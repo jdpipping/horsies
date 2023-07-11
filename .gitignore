@@ -1,10 +1,1 @@
-# starting data
-nyra_2019_complete.csv
-nysgc-horse-racing-injury-data_2019
-
-# processed data
-finish_lines.csv
-track_connector.csv
-track_outlines_for_model.csv
-track_outlines_for_viz.csv
-tracking_data_cleaned.csv
+horse-data/
