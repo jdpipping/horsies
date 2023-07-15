@@ -1,0 +1,340 @@
+---
+title: "Horse Profiles Data Visualizations"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    number_sections: TRUE
+    collapse: TRUE
+date: "July 11th, 2023"
+---
+
+The goal of this document is to visualize the horse profile data to get a sense of what our sample of horses looks like. 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align = "center", out.width = '100%')
+library(tidyverse)
+library(viridis)
+library(GGally)
+library(patchwork)
+library(pointblank)
+library(reactable)
+library(reactablefmtr)
+library(ggbeeswarm)
+```
+
+# Loading in the Data
+
+Each row in the data set represents a unique horse. The columns represent specific variables of interest about that horse. We have 1679 horses and 36 variables of interest.
+
+```{r}
+horse_profiles <- read_csv("./outputted-csvs/horse_profiles.csv")
+```
+
+
+```{r}
+horse_profiles %>% 
+  group_by(if_injury, fatal) %>% 
+  count() %>% 
+  knitr::kable()
+```
+
+
+# Introductory Relationships
+
+In this first section, we explore some initial univariate relationships in the horse profiles data set.
+
+### Number of Times a Horse Raced
+
+```{r}
+horse_profiles %>% 
+  ggplot(aes(x = n_races_tracked_2019))+
+  geom_histogram(binwidth = 1)+
+  scale_y_continuous(breaks = seq(0,1500,100))+
+  labs(x = "Number of Races", y = "Count", title = "All Races")+
+  theme_minimal()
+```
+
+### Horses' Average Race Distance (in Meters)
+
+```{r}
+horse_profiles %>% 
+  ggplot(aes(x = avg_race_dist_meters))+
+  geom_histogram()+
+  scale_y_continuous(breaks = seq(0,2000, 200))+
+  labs(x = "Average Race Distance per Horse (in Meters)", y = "Count", title = "All Races")+
+  theme_minimal()
+```
+
+### Average Total Strain per Horse
+
+```{r}
+horse_profiles %>% 
+  ggplot(aes(x = avg_total_race_strain))+
+  geom_histogram()+
+  scale_y_continuous(breaks = seq(0,2000, 50))+
+  scale_x_continuous(breaks = seq(-100,200,20))+
+  labs(x = "Average Total Race Strain per Horse", y = "Count", title = "Mile Races")+
+  theme_minimal()
+```
+
+
+
+### Frequency of Injuries
+
+```{r}
+horse_profiles %>% 
+  ggplot(aes(x = if_injury))+
+  geom_bar()+
+  scale_y_continuous(breaks = seq(0,4500,500))+
+  labs(y = "Count", x = "The Horse had a Reported Injury", title = "All Races")+
+  theme_minimal()
+```
+
+### Number of Races by Injured vs. Not Injured Horses
+
+
+```{r}
+horse_profiles %>% 
+  mutate(longform_injured = if_else(if_injury == TRUE, "Injured", "Not Injured")) %>% 
+  ggplot(aes(y = longform_injured, x = n_races_tracked_2019))+
+  geom_violin(aes(fill = longform_injured), alpha = .1)+
+  geom_boxplot(aes(color = longform_injured),width = .3)+
+  labs(y = "", x = "Number of Races", title = "Distribution of Races Count for\nInjured versus Non-Injured Horses\n")+
+  scale_x_continuous(breaks = seq(0,25,2))+
+  theme_minimal()+
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5, face = "bold", size = 16), title = element_text(face = "bold", size = 12),
+        axis.text = element_text(color = "black", size = 12))
+```
+
+
+### Horse Fatalities
+
+```{r}
+horse_profiles %>% 
+  filter(if_injury == TRUE) %>% 
+  ggplot(aes(x = fatal))+
+  geom_bar()+
+  theme_minimal()+
+  labs(x = "Fatal?", y = "Count", title = "All Races")+
+  theme(legend.position = "none")
+```
+
+
+### Training, Racing, or Other...Where Did Injury Occur?
+
+
+```{r}
+horse_profiles %>% 
+  filter(if_injury == TRUE) %>% 
+  ggplot()+
+  geom_bar(aes(x = injury_location))+
+  labs(x = "Injury Location", y = "Count", title = "Number of Injuries at Each Racing Track")+
+  theme_minimal()+
+    theme(legend.title = element_blank(), legend.position = "bottom", 
+        legend.justification = "right",
+        legend.text = element_text(size = 10),
+        plot.title = element_text(hjust = 0.5, face = "bold", size = 16), title = element_text(face =
+        "bold", size = 12), axis.text = element_text(color = "black", size = 12))
+```
+
+### Race Track at which Injury Occured
+
+```{r}
+horse_profiles %>% 
+  filter(if_injury == TRUE) %>% 
+  ggplot()+
+  geom_bar(aes(x = injury_track))+
+  scale_y_continuous(breaks = seq(0,60,10))+
+  labs(x = "Racing Track", y = "Count", title = "Number of Injuries at Each Racing Track")+
+  theme_minimal()+
+    theme(legend.title = element_blank(), legend.position = "bottom", 
+        legend.justification = "right",
+        legend.text = element_text(size = 10),
+        plot.title = element_text(hjust = 0.5, face = "bold", size = 16), title = element_text(face =
+        "bold", size = 12), axis.text = element_text(color = "black", size = 12))
+```
+
+### Days from Injury to Next Race
+
+```{r}
+horse_profiles %>% 
+  filter(if_injury == TRUE) %>% 
+  ggplot()+
+  geom_histogram(aes(x = days_injury_to_race), bins = 20)+
+  labs(x = "Days from Injury to Next Race", y = "Count", title = "All Races")+
+  theme_minimal()
+```
+
+# Injury Relationships
+
+```{r}
+horse_profiles %>% 
+  filter(if_injury == TRUE) %>% 
+  ggplot(aes(x = days_injury_to_race, y = injury_track))+
+  geom_violin(aes(fill = injury_track), alpha = .1, width = 1.5)+
+  geom_boxplot(aes(color = injury_track),width = .1)+
+  labs(x = "Days from Injury to Next Race", y = "Count", title = "All Races")+
+  theme_minimal()+
+  theme(legend.position = "none")
+```
+
+```{r}
+horse_profiles %>% 
+  pivot_longer(cols = ends_with("between_races"), names_to = "summary_stat", values_to = "n_days") %>% 
+  ggplot(aes(x = n_days, y = if_injury))+
+    geom_violin(aes(fill = if_injury), alpha = .1)+
+  geom_boxplot(aes(color = if_injury),width = .2)+
+  labs(x = "Number of Days between Races", y = "Has Been Injured?", title = "All Races")+
+  theme_minimal()
+```
+
+### DNFs versus Number of Injuries 
+
+```{r eval = FALSE}
+counts <- horse_profiles %>% 
+  group_by(horse_id) %>%   
+  summarize(n_injuries = sum(n_injury_type)) %>% 
+  group_by(n_injuries) %>% 
+  count()
+
+horse_profiles %>% 
+  group_by(horse_id) %>% 
+  summarize(n_injuries = sum(n_injury_type), n_dnf = sum(n_dnf)) %>% 
+  ggplot(aes(x = n_injuries, fill = as_factor(n_dnf)))+
+  geom_bar(position = "fill")+
+  geom_text(data = counts, aes(x = n_injuries, y = c(.9,.9,.9), label = paste0("Count: ",n)), inherit.aes = FALSE, color = "white")+
+  labs(y = "Proportion")+
+  guides(fill = guide_legend(title = "Number of DNFs"))+
+  labs(x = "Number of Injuries per Horse", title = "All Races")+
+  theme_minimal()
+```
+
+```{r}
+set.seed(47)
+
+cols = c("Days between Last Race and Injury" = "red")
+
+horse_profiles %>%
+  mutate(days_between = as.numeric(injury_date - last_race_pre_injury)) %>% 
+    filter(if_injury == TRUE & !is.na(days_between), !is.na(median_days_between_races), n_races_tracked_2019 > 3) %>% 
+   slice_sample(n = 25) %>% 
+  pivot_longer(cols = ends_with("between_races"), names_to = "summary_stat", values_to = "n_days") %>% 
+  ggplot(aes(y = as.factor(horse_id), x = n_days))+
+  geom_line()+
+  geom_boxplot()+
+  geom_point(aes(y = as.factor(horse_id), x = days_between, color = "Days between Last Race and Injury"), size = 2, inherit.aes = FALSE)+
+  labs(x = "Number of Days between Races", y = "Horse ID", title = "Comparison between a Horse's Distribution of Days Between Races\nand the Number of Days Between their Last Race and Injury")+
+  scale_color_manual(values = cols)+
+  theme_minimal()+
+  theme(legend.title = element_blank(), legend.position = "bottom", 
+        legend.justification = "right",
+        legend.text = element_text(size = 10),
+        plot.title = element_text(hjust = 0.5, face = "bold", size = 16), title = element_text(face =
+        "bold", size = 12), axis.text = element_text(color = "black", size = 12))
+```
+
+### Comparison between Race Distance (in Meters) of Average versus Injury Race 
+
+```{r}
+set.seed(47)
+
+horse_profiles %>%
+  filter(if_injury == TRUE & !is.na(race_length_injury_meters) & n_races_tracked_2019 > 1) %>% 
+  slice_sample(n = 45) %>% 
+  mutate(diff_meters = avg_race_dist_meters - race_length_injury_meters) %>% 
+  mutate(diff_meters_logical = if_else(diff_meters < 0, "Negative", "Positive")) %>% 
+  ggplot(aes(y = as.factor(horse_id), x = diff_meters))+
+  geom_bar(aes(fill = fatal, color = fatal),stat = "identity")+
+  theme_minimal()+
+  labs(y = "Horse ID", x = "Race Distance Difference (in Meters)", title = "The Difference between a Horse's Average Race Distance\nand their Race Distance where They got Injured")+
+  guides(fill = guide_legend(title = "Fatal Injury?"), color = guide_legend(title = "Fatal Injury?"))+
+  scale_x_continuous(breaks = seq(-400,300,50))+
+  theme(legend.text = element_text(size = 10),
+        plot.title = element_text(hjust = 0.5, face = "bold", size = 16), title = element_text(face =
+        "bold", size = 12), axis.text = element_text(color = "black", size = 12))
+```
+
+
+```{r}
+horse_profiles %>% 
+  select(-horse_name, -horse_id, -injury_track_location_clean, - injury_details_reported, -third_quartile_days_between_races, -first_quartile_days_between_races, -avg_total_race_strain, -n_dnf, -n_injury_type) %>% 
+  GGally::ggcorr(label = TRUE,
+                 size = 2.95,
+                 hjust = .85,
+                 color = "black",
+                 face = "bold",
+                 legend.size = 10)+
+  labs(title = "Correlations between Horse Profiles' Variables")+
+  theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 16), title = element_text(face =
+        "bold", size = 12), axis.text = element_text(color = "black", size = 12))
+```
+
+```{r}
+p1 <- horse_profiles %>% 
+  ggplot(aes(y = days_off_pre_injury, x = avg_finishing_place))+
+  geom_point()+
+  geom_smooth()+
+  scale_x_continuous(breaks = seq(0,10,1), limits = c(0.8,8.5))+
+  theme_minimal()
+
+p2 <- horse_profiles %>%
+  ggplot(aes(y = days_injury_to_race, x = avg_finishing_place))+
+  geom_point()+
+  geom_smooth()+
+  scale_x_continuous(breaks = seq(0,10,1), limits = c(0.8,8.5))+
+  theme_minimal()
+
+library(patchwork)
+p1 + p2
+```
+
+```{r}
+horse_profiles %>% 
+  filter(if_injury == TRUE) %>% 
+  ggplot(aes(x = injury_track))+
+  geom_bar(aes(fill = injury_track_location_clean), color = "black",position = "fill")+
+  scale_y_continuous(breaks = seq(0,1,.1))+
+  labs(x = "Race Track", y = "Proportion", title = "Comparison between the Injury Location \nProportions for Different Race Tracks")+
+  guides(fill = guide_legend("Injury Location"))+
+  theme_minimal()+
+    theme(legend.text = element_text(size = 10),
+        plot.title = element_text(hjust = 0.5, face = "bold", size = 16), title = element_text(face =
+        "bold", size = 12), axis.text = element_text(color = "black", size = 12))
+```
+
+
+```{r}
+profiles_grouped_injuries_all <- horse_profiles %>% 
+  mutate(injury_details_reported = str_to_lower(injury_details_reported)) %>% 
+  mutate(injury_type = case_when(
+    str_detect(injury_details_reported, "fracture|sesamoid") ~ "Fracture",
+    str_detect(injury_details_reported, "laceration|bleed") ~ "Laceration",
+    str_detect(injury_details_reported, "fell|stumbled|collapsed") ~ "Fall",
+    str_detect(injury_details_reported, "tendon") ~ "Tendon",
+    str_detect(injury_details_reported, "clipped|hit|^kick") ~ "Hit",
+    str_detect(injury_details_reported, "laminitis") ~ "Muscle",
+    str_detect(injury_details_reported, "suspensory")  ~ "Ligament",
+    str_detect(injury_details_reported, "elbow|fetlock") ~ "Joint",
+    str_detect(injury_details_reported, "colic|colon|pneumonia") ~ "Organ",
+    str_detect(injury_details_reported, "head") ~ "Head",
+    str_detect(injury_details_reported, "^vanned off|vanned off$|unknown|^pulled up|precaution|^injury$| no injury reported|lf$|broke down|flipped in gate|leg$|^injured$") ~ "Unspecified",
+    TRUE ~ NA
+  ))
+
+## might be good to review the groupings above because I am not totally confident on them
+
+profiles_grouped_injuries_all %>% 
+  filter(if_injury == TRUE) %>% 
+  group_by(injury_type, fatal) %>% 
+  count() %>% 
+  ggplot()+
+  geom_bar(aes(x = reorder(injury_type, -n), y = n, fill = fatal), stat = "identity")+
+  scale_y_continuous(breaks = seq(0,80,10))+
+  labs(x = "Injury Type", y = "Count", title = "All Races")+
+  guides(fill = guide_legend(title = "Fatal?"))+
+  scale_fill_hue(l = 50)+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+```
