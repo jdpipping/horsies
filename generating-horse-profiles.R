@@ -164,7 +164,7 @@ horse_profiles <- horse_names %>%
   mutate(injury_details = if_else(is.na(injury_details), "No Reported Injury", injury_details)) %>% 
   mutate(n_injury_type = if_else(is.na(n_injury_type), 0, n_injury_type)) %>% 
   rename(injury_details_reported = injury_details) %>% 
-  mutate(if_injury = if_else(injury_details_reported == "No Reported Injury", FALSE, TRUE)) %>% 
+  mutate(if_injury_reported = if_else(injury_details_reported == "No Reported Injury", FALSE, TRUE)) %>% 
   mutate(dnf_from_injury = if_else(injury_date == date_dnf_1 | injury_date == date_dnf_2, TRUE, FALSE, missing = NA))
 
 #### Writing the Horse Profiles CSV ####

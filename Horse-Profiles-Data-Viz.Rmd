@@ -2,11 +2,12 @@
 title: "Horse Profiles Data Visualizations"
 output: 
   html_document:
+    theme: simplex
     toc: TRUE
     toc_float: TRUE
     number_sections: TRUE
     collapse: TRUE
-date: "July 11th, 2023"
+date: "`r Sys.Date()`"
 ---
 
 The goal of this document is to visualize the horse profile data to get a sense of what our sample of horses looks like. 
@@ -23,6 +24,8 @@ library(reactablefmtr)
 library(ggbeeswarm)
 ```
 
+----
+
 # Loading in the Data
 
 Each row in the data set represents a unique horse. The columns represent specific variables of interest about that horse. We have 1679 horses and 36 variables of interest.
@@ -34,11 +37,11 @@ horse_profiles <- read_csv("./outputted-csvs/horse_profiles.csv")
 
 ```{r}
 horse_profiles %>% 
-  group_by(if_injury, fatal) %>% 
+  group_by(if_injury_reported, fatal) %>% 
   count() %>% 
   knitr::kable()
 ```
-
+----
 
 # Introductory Relationships
 
@@ -78,13 +81,11 @@ horse_profiles %>%
   theme_minimal()
 ```
 
-
-
 ### Frequency of Injuries
 
 ```{r}
 horse_profiles %>% 
-  ggplot(aes(x = if_injury))+
+  ggplot(aes(x = if_injury_reported))+
   geom_bar()+
   scale_y_continuous(breaks = seq(0,4500,500))+
   labs(y = "Count", x = "The Horse had a Reported Injury", title = "All Races")+
@@ -96,7 +97,7 @@ horse_profiles %>%
 
 ```{r}
 horse_profiles %>% 
-  mutate(longform_injured = if_else(if_injury == TRUE, "Injured", "Not Injured")) %>% 
+  mutate(longform_injured = if_else(if_injury_reported == TRUE, "Injured", "Not Injured")) %>% 
   ggplot(aes(y = longform_injured, x = n_races_tracked_2019))+
   geom_violin(aes(fill = longform_injured), alpha = .1)+
   geom_boxplot(aes(color = longform_injured),width = .3)+
@@ -113,7 +114,7 @@ horse_profiles %>%
 
 ```{r}
 horse_profiles %>% 
-  filter(if_injury == TRUE) %>% 
+  filter(if_injury_reported == TRUE) %>% 
   ggplot(aes(x = fatal))+
   geom_bar()+
   theme_minimal()+
@@ -127,7 +128,7 @@ horse_profiles %>%
 
 ```{r}
 horse_profiles %>% 
-  filter(if_injury == TRUE) %>% 
+  filter(if_injury_reported == TRUE) %>% 
   ggplot()+
   geom_bar(aes(x = injury_location))+
   labs(x = "Injury Location", y = "Count", title = "Number of Injuries at Each Racing Track")+
@@ -143,7 +144,7 @@ horse_profiles %>%
 
 ```{r}
 horse_profiles %>% 
-  filter(if_injury == TRUE) %>% 
+  filter(if_injury_reported == TRUE) %>% 
   ggplot()+
   geom_bar(aes(x = injury_track))+
   scale_y_continuous(breaks = seq(0,60,10))+
@@ -160,18 +161,130 @@ horse_profiles %>%
 
 ```{r}
 horse_profiles %>% 
-  filter(if_injury == TRUE) %>% 
+  filter(if_injury_reported == TRUE) %>% 
   ggplot()+
   geom_histogram(aes(x = days_injury_to_race), bins = 20)+
   labs(x = "Days from Injury to Next Race", y = "Count", title = "All Races")+
   theme_minimal()
 ```
 
+
+### Changes in Number of Races per Horse between 2019 to 2021
+
+```{r}
+horse_profiles %>% 
+  select(horse_id:n_races_2021, if_injury_reported, -n_races_tracked_2019) %>%
+  pivot_longer(n_races_2019:n_races_2021, names_to = "year", values_to = "value") %>%
+  drop_na(value) %>% 
+  ggplot(aes(y = year, x = value))+
+  geom_violin(aes(fill = year), alpha = .3)+
+  geom_boxplot(width = .2, aes(color = year))+
+  theme_minimal()+
+  theme(legend.position = "none")
+  
+```
+
+```{r}
+horse_profiles %>% 
+  select(horse_id:n_races_2021, if_injury_reported, -n_races_tracked_2019) %>%
+  mutate(n_diff_2019_2020 = n_races_2020 - n_races_2019) %>% 
+  mutate(n_diff_logical = if_else(n_diff_2019_2020 < 0, TRUE, FALSE)) %>% 
+  group_by(n_diff_logical) %>% 
+  count() %>% 
+  knitr::kable()
+```
+
+
+
+```{r}
+
+horse_id_bottom <- horse_profiles %>% 
+  select(horse_id:n_races_2021, if_injury_reported, -n_races_tracked_2019) %>%
+  mutate(n_diff_2019_2020 = n_races_2020 - n_races_2019) %>% 
+  filter(n_diff_2019_2020 <  quantile(n_diff_2019_2020, probs = 0.05, na.rm = TRUE))
+
+
+
+p1 <- horse_profiles %>% 
+  select(horse_id:n_races_2021, if_injury_reported, -n_races_tracked_2019) %>%
+  pivot_longer(n_races_2019:n_races_2021, names_to = "year", values_to = "value") %>%
+  drop_na(value) %>% 
+  mutate(year = case_when(
+    str_detect(year, "2019") ~ 2019,
+    str_detect(year, "2020") ~ 2020,
+    str_detect(year, "2021") ~ 2021,
+    TRUE ~ NA
+  )) %>% 
+  filter(horse_id %in% horse_id_bottom$horse_id) %>% 
+  ggplot(aes(x = year, y = value))+
+  geom_line(aes(group = as_factor(horse_id), color = as.factor(horse_id)), linetype = "dashed")+
+  geom_point(aes(group = as_factor(horse_id), color = as.factor(horse_id)), size = 2.5)+
+  scale_x_continuous(breaks = seq(2019,2021,1))+
+  scale_y_continuous(breaks = seq(0,30,2))+
+  labs(x = "Year", y = "Number of NYRA Races Started", title = "Bottom 5% of Difference in\nNumber of Races in 2019 to 2020")+
+  guides(color = guide_legend(title = "Horse ID"))+
+  theme_minimal()+
+  theme(legend.position = "none")
+```
+
+```{r}
+horse_id_top <- horse_profiles %>% 
+  select(horse_id:n_races_2021, if_injury_reported, -n_races_tracked_2019) %>%
+  mutate(n_diff_2019_2020 = n_races_2020 - n_races_2019) %>% 
+  filter(n_diff_2019_2020 >  quantile(n_diff_2019_2020, probs = 0.95, na.rm = TRUE))
+
+
+
+p2 <- horse_profiles %>% 
+  select(horse_id:n_races_2021, if_injury_reported, -n_races_tracked_2019) %>%
+  pivot_longer(n_races_2019:n_races_2021, names_to = "year", values_to = "value") %>%
+  drop_na(value) %>% 
+  mutate(year = case_when(
+    str_detect(year, "2019") ~ 2019,
+    str_detect(year, "2020") ~ 2020,
+    str_detect(year, "2021") ~ 2021,
+    TRUE ~ NA
+  )) %>% 
+  filter(horse_id %in% horse_id_top$horse_id) %>% 
+  ggplot(aes(x = year, y = value))+
+  geom_line(aes(group = as_factor(horse_id), color = as.factor(horse_id)), linetype = "dashed")+
+  geom_point(aes(group = as_factor(horse_id), color = as.factor(horse_id)), size = 2.5)+
+  scale_x_continuous(breaks = seq(2019,2021,1))+
+  scale_y_continuous(breaks = seq(0,20,2))+
+  labs(x = "Year", y = "Number of NYRA Races Started", title = "Top 5% of Difference in\nNumber of Races in 2019 to 2020")+
+  guides(color = guide_legend(title = "Horse ID"))+
+  theme_minimal()+
+  theme(legend.position = "none")
+```
+
+```{r}
+library(patchwork)
+
+p1 + p2
+```
+
+
+
+```{r}
+# I think we want to see if there is a significant drop off in race count from year to year
+
+horse_profiles %>% 
+  select(horse_id:n_races_2021, if_injury_reported, -n_races_tracked_2019) %>%
+  mutate(n_diff_2019_2020 = n_races_2020 - n_races_2019,
+         n_diff_2021_2020 = n_races_2021 - n_races_2020)
+  
+
+```
+
+
+
+----
+
 # Injury Relationships
 
 ```{r}
 horse_profiles %>% 
-  filter(if_injury == TRUE) %>% 
+  filter(if_injury_reported == TRUE) %>% 
   ggplot(aes(x = days_injury_to_race, y = injury_track))+
   geom_violin(aes(fill = injury_track), alpha = .1, width = 1.5)+
   geom_boxplot(aes(color = injury_track),width = .1)+
@@ -183,9 +296,9 @@ horse_profiles %>%
 ```{r}
 horse_profiles %>% 
   pivot_longer(cols = ends_with("between_races"), names_to = "summary_stat", values_to = "n_days") %>% 
-  ggplot(aes(x = n_days, y = if_injury))+
-    geom_violin(aes(fill = if_injury), alpha = .1)+
-  geom_boxplot(aes(color = if_injury),width = .2)+
+  ggplot(aes(x = n_days, y = if_injury_reported))+
+    geom_violin(aes(fill = if_injury_reported), alpha = .1)+
+  geom_boxplot(aes(color = if_injury_reported),width = .2)+
   labs(x = "Number of Days between Races", y = "Has Been Injured?", title = "All Races")+
   theme_minimal()
 ```
@@ -218,7 +331,7 @@ cols = c("Days between Last Race and Injury" = "red")
 
 horse_profiles %>%
   mutate(days_between = as.numeric(injury_date - last_race_pre_injury)) %>% 
-    filter(if_injury == TRUE & !is.na(days_between), !is.na(median_days_between_races), n_races_tracked_2019 > 3) %>% 
+    filter(if_injury_reported == TRUE & !is.na(days_between), !is.na(median_days_between_races), n_races_tracked_2019 > 3) %>% 
    slice_sample(n = 25) %>% 
   pivot_longer(cols = ends_with("between_races"), names_to = "summary_stat", values_to = "n_days") %>% 
   ggplot(aes(y = as.factor(horse_id), x = n_days))+
@@ -241,7 +354,7 @@ horse_profiles %>%
 set.seed(47)
 
 horse_profiles %>%
-  filter(if_injury == TRUE & !is.na(race_length_injury_meters) & n_races_tracked_2019 > 1) %>% 
+  filter(if_injury_reported == TRUE & !is.na(race_length_injury_meters) & n_races_tracked_2019 > 1) %>% 
   slice_sample(n = 45) %>% 
   mutate(diff_meters = avg_race_dist_meters - race_length_injury_meters) %>% 
   mutate(diff_meters_logical = if_else(diff_meters < 0, "Negative", "Positive")) %>% 
@@ -292,7 +405,7 @@ p1 + p2
 
 ```{r}
 horse_profiles %>% 
-  filter(if_injury == TRUE) %>% 
+  filter(if_injury_reported == TRUE) %>% 
   ggplot(aes(x = injury_track))+
   geom_bar(aes(fill = injury_track_location_clean), color = "black",position = "fill")+
   scale_y_continuous(breaks = seq(0,1,.1))+
@@ -326,7 +439,7 @@ profiles_grouped_injuries_all <- horse_profiles %>%
 ## might be good to review the groupings above because I am not totally confident on them
 
 profiles_grouped_injuries_all %>% 
-  filter(if_injury == TRUE) %>% 
+  filter(if_injury_reported == TRUE) %>% 
   group_by(injury_type, fatal) %>% 
   count() %>% 
   ggplot()+
