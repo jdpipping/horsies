@@ -1,0 +1,153 @@
+---
+title: "Understanding traj Package"
+output: html_document
+date: "2023-07-17"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(traj)
+```
+
+Much of the discussion of the steps comes from [Traj Tutorial](https://cran.r-project.org/web/packages/traj/vignettes/traj.html)
+
+### Transforming Data
+
+#### Example Data
+
+```{r example data}
+head(example.data$data)
+```
+
+#### Transforming our Data
+
+```{r loading data}
+horse_data <- read_csv("horse-cooking-data/final_horse_strains.csv")
+```
+
+#### Visualizing the Standardized Cumulative Lateral Movement Trajectories
+
+```{r EDA}
+horse_data %>% 
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>% 
+  select(horse_id, frame_id, side_movement) %>% 
+  group_by(frame_id) %>% 
+# mutating to do cumulative absolute lateral movement and standardize it  
+  mutate(side_movement_traj = scale(cumsum(abs(side_movement)))) %>% 
+  ungroup() %>% 
+  ggplot(aes(x = frame_id, y = side_movement_traj))+
+  geom_line(aes(color = as.factor(horse_id))) +
+  labs(x = "Frame ID", y = "Cumulative Lateral Movement (Standardized)")+
+  theme_minimal()
+```
+
+
+```{r transforming sample data into the same form}
+traj_data <- horse_data %>% 
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>% 
+  select(horse_id, frame_id, side_movement) %>% 
+  group_by(frame_id) %>% 
+# mutating to do cumulative absolute lateral movement and standardize it  
+  mutate(side_movement_traj = scale(cumsum(abs(side_movement)))) %>% 
+  ungroup() %>% 
+  select(-side_movement) %>% 
+  pivot_wider(names_from = frame_id, values_from = side_movement_traj, names_prefix = "frame_")
+```
+
+
+### Generating Summary Statistics
+
+```{r compute 24 measures describing the features of trajectories}
+# ID = TRUE because first column corresponds to an ID variable
+s1 <- step1measures(traj_data, ID = TRUE)
+
+head(s1$measurments)
+
+#s1[["measurments"]] <- s1[["measurments"]] %>% 
+#  select(-m10, -m11, -m12, -m17, -m18, -m19, -m20, -m21, -m23, -m24)
+
+```
+
+Each row in the dataframe returned by `step1measures` corresponds to the trajectory on the same row in the input data. For each trajectory, the 24 measures have been calculated and correspond to columns m1 to m24.
+
+### Summary Statistics
+
+1. Range
+
+2. Mean-over-time
+
+3. Standard deviation (SD)
+
+4. Coefficient of variation (CV)
+
+5. Change
+
+6. Mean change per unit time
+
+7. Change relative to the first score
+
+8. Change relative to the mean over time
+
+9. Slope of the linear model
+
+10. $R^2$: Proportion of variance explained by the linear model
+
+11. Maximum of the first differences
+
+12. SD of the first differences
+
+13. SD of the first differences per time unit
+
+14. Mean of the absolute first differences*
+
+15. Maximum of the absolute first differences
+
+16. Ratio of the maximum absolute difference to the mean-over-time
+
+17. Ratio of the maximum absolute first difference to the slope
+
+18. Ratio of the SD of the first differences to the slope
+
+19. Mean of the second differences
+
+20. Mean of the absolute second differences
+
+21. Maximum of the absolute second differences
+
+22. Ratio of the maximum absolute second difference to the mean-over-time
+
+23. Ratio of the maximum absolute second difference to mean absolute first difference
+
+24. Ratio of the mean absolute second difference to the mean absolute first difference
+
+
+In the second step of the analysis, a factor analysis is performed to select a subset of measures that describes the main features of the trajectories. The function step2factors is used to perform the factor analysis.
+
+```{r}
+s2 <- step2factors(s1)
+
+s2 <- step2factors(s1, 
+                   discard = c("m10", "m11", "m12", "m19", "m20", "m21", "m23", "m24"))
+
+head(s2$factors)
+```
+
+The third step of the procedure consists in clustering the trajectories based on the measures identified in the factor analysis. This step is implemented in the step3clusters function. Two options are available to select the number of clusters. First, the user can a priori decide on the number of clusters, such as in the following example in which the number of clusters is set to 4.
+
+Alternatively, the number of clusters can be left blank in which case the step3clusters function will rely on the `NbClust` function from the `NbClust` package to determine the optimal number of clusters based on one of the criteria available in `NbClust`. Please see `NbClust` documentation for more details.
+
+```{r}
+s3 <- step3clusters(s2, nclusters = 4)
+```
+
+Each trajectory gets assigned to only one cluster. From s3, you can get the cluster membership for each ID.
+
+```{r}
+head(s3$clusters)
+
+s3$clust.distr
+```
+
