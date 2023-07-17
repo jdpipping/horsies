@@ -18,20 +18,20 @@ library(doFuture)
 source("data_cleaning_functions.R")
 
 # Load race tracking data
-tracking_data = read_csv("horse-data/nyra_2019_complete.csv",
+tracking_data = read_csv("initial-horse-data/nyra_2019_complete.csv",
                          col_names = c("track_id", "race_date", "race_number", "program_number", "trakus_index", "latitude",
                                        "longitude", "distance_id", "course_type", "track_condition", "run_up_distance", "race_type",
                                        "purse", "post_time", "weight_carried", "jockey", "odds", "position_at_finish"))
 
 # Load track outlines for our three race tracks
-track_outlines = read_csv("horse-data/track_outlines.csv")
+track_outlines = read_csv("initial-horse-data/track_outlines.csv")
 
 # Load in horse names and IDs
-horse_names = read_csv("horse-data/horse_names.csv")
-write.csv(horse_names, "horse-cooking-data/horse_names.csv", row.names = FALSE)
+horse_names = read_csv("initial-horse-data/horse_names.csv")
+write.csv(horse_names, "processed-horse-data/horse_names.csv", row.names = FALSE)
 
-horse_ids = read_csv("horse-data/horse_ids.csv")
-write.csv(horse_ids, "horse-cooking-data/horse_ids.csv", row.names = FALSE)
+horse_ids = read_csv("initial-horse-data/horse_ids.csv")
+write.csv(horse_ids, "processed-horse-data/horse_ids.csv", row.names = FALSE)
 
 # Create jockey ids
 jockey_ids = tracking_data %>%
@@ -41,7 +41,7 @@ jockey_ids = tracking_data %>%
   rownames_to_column("jockey_id") %>%
   mutate(jockey_id = as.numeric(jockey_id))
 
-write.csv(jockey_ids, "horse-cooking-data/jockey_ids.csv", row.names = FALSE)
+write.csv(jockey_ids, "processed-horse-data/jockey_ids.csv", row.names = FALSE)
 
 
 
@@ -653,7 +653,7 @@ tracking_data_s7 = tracking_data_s6b %>%
     everything()
   )
 
-write_csv(tracking_data_s7, "horse-cooking-data/partially_cleaned_data.csv")
+write_csv(tracking_data_s7, "processed-horse-data/partially_cleaned_data.csv")
 
 ################################################################
 ## STEP 8: BREAK DOWN TRACK INTO STAGES ALONG EACH 0.1 METRES ##
@@ -1226,7 +1226,7 @@ tracking_data_s13 = tracking_data_s12 %>%
 ###################################
 
 # Load in drafting data
-drafting_data = read_csv("horse-data/drafting_data.csv") %>%
+drafting_data = read_csv("initial-horse-data/drafting_data.csv") %>%
   pivot_wider(id_cols = "fwd_dist", names_from = "lateral", names_prefix = "lat_", values_from = "drag")
 
 # Calculate drafting results
@@ -1296,8 +1296,8 @@ tracking_data_s14 = tracking_data_s13 %>%
 ##########################################
 
 # Save data as csvs
-write_csv(track_outlines_s4, "horse-cooking-data/track_outlines_for_viz.csv")
-write_csv(track_outlines_s8, "horse-cooking-data/track_outlines_for_model.csv")
-write_csv(finish_lines, "horse-cooking-data/finish_lines.csv")
-write_csv(tracking_data_s14, "horse-cooking-data/tracking_data_cleaned.csv")
-write_csv(track_connector, "horse-cooking-data/track_connector.csv")
+write_csv(track_outlines_s4, "processed-horse-data/track_outlines_for_viz.csv")
+write_csv(track_outlines_s8, "processed-horse-data/track_outlines_for_model.csv")
+write_csv(finish_lines, "processed-horse-data/finish_lines.csv")
+write_csv(tracking_data_s14, "processed-horse-data/tracking_data_cleaned.csv")
+write_csv(track_connector, "processed-horse-data/track_connector.csv")
