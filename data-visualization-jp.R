@@ -1,44 +1,76 @@
 # loading tidyverse, data ####
 library(tidyverse)
 
-horse_data <- read_csv("horse-cooking-data/horse-data/processed-data/final_horse_strains.csv")
+horse_data <- read_csv("~/final_horse_strains.csv")
 
-head(horse_data)
-# get variable names ####
-variable_names <- c()
-for (variable in colnames(horse_data)) {
-  variable_names <- c(variable_names, variable)
-}
-sort(variable_names)
-# data visualization (old) ####
+# data visualization ####
 
 # velocity vs time
 horse_data %>%
-  filter(track_id == "BEL",
-         race_date  == "2019-04-26") %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>%
   ggplot(aes(x = frame_id,
              y = speed,
              color = factor(horse_name))) +
   geom_line(show.legend = FALSE) +
-  facet_wrap(~ race_number)
+  labs(title = 'Speed vs Frame ID for Each Horse',
+       subtitle = 'At the Aqueduct on April 19th, 2019',
+       x = 'Frame ID',
+       y = 'Speed (m/s)') +
+  facet_wrap(~ race_number) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.subtitle = element_text(hjust = 0.5))
 
 # acceleration vs time
 horse_data %>%
-  filter(track_id == "BEL",
-         race_date  == "2019-04-26") %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>%
   ggplot(aes(x = frame_id,
              y = acceleration,
              color = factor(horse_name))) +
   geom_line(show.legend = FALSE) +
-  facet_wrap(~ race_number)
+  labs(title = 'Acceleration vs Frame ID for Each Horse',
+       subtitle = 'At the Aqueduct on April 19th, 2019',
+       x = 'Frame ID',
+       y = 'Acceleration (m/s^2)') +
+  facet_wrap(~ race_number) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.subtitle = element_text(hjust = 0.5))
 
-# lateral movement correlations ####
-horse_data_lat <- horse_data %>%
-  group_by(race_id, horse_id) %>%
-  mutate(aggregate_lateral_movement = sum(side_movement, na.rm = TRUE))
+# lateral movement vs time 
+horse_data %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>%
+  ggplot(aes(x = frame_id,
+             y = abs(side_movement),
+             color = factor(horse_name))) +
+  geom_line(show.legend = FALSE) +
+  labs(title = 'Lateral Movement for Each Horse',
+       subtitle = 'At the Aqueduct on April 19th, 2019',
+       x = 'Frame ID',
+       y = 'Lateral Movement (m)') +
+  facet_wrap(~ race_number) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.subtitle = element_text(hjust = 0.5))
 
-correlations <- cor(horse_data_lat[sapply(horse_data_lat, is.numeric)])
-
-lat_corr <- correlations[, 'aggregate_lateral_movement'] %>%
-  sort(decreasing = TRUE)
-lat_corr
+# cumulative lateral movement vs time
+horse_data %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>%
+  group_by(horse_id) %>%
+  mutate(cum_side_movement = cumsum(abs(side_movement))) %>%
+  ggplot(aes(x = frame_id,
+             y = cum_side_movement,
+             color = factor(horse_name))) +
+  geom_line(show.legend = FALSE) +
+  labs(title = 'Cumulative Lateral Movement for Each Horse',
+       subtitle = 'At the Aqueduct on April 19th, 2019',
+       x = 'Frame ID',
+       y = 'Cumulative Lateral Movement (m)') +
+  facet_wrap(~ race_number) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.subtitle = element_text(hjust = 0.5))

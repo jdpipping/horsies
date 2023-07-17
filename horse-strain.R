@@ -1,7 +1,7 @@
 # load tidyverse, data ####
 library(tidyverse)
 
-horse_data <- read_csv("processed-horse-data/tracking_data_cleaned.csv")
+horse_data <- read_csv("~/tracking_data_cleaned.csv")
 
 # pairwise approach velocities ####
 
@@ -74,4 +74,4 @@ final_horse_strains <- horse_strains %>%
   bind_cols(avg_strains, total_strains)
 
 # write csv
-write_csv(final_horse_strains, 'horse-data/processed-horse-data/final_horse_strains.csv')
+write_csv(final_horse_strains, '~/final_horse_strains.csv')
