@@ -74,4 +74,4 @@ final_horse_strains <- horse_strains %>%
   bind_cols(avg_strains, total_strains)
 
 # write csv
-write_csv(final_horse_strains, '~/final_horse_strains.csv')
+write_csv(final_horse_strains, 'processed-horse-data/final_horse_strains_1600.csv')
