@@ -1,13 +1,16 @@
 ---
-title: "Understanding traj Package"
+title: "Understanding the `traj` Package"
 output: html_document
 date: "2023-07-17"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = "150%", out.height = "150%")
 library(tidyverse)
 library(traj)
+library(psych)
+library(broom)
+library(NbClust)
 ```
 
 Much of the discussion of the steps comes from [Traj Tutorial](https://cran.r-project.org/web/packages/traj/vignettes/traj.html)
@@ -26,36 +29,72 @@ head(example.data$data)
 horse_data <- read_csv("horse-cooking-data/final_horse_strains.csv")
 ```
 
+```{r}
+ID_key <- horse_data %>% 
+  select(race_id, horse_id) %>% 
+  group_by(race_id, horse_id) %>% 
+  slice_head() %>% 
+  mutate(ID = paste0(race_id,"_horse",horse_id)) 
+```
+
+
 #### Visualizing the Standardized Cumulative Lateral Movement Trajectories
 
 ```{r EDA}
 horse_data %>% 
   filter(track_id == "AQU",
          race_date  == "2019-04-19") %>% 
-  select(horse_id, frame_id, side_movement) %>% 
-  group_by(frame_id) %>% 
-# mutating to do cumulative absolute lateral movement and standardize it  
-  mutate(side_movement_traj = scale(cumsum(abs(side_movement)))) %>% 
+  select(horse_id, race_id, frame_id, side_movement, n_horses) %>%
+  group_by(frame_id, race_id) %>% 
+  filter(!any(is.na(side_movement))) %>%
   ungroup() %>% 
+  group_by(horse_id) %>% 
+# generating the cumulative absolute side movement for each horse over the race
+  mutate(side_movement = cumsum(abs(side_movement))) %>% 
+  ungroup() %>% 
+  group_by(frame_id) %>% 
+# mutating to standardize cumulative lateral movement in each frame  
+  mutate(side_movement_traj = scale(side_movement)) %>% 
+  ungroup() %>% 
+# dropping frames in which the side_movement_traj could not be calculated
+  drop_na(side_movement_traj) %>% 
+  group_by(frame_id) %>% 
+  mutate(n_recorded = n()) %>% 
+  filter(n_recorded == n_horses) %>% 
   ggplot(aes(x = frame_id, y = side_movement_traj))+
   geom_line(aes(color = as.factor(horse_id))) +
   labs(x = "Frame ID", y = "Cumulative Lateral Movement (Standardized)")+
+  guides(color = guide_legend(title = "Horse ID"))+
   theme_minimal()
-```
+``` 
 
-
-```{r transforming sample data into the same form}
-traj_data <- horse_data %>% 
-  filter(track_id == "AQU",
-         race_date  == "2019-04-19") %>% 
-  select(horse_id, frame_id, side_movement) %>% 
-  group_by(frame_id) %>% 
-# mutating to do cumulative absolute lateral movement and standardize it  
-  mutate(side_movement_traj = scale(cumsum(abs(side_movement)))) %>% 
+```{r}
+traj_data_unpivot <- horse_data %>% 
+  select(horse_id, race_id, frame_id, side_movement, n_horses) %>%
+  group_by(frame_id, race_id) %>% 
+  filter(!any(is.na(side_movement))) %>%
   ungroup() %>% 
-  select(-side_movement) %>% 
-  pivot_wider(names_from = frame_id, values_from = side_movement_traj, names_prefix = "frame_")
+  group_by(race_id, horse_id) %>% 
+# generating the cumulative absolute side movement for each horse over the race
+  mutate(side_movement = cumsum(abs(side_movement))) %>% 
+  ungroup() %>% 
+  group_by(race_id, frame_id) %>% 
+# mutating to standardize cumulative lateral movement in each frame  
+  mutate(side_movement_traj = scale(side_movement)) %>% 
+  ungroup() %>% 
+# dropping frames in which the side_movement_traj could not be calculated
+  drop_na(side_movement_traj) %>% 
+  group_by(race_id, frame_id) %>% 
+  mutate(n_recorded = n()) %>% 
+  filter(n_recorded == n_horses) %>%
+  ungroup() %>% 
+  mutate(ID = paste0(race_id,"_horse",horse_id)) %>% 
+  select(-horse_id, -race_id, -side_movement, -n_recorded, -n_horses) 
+  
+traj_data <- traj_data_unpivot %>%   
+  pivot_wider(names_from = frame_id, values_from = side_movement_traj)
 ```
+
 
 
 ### Generating Summary Statistics
@@ -127,20 +166,19 @@ Each row in the dataframe returned by `step1measures` corresponds to the traject
 In the second step of the analysis, a factor analysis is performed to select a subset of measures that describes the main features of the trajectories. The function step2factors is used to perform the factor analysis.
 
 ```{r}
-s2 <- step2factors(s1)
-
-s2 <- step2factors(s1, 
-                   discard = c("m10", "m11", "m12", "m19", "m20", "m21", "m23", "m24"))
-
-head(s2$factors)
+s2 <- step2factors(s1, num.factors = 10)
 ```
+
+
 
 The third step of the procedure consists in clustering the trajectories based on the measures identified in the factor analysis. This step is implemented in the step3clusters function. Two options are available to select the number of clusters. First, the user can a priori decide on the number of clusters, such as in the following example in which the number of clusters is set to 4.
 
 Alternatively, the number of clusters can be left blank in which case the step3clusters function will rely on the `NbClust` function from the `NbClust` package to determine the optimal number of clusters based on one of the criteria available in `NbClust`. Please see `NbClust` documentation for more details.
 
 ```{r}
-s3 <- step3clusters(s2, nclusters = 4)
+set.seed(47)
+
+s3 <- step3clusters(s2)
 ```
 
 Each trajectory gets assigned to only one cluster. From s3, you can get the cluster membership for each ID.
@@ -151,3 +189,95 @@ head(s3$clusters)
 s3$clust.distr
 ```
 
+```{r warning = FALSE}
+set.seed(47)
+
+cluster_info <- s3[["clusters"]] 
+
+sampled_traj <- cluster_info %>% 
+  #filter(cluster %in% c(1, 2, 3,8,9,10,12,13,15)) %>% 
+  group_by(cluster) %>% 
+  slice_sample(n = 10) 
+
+traj_data_unpivot %>% 
+  right_join(sampled_traj, by = "ID") %>% 
+  select(ID, everything()) %>% 
+  ggplot(aes(x = frame_id, y = side_movement_traj))+
+  geom_line(aes(color = as.factor(ID)))+
+  facet_wrap(~cluster)+
+  labs(x = "Frame ID", y = "Cumulative Lateral Movement Trajectories (Standardized)",
+       title = "Standardized Cumulative Lateral Movement Trajectories for Each Cluster")+
+  theme_minimal()+
+  theme(legend.position = "none")
+
+traj_data_unpivot %>% 
+  right_join(sampled_traj, by = "ID") %>% 
+  select(ID, everything()) %>%
+  group_by(cluster, frame_id) %>% 
+  summarize(avg_side_movement_traj = mean(side_movement_traj),
+            sd_side_movement_traj = sd(side_movement_traj), .groups = "keep") %>% 
+  ungroup() %>% 
+  ggplot(aes(x = frame_id, y = avg_side_movement_traj))+
+  geom_ribbon(aes(x = frame_id,
+                  ymin = avg_side_movement_traj - sd_side_movement_traj,
+                  ymax = avg_side_movement_traj + sd_side_movement_traj),
+              alpha = 0.3, fill = "red")+
+  geom_line()+
+  facet_wrap(~cluster)+
+  labs(x = "Frame ID", y = "Cumulative Lateral Movement Trajectory (Standardized)",
+       title = "Average Standardized Cumulative Lateral Movement Trajectory for Each Cluster")+
+  theme_minimal()
+```
+
+
+```{r}
+cluster_info %>% 
+  left_join(ID_key, by = "ID") %>% 
+# removed clusters where there are only a few observations
+  filter(!(cluster %in% c(1,4,11))) %>% 
+  group_by(cluster, race_id) %>% 
+  summarize(n = n(), .groups = "keep") %>% 
+  ungroup() %>% 
+  group_by(cluster) %>% 
+  mutate(sum = sum(n),
+         prop = n/sum) %>% 
+  ggplot(aes(x = as.factor(race_id), y = prop))+
+  geom_bar(stat = "identity", aes(fill = race_id))+
+  facet_wrap(~cluster, scales = "free_x")+
+  labs(x = "Race ID", y = "Proportion",
+       title = "Frequency of Race in Each Cluster")+
+  theme_minimal()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank())
+  
+```
+
+```{r}
+cluster_info %>% 
+  left_join(ID_key, by = "ID") %>% 
+# removed clusters where there are only a few observations
+  filter(!(cluster %in% c(1,4,11))) %>% 
+  group_by(cluster, horse_id) %>% 
+  summarize(n = n(), .groups = "keep") %>% 
+  ungroup() %>%
+  group_by(cluster) %>% 
+  mutate(sum = sum(n),
+         prop = n/sum) %>% 
+  ungroup() %>% 
+# for sake of being interested in if same horse is being clustered together, we will filter out sum = 1  
+  filter(sum > 1) %>% 
+  arrange(desc(prop), desc(sum), horse_id) %>% 
+  ggplot(aes(x = as.factor(horse_id), y = prop))+
+  geom_bar(stat = "identity", aes(fill = as.factor(horse_id)))+
+  facet_wrap(~cluster, scales = "free_x")+
+  labs(x = "Horse ID", y = "Proportion",
+       title = "Frequency of Horse in Each Cluster")+
+  theme_minimal()+
+  theme(legend.position = "none",
+        axis.text.x = element_blank())
+
+```
+
+#### NOTE: 
+
+I wonder if we could also look at injury information for horses whose trajectories are not all clustered together
