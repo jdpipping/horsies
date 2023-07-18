@@ -1,11 +1,11 @@
 ---
 title: "Understanding the `traj` Package"
-output: html_document
+output: pdf_document
 date: "2023-07-17"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = "150%", out.height = "150%")
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center", message = FALSE, warning = FALSE)
 library(tidyverse)
 library(traj)
 library(psych)
@@ -281,3 +281,22 @@ cluster_info %>%
 #### NOTE: 
 
 I wonder if we could also look at injury information for horses whose trajectories are not all clustered together
+
+
+```{r}
+cluster_info %>% 
+  left_join(ID_key, by = "ID") %>% 
+# removed clusters where there are only a few observations
+  filter(!(cluster %in% c(1,4,11))) %>% 
+  group_by(cluster, horse_id) %>% 
+  summarize(n = n(), .groups = "keep") %>% 
+  ungroup() %>%
+  group_by(horse_id) %>% 
+  mutate(sum = sum(n),
+         prop = n/sum) %>% 
+  ungroup() %>% 
+# for sake of being interested in if same horse is being clustered together, we will filter out sum = 1  
+  filter(sum > 1) %>% 
+  arrange(desc(prop), desc(sum), horse_id)
+```
+
