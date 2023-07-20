@@ -42,7 +42,7 @@ horse_avgs <- tracking_partially_cleaned |>
 ### Extracting the Strain Information for each Horse ###
 
 horse_strain_avgs <- horse_strain_info |> 
-  select(horse_id, race_id, ends_with("strain")) |> 
+  dplyr::select(horse_id, race_id, ends_with("strain")) |> 
   group_by(race_id, horse_id) |>
   summarize(total_strain_per_race = sum(total_strain, na.rm = TRUE), .groups = "keep") |> 
   ungroup() |> 
@@ -59,7 +59,7 @@ horse_time_between_races <- tracking_partially_cleaned |>
   group_by(horse_id) |> 
   mutate(n_races = n()) |> 
   filter(n_races > 1) |> 
-  select(horse_id, race_date) |> 
+  dplyr::select(horse_id, race_date) |> 
   arrange(horse_id, race_date)
 
 diff_time <- c()
@@ -85,7 +85,7 @@ horse_time_between_races <- cbind(horse_time_between_races, diff_time) |>
 #### Extracting the DNF Information for each Horse ####
   
 horse_dnf_info <- tracking_partially_cleaned |> 
-  select(race_id, horse_id, race_date, dnf) |> 
+  dplyr::select(race_id, horse_id, race_date, dnf) |> 
   filter(dnf == TRUE) |> 
   group_by(race_id, horse_id) |> 
   slice_head() |>
@@ -117,7 +117,7 @@ horse_injury_counts <- horse_injury_info |>
          injury_details = `Injury/Illness Details`, injury_track = `Track`,
          days_injury_to_race = `Days from incident to next race`,
          race_length = `Length of Race`, days_off_pre_injury = `Days Off`, fatal = Fatal) |>
-  select(horse_name, injury_track, contains("injury"), contains("race"), contains("days"), fatal, 
+  dplyr::select(horse_name, injury_track, contains("injury"), contains("race"), contains("days"), fatal, 
          -`Last Race`, -starts_with("Not")) |>
   mutate(race_length_cleaned = str_remove(race_length, "Miles|Mile|F")) |> 
   mutate(race_length_cleaned = str_remove(race_length_cleaned, "(Hurdle)")) |> 
@@ -147,7 +147,7 @@ horse_injury_counts <- horse_injury_info |>
   mutate(injury_track_location_clean = str_to_title(injury_track_location_clean)) |> 
   mutate(injury_track_location_clean = factor(injury_track_location_clean,
                                               levels = c("Unknown", "After The Race", "Homestretch", "Far Turn", "Backstretch", "Starting Gate" ))) |> 
-  select(-race_length_cleaned, -race_length, -race_length_cleaned_eval, -injury_track_location)
+  dplyr::select(-race_length_cleaned, -race_length, -race_length_cleaned_eval, -injury_track_location)
 
 
 #### Compiling horses who under (or over) raced relative to other horse's their age ####
@@ -155,8 +155,8 @@ horse_injury_counts <- horse_injury_info |>
 over_or_under_raced <- extreme_resid_horses |> 
   mutate(over_or_under_raced = if_else(.std.resid > 1.645, "over", "under")) |> 
   rename(age_year_over_or_under = age_year,
-         n_races_over_or_under = n_races) |>
-  dplyr::select(horse_id, over_or_under_raced, age_year_over_or_under, n_races_over_or_under)
+         n_races_year_over_or_under = n_races) |>
+  dplyr::select(horse_id, over_or_under_raced, age_year_over_or_under, n_races_year_over_or_under)
 
 #### FINAL JOIN AND MUTATIONS ####
 
