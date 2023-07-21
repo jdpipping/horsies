@@ -2,4 +2,6 @@
 horse-data/
 initial-horse-data/
 processed-horse-data/
+.RDataTmp
+.Rhistory
 .Rproj.user
