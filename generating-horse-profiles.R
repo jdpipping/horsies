@@ -18,14 +18,11 @@ library(lubridate)
 #### Loading in the Relevant CSV Files ####
 
 horse_names <- read_csv("horse-cooking-data/horse_names.csv")
-jockey_ids <- read_csv("horse-cooking-data/jockey_ids.csv")
-#tracking_cleaned <- read_csv("horse-cooking-data/tracking_data_cleaned.csv")
 tracking_partially_cleaned <- read_csv("horse-cooking-data/partially_cleaned_data.csv")
 horse_injury_info <- read_csv("horse-cooking-data/horse_injuries.csv") 
 horse_strain_avgs <- read_csv("horse-cooking-data/avg_horse_strains.csv")
 horse_3year_racing_NYRA <- read_csv("horse-cooking-data/horses_3years_racing_NYRA.csv")
 extreme_resid_horses <- read_csv("outputted-csvs/extreme_resid_horses.csv")
-  
 
 #### Extracting the Number of Races for each Horse ####
 
@@ -168,7 +165,6 @@ under_raced <- extreme_resid_horses |>
 #### FINAL JOIN AND MUTATIONS ####
 
 horse_profiles <- horse_names |>
-#  filter(horse_id %in% tracking_cleaned$horse_id) |> 
   right_join(horse_race_count, by = "horse_id") |> 
   left_join(horses_starts_2019_2020, by = "horse_id") |> 
   mutate(n_races_diff_2019 = n_races_2019 - n_races_tracked_2019) |> 
