@@ -1,3 +1,15 @@
+### How the Strain Information was extracted for each Horse ###
+
+#horse_strain_info |> 
+#  dplyr::select(horse_id, race_id, ends_with("strain")) |> 
+#  filter(is.finite(total_strain)) |>
+#  group_by(race_id, horse_id) |>
+#  summarize(total_strain_per_race = sum(total_strain, na.rm = TRUE), .groups = "keep") |> 
+#  ungroup() |> 
+#  group_by(horse_id) |> 
+#  summarize(avg_total_race_strain = mean(total_strain_per_race, na.rm = TRUE)) |>
+#  write_csv("horse-cooking-data/avg_horse_strains.csv")
+
 #### Loading the Packages ####
 
 library(tidyverse)
@@ -7,10 +19,10 @@ library(lubridate)
 
 horse_names <- read_csv("horse-cooking-data/horse_names.csv")
 jockey_ids <- read_csv("horse-cooking-data/jockey_ids.csv")
-tracking_cleaned <- read_csv("horse-cooking-data/tracking_data_cleaned.csv")
+#tracking_cleaned <- read_csv("horse-cooking-data/tracking_data_cleaned.csv")
 tracking_partially_cleaned <- read_csv("horse-cooking-data/partially_cleaned_data.csv")
 horse_injury_info <- read_csv("horse-cooking-data/horse_injuries.csv") 
-horse_strain_info <- read_csv("horse-cooking-data/final_horse_strains.csv")
+horse_strain_avgs <- read_csv("horse-cooking-data/avg_horse_strains.csv")
 horse_3year_racing_NYRA <- read_csv("horse-cooking-data/horses_3years_racing_NYRA.csv")
 extreme_resid_horses <- read_csv("outputted-csvs/extreme_resid_horses.csv")
   
@@ -37,17 +49,6 @@ horse_avgs <- tracking_partially_cleaned |>
             avg_acceleration = mean(acceleration, na.rm = TRUE),
             avg_speed = mean(speed, na.rm = TRUE),
             avg_weight_carried = mean(weight_carried, na.rm = TRUE))
-
-
-### Extracting the Strain Information for each Horse ###
-
-horse_strain_avgs <- horse_strain_info |> 
-  dplyr::select(horse_id, race_id, ends_with("strain")) |> 
-  group_by(race_id, horse_id) |>
-  summarize(total_strain_per_race = sum(total_strain, na.rm = TRUE), .groups = "keep") |> 
-  ungroup() |> 
-  group_by(horse_id) |> 
-  summarize(avg_total_race_strain = mean(total_strain_per_race, na.rm = TRUE))
   
 
 #### Extracting the Number of Days since Last Race for each Horse ####
@@ -150,19 +151,25 @@ horse_injury_counts <- horse_injury_info |>
   dplyr::select(-race_length_cleaned, -race_length, -race_length_cleaned_eval, -injury_track_location)
 
 
-#### Compiling horses who under (or over) raced relative to other horse's their age ####
+#### Compiling horses who under-raced relative to other horse's their age in a specific calendar year ####
 
-over_or_under_raced <- extreme_resid_horses |> 
-  mutate(over_or_under_raced = if_else(.std.resid > 1.645, "over", "under")) |> 
-  rename(age_year_over_or_under = age_year,
-         n_races_year_over_or_under = n_races) |>
-  dplyr::select(horse_id, over_or_under_raced, age_year_over_or_under, n_races_year_over_or_under)
+under_raced <- extreme_resid_horses |>
+  mutate(under_raced = TRUE) |>
+  rename(age_year_when_under = age_year,
+         race_year_when_under = race_year,
+         n_races_when_under = n_races) |>
+  dplyr::select(horse_id, under_raced, race_year_when_under) |>
+  group_by(horse_id, race_year_when_under) |>
+  slice_head() |>
+  pivot_wider(names_from = race_year_when_under, values_from = under_raced, names_prefix = "under_raced_") |>
+  select(horse_id, under_raced_2019, under_raced_2020, everything()) |>
+  mutate(ever_under_raced = TRUE)
 
 #### FINAL JOIN AND MUTATIONS ####
 
 horse_profiles <- horse_names |>
-  filter(horse_id %in% tracking_cleaned$horse_id) |> 
-  left_join(horse_race_count, by = "horse_id") |> 
+#  filter(horse_id %in% tracking_cleaned$horse_id) |> 
+  right_join(horse_race_count, by = "horse_id") |> 
   left_join(horses_starts_2019_2020, by = "horse_id") |> 
   mutate(n_races_diff_2019 = n_races_2019 - n_races_tracked_2019) |> 
   left_join(horse_avgs, by = "horse_id") |> 
@@ -176,8 +183,10 @@ horse_profiles <- horse_names |>
   rename(injury_details_reported = injury_details) |> 
   mutate(if_injury_reported = if_else(injury_details_reported == "No Reported Injury", FALSE, TRUE)) |> 
   mutate(dnf_from_injury = if_else(injury_date == date_dnf_1 | injury_date == date_dnf_2, TRUE, FALSE, missing = NA)) |>
-  left_join(over_or_under_raced, by = "horse_id") |>
-  mutate(over_or_under_raced = if_else(is.na(over_or_under_raced), "no", over_or_under_raced))
+  left_join(under_raced, by = "horse_id") |>
+  mutate(across(contains("under_raced"), ~replace_na(.x, FALSE))) |>
+  group_by(horse_id) |>
+  slice_head()
   
 
 #### Writing the Horse Profiles CSV ####
