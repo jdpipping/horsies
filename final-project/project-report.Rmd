@@ -1,0 +1,47 @@
+---
+title: "TITLE HERE"
+author: "Sara Colando^[Pomona College, skca2020@mymail.pomona.edu], Jonathan Pipping^[University of Florida, jonathan.pipping@ufl.edu], and Kris Wilson^[North Carolina State University, kawilso7@ncsu.edu]"
+date: "July 28th, 2023"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    toc-collapse: TRUE
+bibliography: final-project.bib
+css: project-report.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
+library(tidyverse)
+```
+
+----
+
+# Introduction
+
+----
+
+# Data
+
+----
+
+# Methods
+
+----
+
+# Results
+
+----
+
+# Discussion
+
+----
+
+# Acknowledgements
+
+----
+
+# References
+
+----

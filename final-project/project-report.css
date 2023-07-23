@@ -1,0 +1,34 @@
+/*----------TEXT SPECS---------*/
+
+h1, h2, h3, h4 {
+   text-align: center;
+}
+
+a {
+  color: #0f1d40;
+}
+a:hover {
+  color: #0f1d40;
+}
+
+
+/*----------TOC---------*/
+
+#TOC::before {
+  content: "";
+  display: block;
+  height: 200px;
+  margin: 2em 10px 20px 10px;
+  background-image: url("NYRA-logo.jpeg");
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: #0f1d40;
+    border-color: #0f1d40;
+}
+
