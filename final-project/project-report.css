@@ -1,6 +1,6 @@
 /*----------TEXT SPECS---------*/
 
-h1, h2, h3, h4 {
+h1, h2{
    text-align: center;
 }
 
@@ -11,6 +11,13 @@ a:hover {
   color: #0f1d40;
 }
 
+
+h4.author { /* Header 4 - and the author and data headers use this too  */
+  text-align: center;
+}
+h4.date { /* Header 4 - and the author and data headers use this too  */
+  text-align: center;
+}
 
 /*----------TOC---------*/
 

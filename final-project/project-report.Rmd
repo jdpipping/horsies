@@ -7,41 +7,86 @@ output:
     toc: TRUE
     toc_float: TRUE
     toc-collapse: TRUE
+    theme: flatly
 bibliography: final-project.bib
+link-citations: TRUE
+csl: norsk-apa-manual.csl
 css: project-report.css
 ---
 
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", warning = FALSE, message = FALSE)
+library(lubridate)
+library(broom)
+library(MASS)
 library(tidyverse)
 ```
 
-----
 
-# Introduction
 
 ----
 
-# Data
+## Executive Summary
 
 ----
 
-# Methods
+## Introduction
+
+In the recent years, _____. 
+
+@Tim-Parkin
 
 ----
 
-# Results
+## Data
 
 ----
 
-# Discussion
+### Exploratory Data Analysis (EDA)
 
 ----
 
-# Acknowledgements
+## Methods
+
 
 ----
 
-# References
+### Identifying Horses who Under-Raced 
+
+### Caclulating Strain
+
+### Standardizing Relevant Variables
+
+### Clustering Horse Trajectories
+
+### Determining Descriptive Summary Statistics for Trajectories
+
+
+
+
+@canadian-pharoah
+
+@trajectory-summary-stats
+
+@Quang
 
 ----
+
+## Results
+
+----
+
+## Discussion
+
+----
+
+## Acknowledgements
+
+
+We would like to thank...
+
+----
+
+## References
+
