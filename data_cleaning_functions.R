@@ -909,7 +909,7 @@ connect_frames = function(speed_issue, frame_issue) {
 ## STEP 9: MATCH TRACKING DATA WITH TRACK AND DETERMINE EXACT DISTANCES ##
 ##########################################################################
 
-# 
+
 assign_track_position = function(tracking_data, track_outlines) {
   
   track_outlines = ungroup(track_outlines)
