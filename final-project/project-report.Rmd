@@ -1,0 +1,270 @@
+---
+title: "Clustering Race Horse Movement Profiles to Discover Trends in Injured Horses"
+author: "Sara Colando^[Pomona College, skca2020@mymail.pomona.edu], Jonathan Pipping^[University of Florida, jonathan.pipping@ufl.edu], and Kris Wilson^[North Carolina State University, kawilso7@ncsu.edu]"
+date: "July 28th, 2023"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    toc-collapse: TRUE
+    theme: flatly
+bibliography: final-project.bib
+link-citations: TRUE
+csl: norsk-apa-manual.csl
+css: project-report.css
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center", warning = FALSE, message = FALSE)
+library(lubridate)
+library(broom)
+library(MASS)
+library(tidyverse)
+library(ggiraph)
+library(forcats)
+library(gridExtra)
+```
+
+
+
+----
+
+## Executive Summary
+
+----
+
+## Introduction
+
+Between 2009 and 2021, over 7,200 horses died or were euthanized due to racing-related injuries [@Fobar-2023]. Just a month ago, the Churchill Downs in Kentucky had to suspend races because twelve horses have sustained fatal injuries at the track this spring season [@Romero-2023]. Several horse racing associations in the United States, such as the New York Racing Association (NYRA), are invested in lowering the prevalence of race-related injuries by understanding what increases injury risk [@NYRA-safety].
+
+At the same time, horse racing data has significantly advanced in recent years. In 2022, the New York Racing Association (NYRA) and New York Thoroughbred Horsemen’s Association (NYTHA) co-sponsored the first-ever Big Data Derby, where horse tracking data was released for public analysis. The released data includes several metrics that had been previously unavailable in horse racing, such as the horse’s longitude and latitude every 0.25 seconds in the race [@big-data-derby-2022]. 
+
+**With the newly-available tracking data, we hope to discover whether certain movement patterns are common for horses who became injured in 2019. In particular, through this project, we aim to contribute the following:**
+
+>1. Cluster movement profiles for horses that raced in a New York race in 2019 using the newly-available horse tracking data. 
+
+>2. Discover whether certain movement clusters are more likely to be associated with horses who become injured in 2019.
+
+We hope that analyzing the movement profiles of horses with the tracking data will help NYRA (and other racing associations) accomplish their goal of reducing the occurrence of race-related injuries and fatalities in horses by seeing whether certain movement profiles are riskier for horses. 
+
+----
+
+## Data
+
+#### Horse Profiles: 
+
+The horse profiles data set includes details about each horse who was tracked in a NYRA race during 2019. In the final data set, there are 4,589 unique horses and 40 variables. Each observation in the data set represents a horse and their relevant information, such as the number of races they competed in during 2019, summary statistics for their days between races, and their injury status. We used three sources to collect data about each tracked horse. First, we ascertained severe injury and fatality data through Joe Appelbaum at NYRA. Similarly, we received a list of all horses who started at a NYRA track between 2019 and 2021 from Joe Appelbaum. Finally, we used the horse tracking data, cleaned by Brendan Kumagai and his team for the Big Data Derby 2022 competition. The relevant variables from the horse profiles data set include:
+
+* **If Injury Reported**: whether the horse became severely injured at a NYRA track.
+
+* **Fatal**: whether the horse's reported severe injury was fatal or not.
+
+* **Ever Under-Raced**: whether the horse under-raced given their age (in years) and the calendar year (the method used to classify a horse as "under-racing" is described in the methods section below).
+
+
+#### Horse Tracking Data:
+
+
+
+
+
+
+
+----
+
+### Exploratory Data Analysis (EDA)
+
+```{r}
+horse_profiles <- read_csv("../outputted-csvs/horse_profiles.csv")
+
+horse_profiles |>
+  group_by(if_injury_reported, ever_under_raced) |>
+  count() |>
+  knitr::kable()
+```
+
+
+----
+
+## Methods
+
+
+### Identifying Horses who Under-Raced 
+
+Given only 122 out of 4589 horses (2.65%) had reported severe injuries, it would be unlikely that we would have enough injury signal to discover movement trends in injured horses if we just considered severely injured horses. To generate more injury signal, we posited that horses who under-raced relative to other horses their age in a calendar year had more subtle injuries. In total, we analyzed 931 unique horses in our for under-racing. We chose to control for horse age (in years) and the calendar year because the expected number of races for a 2 year old horse would be very different than the expected race count for a 10 year old horse in the same calendar year. Similarly, we would expect the race count for horse that is 4 years old in 2019 to be different than a horse who is 4 years old in 2020, as race opportunities were limited in 2020 due to the COVID-19 pandemic. Therefore, we developed a model of expected race counts based on the horse's age (in years) and the calendar year (ranging from 2019-2021) to expand our set of injured horses. 
+
+Given we wanted to find an expected count, we considered using both Poisson and Negative Binomial models. Due to the presence of overdispersion in our data, we ultimately opted to use the Negative Binomial model to determine the expected number of races for each horse given their age and the calendar year. **FACTOR INFO**
+
+**EQUATION??**
+
+We next calculated the standardized residual for each horse. The standardized residual for horse *i* is defined as follows:
+
+**EQUATION??**
+
+We classified a horse as under-racing if their standardized residual fell below -1 for any combination of  their age and the calendar year that appeared in the data set. 
+
+### Caclulating Strain
+
+### Clustering Horse Trajectories
+
+#### Standardizing Relevant Variables
+
+#### Determining Descriptive Summary Statistics for Trajectories
+
+----
+
+## Results
+
+
+### Horses who Under-Raced
+
+
+```{r}
+horse_names <- read_csv("../horse-cooking-data/horse_names.csv")
+participation_data <- read_csv("../horse-cooking-data/horses_3years_racing_NYRA.csv") |>
+  rename(horse_name = `horse name`,
+         birth_date = `birth date`,
+         race_date = `race date`) |>
+  drop_na(horse_name)
+horse_profiles_injured <- read_csv("../outputted-csvs/horse_profiles.csv") |>
+  filter(if_injury_reported == TRUE) 
+
+#### append horse names to participation data ####
+## remove 2022 because only race from that year is from 01/01/2022
+
+id_participation_data <- participation_data |>
+  left_join(horse_names, by = 'horse_name') |>
+  mutate(race_year = year(race_date)) |>
+  filter(!(race_year == 2022))
+
+#### building participation model
+
+participation_data_model <- id_participation_data |>
+  mutate(
+    age = as.period(interval(start = birth_date, end = race_date)),
+    age_year = year(age),
+    race_year = as.factor(race_year)) |> 
+  drop_na(horse_id, age_year) |> 
+  group_by(horse_id, age_year, race_year) |> 
+  summarize(n_races = n(), .groups = "keep")
+
+nb_model <- glm.nb(n_races ~ age_year + race_year, data = participation_data_model)
+
+#### using MASS package to get standardized residuals ####
+
+model_resids <- MASS::stdres(nb_model) |> 
+  as_tibble() |>
+  rename(.std.resid = value) |>
+  cbind(participation_data_model)
+```
+
+
+```{r}
+table <- nb_model |>
+  tidy() |>
+  rename(Term = term) |>
+  mutate(Estimate = round(estimate, 3),
+         `Standard Error` = round(std.error, 3),
+         Statistic = round(statistic, 3),
+         `P-value` = round(p.value, 3)) |>
+  select(Term, Estimate, `Standard Error`, Statistic, `P-value`)
+```
+
+
+```{r fig.cap = "Distribution of Standardized Residuals for Expected Race Count of a horse given their age (in years) and the calendar year (ranging from 2019 to 2021)."}
+#### visualizing standardized residuals #####
+p1 <- model_resids|> 
+  mutate(under_raced = if_else(.std.resid < -1, TRUE, FALSE)) |>
+  ggplot(aes(x=.std.resid)) +
+  geom_histogram(aes(fill = under_raced), binwidth = .15)+
+  scale_x_continuous(breaks = seq(-2,6,1))+
+  scale_y_continuous(breaks = seq(0,800,50))+
+  labs(x = "Standardized Residual", y = "Count")+
+  theme_minimal()+
+  scale_fill_viridis_d()+
+  theme(text = element_text(face = "bold", size = 8), axis.title = element_text(size = 10),
+        legend.position = "none")
+
+t1 <- tableGrob(table, theme=ttheme_minimal(base_size = 8), rows=NULL)
+```
+
+
+```{r out.width='120%', out.height= '50%'}
+grid.arrange(p1, t1, nrow=1)
+```
+
+
+Of the 931 horses were able to analyze for under-racing given their age and the calendar year, we found that 251 unique horses under-raced between 2019 and 2021. 75 out of those 251 horses under-raced more than once. Interestingly, though, only one horse who under-raced had a severe injury reported in 2019 and the year they under-raced was 2021.
+
+```{r}
+injured <- model_resids |>
+  cbind(nb_model$fitted.values) |>
+  mutate(under_raced = if_else(.std.resid < -1, TRUE, FALSE)) |>
+  rename(.fitted = `nb_model$fitted.values`) |>
+  left_join(horse_profiles_injured, by = "horse_id") |>
+  select(horse_id, age_year, race_year, n_races, .fitted, .std.resid, if_injury_reported, fatal) |>
+  filter(if_injury_reported == TRUE)
+
+
+gg <- model_resids |>
+  cbind(nb_model$fitted.values) |>
+  mutate(under_raced = if_else(.std.resid < -1, TRUE, FALSE)) |>
+  rename(.fitted = `nb_model$fitted.values`) |>
+  left_join(horse_profiles_injured, by = "horse_id") |>
+  select(horse_id, age_year, race_year, n_races, .fitted, .std.resid, if_injury_reported, fatal) |>
+  ggplot(aes(x = .fitted, y = .std.resid))+
+  geom_segment(linetype= 2, x = 0, xend = 10.2, y = -1, yend = -1, color = "grey30", alpha = .5)+
+  geom_point()+
+  geom_point_interactive(data = injured, aes(x = .fitted, y = .std.resid, color = as.factor(horse_id),
+                                             tooltip = paste0("Standard Residual: ", round(.std.resid, 3), "\nYear: ", race_year,"\nRace Count: ",n_races), data_id = .std.resid), size = 2)+
+  scale_y_continuous(breaks = seq(-2,10,.5))+
+  scale_x_continuous(limit = c(2.9, 10), breaks = seq(3,10,1))+
+  labs(x = "Fitted Value", y = "Standardized Residual")+
+  guides(color = guide_legend(title = "Injured Horse ID", order = 1))+
+  theme_minimal()+
+  theme(text = element_text(face = "bold"))
+
+girafe(ggobj = gg,
+       options = list(opts_tooltip(use_fill = TRUE, opacity = 1)))
+```
+
+```{r}
+model_resids |>
+  cbind(nb_model$fitted.values) |>
+  mutate(under_raced = if_else(.std.resid < -1, TRUE, FALSE),
+         over_expected = if_else(.std.resid > 0, "Over Expected Count", "Under Expected Count")) |>
+  mutate(over_expected = fct_relevel(over_expected, "Under Expected Count", "Over Expected Count")) |>
+  rename(.fitted = `nb_model$fitted.values`) |>
+  left_join(horse_profiles_injured, by = "horse_id") |>
+  select(horse_id, age_year, race_year, over_expected, n_races, .fitted, .std.resid, if_injury_reported, fatal) |>
+  filter(if_injury_reported == TRUE) |>
+  ggplot(aes(x = over_expected))+
+  geom_bar(aes(fill = fct_relevel(as.factor(race_year), "2021", "2020", "2019")), color = "black")+
+  scale_y_continuous(breaks = seq(0,22,2))+
+  labs(x = "", y = "Count")+
+  guides(fill = guide_legend(title = "Race Year"))+
+  theme_minimal()+
+  theme(text = element_text(face = "bold"))
+```
+
+
+### Horse Trajectory Clusters
+
+### Cluster Membership for Horses that Under-Raced or had a Reported Injury  
+
+----
+
+## Discussion
+
+----
+
+## Acknowledgements
+
+
+We would like to thank...
+
+----
+
+## References
+
