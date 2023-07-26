@@ -659,6 +659,9 @@ write_csv(tracking_data_s7, "processed-horse-data/partially_cleaned_data.csv")
 ## STEP 8: BREAK DOWN TRACK INTO STAGES ALONG EACH 0.1 METRES ##
 ################################################################
 
+# JP
+print('step 8')
+
 # Nest the data for parallelization
 track_outlines_s8_w1 = track_outlines_s4 %>%
   group_by(track_id, course_type) %>%
@@ -719,6 +722,9 @@ toc()
 ##########################################################################
 ## STEP 9: MATCH TRACKING DATA WITH TRACK AND DETERMINE EXACT DISTANCES ##
 ##########################################################################
+
+# JP
+print('step 9')
 
 # Determine where the max distance marker occurs (i.e. distance marker flips back to zero)
 track_max = track_outlines_s8 %>%
@@ -794,6 +800,11 @@ tracking_data_s9b = tracking_data_s9a %>%
 
 # Find all data points outside of the track
 outside_track = tracking_data_s9b %>% filter(!inside_track)
+
+# JP
+write_csv(tracking_data_s9b, 'tracking_data_s9b.csv')
+print('finito')
+quit()
 
 # # Diagnostic plot: Check where points outside of track lie
 # ggplot() +
