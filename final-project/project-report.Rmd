@@ -3,10 +3,11 @@ title: "Clustering Race Horse Movement Profiles to Discover Trends in Injured Ho
 author: "Sara Colando^[Pomona College, skca2020@mymail.pomona.edu], Jonathan Pipping^[University of Florida, jonathan.pipping@ufl.edu], and Kris Wilson^[North Carolina State University, kawilso7@ncsu.edu]"
 date: "July 28th, 2023"
 output: 
-  html_document:
+  bookdown::html_document2:
     toc: TRUE
     toc_float: TRUE
     toc-collapse: TRUE
+    number_sections: FALSE
     theme: flatly
 bibliography: final-project.bib
 link-citations: TRUE
@@ -28,16 +29,12 @@ library(ggthemes)
 library(grid)
 ```
 
-```{r}
-palettes <- ggthemes_data[["tableau"]][["color-palettes"]][["regular"]]
-```
-
-
-
 
 ----
 
 ## Executive Summary
+
+
 
 ----
 
@@ -49,9 +46,11 @@ At the same time, horse racing data has significantly advanced in recent years. 
 
 **With the newly-available tracking data, we hope to discover whether certain movement patterns are common for horses who became injured in 2019. In particular, through this project, we aim to contribute the following:**
 
->1. Cluster movement profiles for horses that raced in a New York race in 2019 using the newly-available horse tracking data. 
+>1. Identify horses who under-raced between 2019 and 2021 to expand the subset of injured horses, from just being those who had a severe injured reported.
 
->2. Discover whether certain movement clusters are more likely to be associated with horses who become injured in 2019.
+>2. Cluster movement profiles for horses who raced in a New York race in 2019 using the newly-available horse tracking data. 
+
+>3. Discover whether certain movement clusters are more likely to be associated with horses who become injured in 2019.
 
 We hope that analyzing the movement profiles of horses with the tracking data will help NYRA (and other racing associations) accomplish their goal of reducing the occurrence of race-related injuries and fatalities in horses by seeing whether certain movement profiles are riskier for horses. 
 
@@ -82,6 +81,80 @@ The horse profiles data set includes details about each horse who was tracked in
 
 ### Exploratory Data Analysis (EDA)
 
+Before identifying under-racing horses through an expected counts model, we visualized some key variables with the NYRA Start List Data Set; namely, we visualized the relationship between horse age and race count and the relationship between calendar year and race count to have a better sense of how these variables are associated with a horse's race count.
+
+```{r}
+horse_names <- read_csv("../horse-cooking-data/horse_names.csv")
+participation_data <- read_csv("../horse-cooking-data/horses_3years_racing_NYRA.csv") |>
+  rename(horse_name = `horse name`,
+         birth_date = `birth date`,
+         race_date = `race date`) |>
+  drop_na(horse_name)
+
+horse_profiles_injured <- read_csv("../outputted-csvs/horse_profiles.csv") |>
+  filter(if_injury_reported == TRUE) 
+
+#### append horse names to participation data ####
+## remove 2022 because only race from that year is from 01/01/2022
+
+id_participation_data <- participation_data |>
+  left_join(horse_names, by = 'horse_name') |>
+  mutate(race_year = year(race_date)) |>
+  filter(!(race_year == 2022))
+
+EDA_data <-id_participation_data |>
+  mutate(
+    age = as.period(interval(start = birth_date, end = race_date)),
+    age_year = year(age),
+    race_year = as.factor(race_year)) |> 
+  drop_na(horse_id, age_year) |> 
+  group_by(horse_id, age_year, race_year) |> 
+  summarize(n_races = n(), .groups = "keep")
+```
+
+```{r}
+EDA_underrace_1 <- id_participation_data |>
+  mutate(
+    age = as.period(interval(start = birth_date, end = race_date)),
+    age_year = year(age)) |>
+  group_by(horse_id, age_year) |>
+  summarize(n_races = n()) |>
+  drop_na() |>
+  ggplot(aes(x = age_year, y = n_races))+
+  geom_point(alpha = 0.3)+
+  geom_smooth(method = "lm", color = "#e15759", fill = "#edc948")+
+  scale_x_continuous(breaks = seq(0,10,1))+
+  scale_y_continuous(breaks = seq(0,25,2))+
+  labs(x = "Horse's Age (in Years)", y = "Number of Races")+
+  theme_minimal()
+```
+
+```{r}
+EDA_underrace_2 <- id_participation_data |>
+  mutate(
+    age = as.period(interval(start = birth_date, end = race_date)),
+    age_year = year(age),
+    race_year = as.factor(race_year)) |>
+  mutate(race_year = fct_relevel(race_year, "2021", "2020", "2019")) |>
+  group_by(horse_id, race_year) |>
+  summarize(n_races = n()) |>
+  drop_na() |>
+  ggplot(aes(y = race_year, x = n_races))+
+  geom_violin(aes(fill = race_year, color = race_year), alpha = 0.3)+
+  geom_boxplot(aes(color = race_year), width = 0.2)+
+  scale_fill_tableau()+
+  scale_color_tableau()+
+  labs(x = "Number of Races", y = "Calendar Year")+
+  scale_x_continuous(breaks = seq(0,30,2))+
+  theme_minimal()+
+  theme(legend.position = "none")
+```
+
+```{r EDA-under-race, fig.cap= "Exploratory Data Analysis for Expected Race Count Model"}
+grid.arrange(EDA_underrace_1, EDA_underrace_2, nrow=1)
+```
+
+**Figure \@ref(fig:EDA-under-race) Key Takeaways:** The left side of Figure \@ref(fig:EDA-under-race) depicts the relationship between a horse's age (in years) and their number of races, fit with a simple linear regression model. From the regression line, we see that as horse's age (in years) increases, the expected number of races the horse will compete in increases as well for horse's between 1 and 10 years-old. The plot does not give us any indication that we should treat horse's age as a factored predictor rather than a continuous variable. The right side of Figure \@ref(fig:EDA-under-race) illustrates the relationship between the calendar year and each horse's number of races in that year. The change in median number of races from 2019 to 2020 against the change in median number of races from 2020 to 2021, solidifies that we should treat calendar year as a factored variable (rather than continuous variable) in our expected race count model.
 
 
 ----
@@ -93,9 +166,9 @@ The horse profiles data set includes details about each horse who was tracked in
 
 Given only 122 out of 4589 horses (2.65%) had reported severe injuries, it would be unlikely that we would have enough injury signal to discover movement trends in injured horses if we just considered severely injured horses. To generate more injury signal, we posited that horses who under-raced relative to other horses their age in a calendar year had more subtle injuries. We could only analyze 931 unique horses for under-racing given we only wanted to include horses who raced in 2019 and the start list data for such horses was limited. Therefore, only 20% of the tracked horses could be evaluated for under-racing.
 
-We chose to control for horse age (in years) and the calendar year because the expected number of races for a 2 year old horse would be very different than the expected race count for a 10 year old horse in the same calendar year. Similarly, we would expect the race count for horse that is 4 years old in 2019 to be different than a horse who is 4 years old in 2020, as race opportunities were limited in 2020 due to the COVID-19 pandemic. Therefore, we developed a model of expected race counts based on the horse's age (in years) and the calendar year (ranging from 2019-2021) to expand our set of injured horses. 
+We chose to control for horse age (in years) and the calendar year because the expected number of races for a 2 year old horse would be very different than the expected race count for a 10 year old horse in the same calendar year. Similarly, we would expect the race count for horse that is 4 years old in 2019 to be different than a horse who is 4 years old in 2020 given the COVID-19 pandemic. Therefore, we developed a model of expected race counts based on the horse's age (in years) and the calendar year (ranging from 2019-2021) to expand our set of injured horses. 
 
-Given we wanted to find an expected count, we considered using both Poisson and Negative Binomial models. Due to the presence of overdispersion in our data, we ultimately opted to use the Negative Binomial model to determine the expected number of races for each horse given their age and the calendar year. We chose to factor calendar year because we hypothesized that the change in expected race count between 2019 and 2020 would be different than change in expected race count between 2020 and 2021. 
+Given we wanted to find an expected count, we considered using both Poisson and Negative Binomial models. Due to the presence of overdispersion in our data, we ultimately opted to use the Negative Binomial model to determine the expected number of races for each horse given their age and the calendar year [@NB-model]. Per Figure \@ref(fig:EDA-under-race), we treated horse's age as continuous and the calendar year as a factor.
 
 **Hence, we fit the following Negative Binomial model:**
 
@@ -107,7 +180,9 @@ Then, we calculated the standardized residual for each horse.
 
 $$i^{th}\text{ Standardized Residual }= \frac{y_i - \hat{y_i}}{SE}$$
 
-Finally, we classified a horse as under-racing if their standardized residual fell below -1 for any combination of  their age and the calendar year that appeared in the data set. 
+*where SE is the standard error of the residuals, $y_i$ is the actual number of races for the $i^{th}$ observation, and $\hat{y}_i$ is the predicted number of races for the $i^{th}$ observation* [@std-resid].
+
+**Finally, we classified a horse as under-racing if their standardized residual fell below -1 for *any* combination of their age and the calendar year that appeared in the data set.** 
 
 ### Caclulating Strain
 
@@ -124,7 +199,7 @@ Finally, we classified a horse as under-racing if their standardized residual fe
 
 ### Horses who Under-Raced
 
-All the coefficients in our fitted model have a p-value of approximately 0, meaning that age (in years) and the calendar year (compared to 2019) are significant predictors of expected race counts for a horse. One caveat is that our standardized residuals appear skew right rather than symmetrical around zero. Though, the distribution of standardized residuals still has a mean value of 0 and a variance of approximately 1, with 95.5% of the standardized residuals being within two standard deviations of the mean value of 0. Therefore, our Negative Binomial model is appropriate for predicting the expected race count for each combination of age and calendar year in the data set.    
+Figure \@ref(fig:model) shows that all the coefficients in our fitted model have a p-value of approximately 0, meaning that age (in years) and the calendar year (compared to 2019) are significant predictors of expected race counts for a horse. One caveat is that our standardized residuals appear skew right rather than symmetrical around zero (Figure \@ref(fig:model)). Though, the distribution of standardized residuals still has a mean value of 0 and a variance of approximately 1, with 95.5% of the standardized residuals being within two standard deviations of the mean value of 0. Therefore, our Negative Binomial model is appropriate for predicting the expected race count for each combination of age and calendar year in the data set.    
 
 
 ```{r}
@@ -184,7 +259,7 @@ table <- nb_model |>
 p1 <- model_resids|> 
   mutate(under_raced = if_else(.std.resid < -1, TRUE, FALSE)) |>
   ggplot(aes(x=.std.resid)) +
-  geom_histogram(aes(fill = under_raced), binwidth = .15)+
+  geom_histogram(aes(fill = under_raced), binwidth = .15, alpha = 0.75)+
   scale_x_continuous(breaks = seq(-2,6,1))+
   scale_y_continuous(breaks = seq(0,800,50))+
   labs(x = "Standardized Residual", y = "Count")+
@@ -199,14 +274,14 @@ t1 <- tableGrob(table, theme=ttheme_minimal(base_size = 8), rows=NULL)
 ```
 
 
-```{r out.width='120%', out.height= '50%'}
-grid.arrange(p1, t1, nrow=1, top=textGrob(expression("Model Evaluation Visualizations for Expected Race Count")))
+```{r model, out.width='120%', out.height= '50%', fig.cap = "Evaluation Visualizations for Expected Race Count Model"}
+grid.arrange(p1, t1, nrow=1)
 ```
 
 
-Of the 931 horses were able to analyze for under-racing given their age and the calendar year, we found that 251 unique horses under-raced between 2019 and 2021. 75 out of those 251 horses under-raced more than once. Only one horse who under-raced had a severe injury reported in 2019 and the year they under-raced was 2021. No horses with a standardized residual less than -1 had a fatal injury in 2019. 
+Of the 931 horses were able to analyze for under-racing given their age and the calendar year, we found that 251 unique horses under-raced between 2019 and 2021. 75 out of those 251 horses under-raced more than once. Only one horse who under-raced had a severe injury reported in 2019 and the year they under-raced was 2021. No horses with a standardized residual less than -1 had a fatal injury in 2019 (Figure \@ref(fig:fitted-resid)). 
 
-```{r out.width='70%'}
+```{r fitted-resid, out.width='70%', fig.cap= "Standardized Residuals versus Fitted Values for Race Count given the Horse's Age and the Calendar Year"}
 injured <- model_resids |>
   cbind(nb_model$fitted.values) |>
   mutate(under_raced = if_else(.std.resid < -1, TRUE, FALSE)) |>
@@ -229,7 +304,7 @@ gg <- model_resids |>
                                              tooltip = paste0("Standard Residual: ", round(.std.resid, 3), "\nYear: ", race_year,"\nRace Count: ",n_races), data_id = .std.resid), size = 2.5)+
   scale_y_continuous(breaks = seq(-2,10,.5))+
   scale_x_continuous(limit = c(2.9, 10), breaks = seq(3,10,1))+
-  labs(x = "Fitted Value", y = "Standardized Residual", title = "Standardized Residuals versus Fitted Values for Expected Race Count\ngiven the Horse's Age and the Calendar Year")+
+  labs(x = "Fitted Value", y = "Standardized Residual")+
   annotate("text", x = 9.4, y = -.8, label = "Under-Racing Cut-Off", size = 2.5, color = "grey30")+
   guides(color = guide_legend(title = "Injured Horse ID", order = 1))+
   scale_colour_tableau()+
@@ -240,11 +315,9 @@ girafe(ggobj = gg,
        options = list(opts_tooltip(use_fill = TRUE, opacity = 1)))
 ```
 
-Examining the horses with severe injuries in 2019 further, we found that horses with severe injuries were more likely to race more than their expected count in 2019. In 2020 and 2021 though, these horses were more likely to race less than expected but not significantly so, given only one severely injured horse had a standardized residual less than -1 during 2020 and 2021. These results gives us some evidence that horses who become severely injured are actually more likely to over-race than under-race relative to other horses their age in a given calendar year.
+Examining the horses with severe injuries in 2019 further, we found that horses with severe injuries were more likely to race more than their expected count in 2019 (Figure \@ref(fig:bar-injury)). In contrast, in 2020 and 2021, these horses were more likely to race less than expected but not significantly so, given only one severely injured horse had a standardized residual less than -1 during 2020 and 2021 (Figure \@ref(fig:fitted-resid) and \@ref(fig:bar-injury)). These results gives us some evidence that horses who become severely injured are actually more likely to over-race than under-race relative to other horses their age in a given calendar year.
 
-
-
-```{r}
+```{r bar-injury, fig.cap = "Comparison Between Racing More or Less than Expected\nfor Horses who were Severely Injured in 2019"}
 model_resids |>
   cbind(nb_model$fitted.values) |>
   mutate(under_raced = if_else(.std.resid < -1, TRUE, FALSE),
@@ -255,16 +328,15 @@ model_resids |>
   select(horse_id, age_year, race_year, over_expected, n_races, .fitted, .std.resid, if_injury_reported, fatal) |>
   filter(if_injury_reported == TRUE) |>
   ggplot(aes(x = over_expected))+
-  geom_bar(aes(fill = fct_relevel(as.factor(race_year), "2021", "2020", "2019")), color = "black")+
+  geom_bar(aes(fill = fct_relevel(as.factor(race_year), "2021", "2020", "2019")), 
+           color = "black", alpha = 0.75)+
   scale_y_continuous(breaks = seq(0,22,2))+
-  labs(x = "", y = "Count", title = "Comparison Between Racing More or Less than Expected\nfor Horses who were Severely Injured in 2019")+
+  labs(x = "", y = "Count")+
   guides(fill = guide_legend(title = "Race Year"))+
   scale_fill_tableau()+
   theme_minimal()+
   theme(text = element_text(size = 14, color = "black"), axis.text.x = element_text(size = 12, color = "black"), plot.title = element_text(hjust = 0.5, size = 14, color = "black"))
 ```
-
-
 
 ### Horse Trajectory Clusters
 
@@ -272,14 +344,15 @@ model_resids |>
 
 ----
 
-## Discussion
+## Conclusion
+
+### Future Directions
 
 ----
 
 ## Acknowledgements
 
-
-We would like to thank...
+We thank Dr. Ron Yurko and Quang Nguyen for all their guidance and encouragement during this project. Additionally, we are thankful to our external partners at NYRA, particularly Joe Appelbaum and Davis Klein, for offering us domain-specific advice. We are also thankful to Brendan Kumagai and his Big Data Derby 2022 team for sharing their data cleaning code and processed data set. Finally, we would like to express our gratitude to Meg Ellingwood, Shamindra Shrotriya, and the rest of SURE 2023 for the opportunity to conduct sports analytics research this summer.
 
 ----
 

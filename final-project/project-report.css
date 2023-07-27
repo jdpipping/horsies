@@ -13,7 +13,8 @@ a {
   color: #0f1d40;
 }
 a:hover {
-  color: #0f1d40;
+  color: #a9a9a9;
+  border: 1px solid #a9a9a9;
 }
 
 
