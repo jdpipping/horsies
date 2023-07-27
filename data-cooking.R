@@ -168,7 +168,7 @@ horse_velocities <- final_euclidean_data %>%
 
 # strain function
 strain <- function(distance, velocity) {
-  strain = velocity / distance
+  strain = -velocity / distance
   return(strain)
 }
 
