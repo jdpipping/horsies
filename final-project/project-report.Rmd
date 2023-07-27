@@ -346,7 +346,21 @@ model_resids |>
 
 ## Conclusion
 
-### Future Directions
+### Limitations
+
+During this project, our main limitations came from data availability. In particular, calculating some of the frame-specific metrics from the tracking data involved immense computational power. One such example is lateral movement, which we could only acquire for 1600 meter races by Brendan Kumagai graciously sharing his processed data with us. Therefore, we could only analyze lateral movement for horses who ran a 1600 meter race during 2019, reducing our data set to 1678 horses, compared to the data set of 4638 horses we had for strain and speed.
+
+Along similar lines, we could only analyze 931 out of the 4638 horses for under-racing because the NYRA Start Data was limited. Hence we likely under-estimates the *true* number of horses who under-raced between 2019 and 2021, which in turn limited our ability to identify injury trends in our movement profile clusters.
+
+### Future Work
+
+**Below are some ideas for future work based on our project:**
+
+* Collecting more starts information to close the gap between the number of horses tracked in 2019 and the number of horses analyzed for under-racing to generate more injury signal.
+
+* Computing lateral movement for all distances, rather than just 1600m races, to provide more information about lateral movement and its relationship to injury risk.
+
+* Using a multilevel model to incorporate the distribution of horses as a random effect to capture some of the variation in the data without losing information.
 
 ----
 
