@@ -236,11 +236,12 @@ $$\overline{STRAIN_{ij}}(t) = \frac{1}{|Z_i|}*\sum_{j^* \in Z_i} \widehat{STRAIN
 
 Both of these metrics are useful for evaluating the magnitude of STRAIN experienced by horses in a race and provide novel features for predicting future injury.
 
+#### Determining Descriptive Summary Statistics for Trajectories
+
+#### Principal Component Analysis
+
 ### Clustering Horse Trajectories
 
-#### Standardizing Relevant Variables
-
-#### Determining Descriptive Summary Statistics for Trajectories
 
 ----
 
