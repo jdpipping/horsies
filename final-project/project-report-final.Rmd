@@ -60,7 +60,7 @@ We hope that analyzing the movement profiles of horses with the tracking data wi
 
 #### Horse Profiles: 
 
-The horse profiles data set includes details about each horse who was tracked in a NYRA race during 2019. In the final data set, there are 4,589 unique horses and 40 variables. Each observation in the data set represents a horse and their relevant information, such as the number of races they competed in during 2019, summary statistics for their days between races, and their injury status. We used three sources to collect data about each tracked horse. First, we ascertained severe injury and fatality data through Joe Appelbaum at NYRA. Similarly, we received a list of all horses who started at a NYRA track between 2019 and 2021 from Joe Appelbaum. Finally, we used the horse tracking data, cleaned by Brendan Kumagai and his team for the Big Data Derby 2022 competition. The relevant variables from the horse profiles data set include:
+The horse profiles data set includes details about each horse who was tracked in a NYRA race during 2019. In the final data set, there are 4,589 unique horses and 40 variables. Each observation in the data set represents a horse and their relevant information, such as the number of races they competed in during 2019, summary statistics for their days between races, and their injury status. We used three sources to collect data about each tracked horse. First, we ascertained severe injury and fatality data through Joe Appelbaum at NYRA. Similarly, we received a list of all horses who started at a NYRA track between 2019 and 2021 from Joe Appelbaum. The relevant variables from the horse profiles data set include:
 
 * **If Injury Reported**: whether the horse became severely injured at a NYRA track.
 
@@ -71,11 +71,13 @@ The horse profiles data set includes details about each horse who was tracked in
 
 #### Horse Tracking Data:
 
+The horse tracking data set includes information about each tracked NYRA race during 2019. The original data set includes 4,589 unique horses, 25 variables, and 5,162,881 observations. Each observation in the data set represents a single horse's position at a particular frame within a race, represented as longitude and latitude. With the help of data cleaning functions from Brendan Kumagai and his team [@canadian-pharoah], we converted horse positions to Cartesian coordinates (in meters) and produced horse trajectories for each of the following metrics:
 
+* **Speed**: a horse's speed (in meters per second) in the current frame.
 
+* **Acceleration**: a horse's acceleration (in meters per second squared) in the current frame.
 
-
-
+* **Lateral Movement**: a horse's side-to-side movement (in meters) from the previous frame to the current frame.
 
 ----
 
@@ -184,7 +186,7 @@ $$i^{th}\text{ Standardized Residual }= \frac{y_i - \hat{y_i}}{SE}$$
 
 **Finally, we classified a horse as under-racing if their standardized residual fell below -1 for *any* combination of their age and the calendar year that appeared in the data set.** 
 
-### Motivating and Implementing STRAIN
+### Motivation and Implementation of STRAIN
 
 In materials science, [@materialScience] strain measures the deformation of a material from stress as the change in its length relative to its original length. Formally, let $D(t)$ be the distance between any two points of interest within a material at time $t$ and $D_0$ be the initial distance between those same points. The strain for a given material at time $t$ is defined as
 
@@ -234,11 +236,11 @@ $$\overline{STRAIN_{ij}}(t) = \frac{1}{|Z_i|}*\sum_{j^* \in Z_i} \widehat{STRAIN
 
 Both of these metrics are useful for evaluating the magnitude of STRAIN experienced by horses in a race and provide novel features for predicting future injury.
 
-### Clustering Race Horse Movements
+### Clustering Horse Trajectories
 
-#### Principal Component Analysis 
+#### Standardizing Relevant Variables
 
-#### Model-Based Clustering
+#### Determining Descriptive Summary Statistics for Trajectories
 
 ----
 
@@ -365,7 +367,7 @@ girafe(ggobj = gg,
 
 Examining the horses with severe injuries in 2019 further, we found that horses with severe injuries were more likely to race more than their expected count in 2019 (Figure \@ref(fig:bar-injury)). In contrast, in 2020 and 2021, these horses were more likely to race less than expected but not significantly so, given only one severely injured horse had a standardized residual less than -1 during 2020 and 2021 (Figure \@ref(fig:fitted-resid) and \@ref(fig:bar-injury)). These results gives us some evidence that horses who become severely injured are actually more likely to over-race than under-race relative to other horses their age in a given calendar year.
 
-```{r bar-injury, fig.cap = "Comparison Between Racing More or Less than Expected for Horses who were Severely Injured in 2019"}
+```{r bar-injury, fig.cap = "Comparison Between Racing More or Less than Expected\nfor Horses who were Severely Injured in 2019"}
 model_resids |>
   cbind(nb_model$fitted.values) |>
   mutate(under_raced = if_else(.std.resid < -1, TRUE, FALSE),
@@ -386,14 +388,13 @@ model_resids |>
   theme(text = element_text(size = 14, color = "black"), axis.text.x = element_text(size = 12, color = "black"), plot.title = element_text(hjust = 0.5, size = 14, color = "black"))
 ```
 
-### Movement Profiles Clustering 
+### Horse Trajectory Clusters
+
+### Cluster Membership for Horses that Under-Raced or had a Reported Injury  
 
 ----
 
 ## Conclusion
-
-In our project, we found that a substantial proportion of horses that raced less than expected given their age and the calendar year. Through modeling expected race counts for under-racing, we were able to generate more injury signal than available by just looking at severe horse injuries in 2019. This, in addition to our analysis of how horse's race, could provide some insight into potential patterns and factors leading to horse injures that would be interesting to investigate further, particularly with respect to speed and acceleration. These data-driven insights on the association between certain movement profiles and horse injuries could allow for our external partners at the NYRA improve race horse welfare.
-
 
 ### Limitations
 
@@ -405,7 +406,7 @@ Along similar lines, we could only analyze 931 out of the 4638 horses for under-
 
 **Below are some ideas for future work based on our project:**
 
-* Collecting more start information to close the gap between the number of horses tracked in 2019 and the number of horses analyzed for under-racing to generate more injury signal.
+* Collecting more starts information to close the gap between the number of horses tracked in 2019 and the number of horses analyzed for under-racing to generate more injury signal.
 
 * Computing lateral movement for all distances, rather than just 1600m races, to provide more information about lateral movement and its relationship to injury risk.
 

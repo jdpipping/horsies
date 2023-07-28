@@ -60,7 +60,7 @@ We hope that analyzing the movement profiles of horses with the tracking data wi
 
 #### Horse Profiles: 
 
-The horse profiles data set includes details about each horse who was tracked in a NYRA race during 2019. In the final data set, there are 4,589 unique horses and 40 variables. Each observation in the data set represents a horse and their relevant information, such as the number of races they competed in during 2019, summary statistics for their days between races, and their injury status. We used three sources to collect data about each tracked horse. First, we ascertained severe injury and fatality data through Joe Appelbaum at NYRA. Similarly, we received a list of all horses who started at a NYRA track between 2019 and 2021 from Joe Appelbaum. Finally, we used the horse tracking data, cleaned by Brendan Kumagai and his team for the Big Data Derby 2022 competition. The relevant variables from the horse profiles data set include:
+The horse profiles data set includes details about each horse who was tracked in a NYRA race during 2019. In the final data set, there are 4,589 unique horses and 40 variables. Each observation in the data set represents a horse and their relevant information, such as the number of races they competed in during 2019, summary statistics for their days between races, and their injury status. We used three sources to collect data about each tracked horse. First, we ascertained severe injury and fatality data through Joe Appelbaum at NYRA. Similarly, we received a list of all horses who started at a NYRA track between 2019 and 2021 from Joe Appelbaum. The relevant variables from the horse profiles data set include:
 
 * **If Injury Reported**: whether the horse became severely injured at a NYRA track.
 
@@ -71,11 +71,13 @@ The horse profiles data set includes details about each horse who was tracked in
 
 #### Horse Tracking Data:
 
+The horse tracking data set includes information about each tracked NYRA race during 2019. The original data set includes 4,589 unique horses, 25 variables, and 5,162,881 observations. Each observation in the data set represents a single horse's position at a particular frame within a race, represented as longitude and latitude. With the help of data cleaning functions from Brendan Kumagai and his team [@canadian-pharoah], we converted horse positions to Cartesian coordinates (in meters) and produced horse trajectories for each of the following metrics:
 
+* **Speed**: a horse's speed (in meters per second) in the current frame.
 
+* **Acceleration**: a horse's acceleration (in meters per second squared) in the current frame.
 
-
-
+* **Lateral Movement**: a horse's side-to-side movement (in meters) from the previous frame to the current frame.
 
 ----
 
