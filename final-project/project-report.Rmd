@@ -34,6 +34,10 @@ library(grid)
 
 ## Executive Summary
 
+Between 2009 and 2021, over 7,200 horses died or were euthanized due to racing-related injuries [@Fobar-2023]. Using horse profile data and horse tracking data from the NYRA, we hoped to identify horses who under-raced between 2019 and 2021, cluster movement profiles for horses who raced in 2019 New York races, and discover whether certain profiles were more associated with injured horses.
+
+By fitting a negative binomial model on horse profile data and performing residual analysis, we discovered that at least 251 horses under-raced between 2019 and 2021. Additionally, clustering horse movement profiles revealed that a horse's speed profile is most-associated with its injury status: specifically, that HERE YA GO KRIS.
+
 
 
 ----
