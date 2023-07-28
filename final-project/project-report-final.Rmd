@@ -34,6 +34,10 @@ library(grid)
 
 ## Executive Summary
 
+Between 2009 and 2021, over 7,200 horses died or were euthanized due to racing-related injuries [@Fobar-2023]. Using horse profile data and horse tracking data from the NYRA, we hoped to identify horses who under-raced between 2019 and 2021, cluster movement profiles for horses who raced in 2019 New York races, and discover whether certain profiles were more associated with injured horses.
+
+By fitting a negative binomial model on horse profile data and performing residual analysis, we discovered that at least 251 horses under-raced between 2019 and 2021. Additionally, clustering horse movement profiles revealed that a horse's speed profile is most-associated with its injury status: specifically, that HERE YA GO KRIS.
+
 
 
 ----
@@ -71,7 +75,7 @@ The horse profiles data set includes details about each horse who was tracked in
 
 #### Horse Tracking Data:
 
-The horse tracking data set includes information about each tracked NYRA race during 2019. The original data set includes 4,589 unique horses, 25 variables, and 5,162,881 observations. Each observation in the data set represents a single horse's position at a particular frame within a race, represented as longitude and latitude. With the help of data cleaning functions from Brendan Kumagai and his team [@canadian-pharoah], we converted horse positions to Cartesian coordinates (in meters) and produced horse trajectories for each of the following metrics:
+The horse tracking data set includes information about each tracked NYRA race during 2019. The original data set was publicized as part of the 2022 NYTHA/NYRA Big Data Derby [@big-data-derby-2022] and includes 25 variables for 4,589 unique horses who competed in at least one of 1,991 races for a total of 5,162,881 observations. Each observation in the data set represents a single horse's position at a particular frame within a race, represented as longitude and latitude. With the help of data cleaning functions from Brendan Kumagai and his team [@canadian-pharoah], we converted horse positions to Cartesian coordinates (in meters) and produced horse trajectories for each of the following metrics:
 
 * **Speed**: a horse's speed (in meters per second) in the current frame.
 
@@ -236,11 +240,12 @@ $$\overline{STRAIN_{ij}}(t) = \frac{1}{|Z_i|}*\sum_{j^* \in Z_i} \widehat{STRAIN
 
 Both of these metrics are useful for evaluating the magnitude of STRAIN experienced by horses in a race and provide novel features for predicting future injury.
 
+#### Determining Descriptive Summary Statistics for Trajectories
+
+#### Principal Component Analysis
+
 ### Clustering Horse Trajectories
 
-#### Standardizing Relevant Variables
-
-#### Determining Descriptive Summary Statistics for Trajectories
 
 ----
 
