@@ -71,7 +71,7 @@ The horse profiles data set includes details about each horse who was tracked in
 
 #### Horse Tracking Data:
 
-The horse tracking data set includes information about each tracked NYRA race during 2019. The original data set was publicized as part of the 2022 NYTHA/NYRA Big Data Derby [@big-data-derby-2022] and includes information on 4,589 unique horses, 1,991 races, 25 variables, and 5,162,881 total observations. Each observation in the data set represents a single horse's position at a particular frame within a race, represented as longitude and latitude. With the help of data cleaning functions from Brendan Kumagai and his team [@canadian-pharoah], we converted horse positions to Cartesian coordinates (in meters) and produced horse trajectories for each of the following metrics:
+The horse tracking data set includes information about each tracked NYRA race during 2019. The original data set was publicized as part of the 2022 NYTHA/NYRA Big Data Derby [@big-data-derby-2022] and includes 25 variables for 4,589 unique horses who competed in at least one of 1,991 races for a total of 5,162,881 observations. Each observation in the data set represents a single horse's position at a particular frame within a race, represented as longitude and latitude. With the help of data cleaning functions from Brendan Kumagai and his team [@canadian-pharoah], we converted horse positions to Cartesian coordinates (in meters) and produced horse trajectories for each of the following metrics:
 
 * **Speed**: a horse's speed (in meters per second) in the current frame.
 
