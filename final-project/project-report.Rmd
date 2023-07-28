@@ -164,6 +164,115 @@ grid.arrange(EDA_underrace_1, EDA_underrace_2, nrow=1)
 
 Before computing summary statistics and clustering horse movement profiles, we visualized horse trajectories from the 2019 NYRA Horse Tracking Data Set; namely, we visualized the position, speed, acceleration, lateral movement, cumulative lateral movement, and STRAIN for horses who ran at the Aqueduct on April 19th, 2019. These visualizations provide a better understanding of common patterns of horse movement throughought a race.
 
+```{r}
+# load horse data ####
+
+horse_data <- read_csv('../processed-horse-data/final_horse_strains.csv')
+
+track_outline <- read_csv('../processed-horse-data/track_outlines_for_viz.csv') |> 
+  filter(track_id == 'AQU',
+         course_type == 'D')
+
+# visualizing a race (race) ####
+
+# visualize horse trajectories
+race <- horse_data %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19",
+         race_number == 1) %>%
+  arrange(horse_id, frame_id) %>%
+  ggplot(aes(x = x,
+             y = y)) +
+  geom_path(show.legend = FALSE,
+            aes(color = as.factor(horse_name),
+                group = as.factor(horse_name))) +
+  # display track outlines
+  geom_path(data = track_outline, show.legend = FALSE,
+            aes(group = as.factor(outline_type))) +
+  labs(title = 'The Aqueduct on April 19th, 2019: Race 1',
+       x = 'x (m)',
+       y = 'y (m)') +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+# speed vs time (speed) ####
+
+speed <- horse_data %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>%
+  ggplot(aes(x = (frame_id / 4),
+             y = speed,
+             color = factor(horse_name))) +
+  geom_line(show.legend = FALSE) +
+  labs(title = 'Speed vs Time for Each Horse',
+       subtitle = 'At the Aqueduct on April 19th, 2019',
+       x = 'Time (s)',
+       y = 'Speed (m/s)') +
+  facet_wrap(~ race_number) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.subtitle = element_text(hjust = 0.5))
+
+# acceleration vs time (accel) ####
+
+accel <- horse_data %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>%
+  ggplot(aes(x = (frame_id / 4),
+             y = acceleration,
+             color = factor(horse_name))) +
+  geom_line(show.legend = FALSE) +
+  labs(title = 'Acceleration vs Time for Each Horse',
+       subtitle = 'At the Aqueduct on April 19th, 2019',
+       x = 'Time (s)',
+       y = 'Acceleration (m/s^2)') +
+  facet_wrap(~ race_number) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.subtitle = element_text(hjust = 0.5))
+
+# load 1600m horse data ####
+
+horse_data_1600 <- read_csv('../processed-horse-data/lateral_movement_1600.csv')
+
+# lateral movement vs time (lat) ####
+
+lat <- horse_data_1600 %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>%
+  ggplot(aes(x = (frame_id / 4),
+             y = abs(side_movement),
+             color = factor(horse_name))) +
+  geom_line(show.legend = FALSE) +
+  labs(title = 'Lateral Movement vs Time for Each Horse',
+       subtitle = 'At the Aqueduct on April 19th, 2019',
+       x = 'Time (s)',
+       y = 'Lateral Movement (m)') +
+  facet_wrap(~ race_number) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.subtitle = element_text(hjust = 0.5))
+
+# cumulative lateral movement vs time (cum_lat) ####
+
+cum_lat <- horse_data_1600 %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>%
+  group_by(horse_id) %>%
+  mutate(cum_side_movement = cumsum(abs(side_movement))) %>%
+  ggplot(aes(x = frame_id / 4,
+             y = cum_side_movement,
+             color = factor(horse_name))) +
+  geom_line(show.legend = FALSE) +
+  labs(title = 'Cumulative Lateral Movement vs Time for Each Horse',
+       subtitle = 'At the Aqueduct on April 19th, 2019',
+       x = 'Time (s)',
+       y = 'Cumulative Lateral Movement (m)') +
+  facet_wrap(~ race_number) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.subtitle = element_text(hjust = 0.5))
+```
 
 
 ----
