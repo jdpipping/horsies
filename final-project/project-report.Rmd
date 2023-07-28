@@ -36,9 +36,7 @@ library(grid)
 
 Between 2009 and 2021, over 7,200 horses died or were euthanized due to racing-related injuries [@Fobar-2023]. Using horse profile data and horse tracking data from the NYRA, we hoped to identify horses who under-raced between 2019 and 2021, cluster movement profiles for horses who raced in 2019 New York races, and discover whether certain profiles were more associated with injured horses.
 
-By fitting a negative binomial model on horse profile data and performing residual analysis, we discovered that at least 251 horses under-raced between 2019 and 2021. Additionally, clustering horse movement profiles revealed that a horse's speed profile is most-associated with its injury status: specifically, that HERE YA GO KRIS.
-
-
+By fitting a negative binomial model on horse profile data and performing residual analysis, we discovered that at least 251 horses under-raced between 2019 and 2021. Additionally, clustering horse movement profiles revealed that a horse's speed profile is most associated with its injury status: specifically, greater variation in speed is more associated with injury.
 
 ----
 
@@ -291,15 +289,30 @@ grid.arrange(lat, cum_lat, nrow=1)
 
 **Figure \@ref(fig:lateral) Key Takeaways:**: The left side of Figure \@ref(fig:lateral) depicts the lateral movement trajectories for each horse who raced at the Aqueduct Racetrack on April 19th, 2019. Typical lateral movement trajectories sometimes include a spike at the start of the race as horses move to the inner rail, but the widest oscillations ensue in the middle / final stages of a race as horses jockey for position. The right side of Figure \@ref(fig:lateral) depicts the cumulative lateral movement trajectories for each horse (which correspond to their lateral movement trajectories). These curves are strictly increasing, and though they tend to move together, some horses show significant deviation in cumulative lateral movement accumulated throughout a race, which we hypothesize may be associated with increased injury risk.
 
-```{r}
-# FOR KRIS: INPUT STRAIN CODE HERE
+```{r strain over time}
+strainz <- horse_data %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>%
+  ggplot(aes(x = (frame_id / 4),
+             y = avg_strain,
+             color = factor(horse_name))) +
+  geom_line(show.legend = FALSE) +
+  labs(title = 'Average Strain vs Time for Each Horse',
+       subtitle = 'At the Aqueduct on April 19th, 2019',
+       x = 'Time (s)',
+       y = 'Speed (m/s)') +
+  facet_wrap(~ race_number) +
+  theme_minimal() +
+  ylim(c(-5, 25)) + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.subtitle = element_text(hjust = 0.5))
 ```
 
-```{r NAMEOFOBJECT, fig.cap = "Strain Trajectories from the Aqueduct on April 19th, 2019"}
-grid.arrange(NAMEOFOBJECT, nrow=1)
-
+```{r strainz, fig.cap = "Strain Trajectories from the Aqueduct on April 19th, 2019"}
+grid.arrange(strainz, nrow=1)
 ```
 
+**Figure \@ref(fig:strainz) Key Takeaways:**: Figure \@ref(fig:strainz) illustrates the average strain rate trajectories for each horse who raced at the Aqueduct Racetrack on April 19th, 2019. Typical strain trajectories depict include a spike at the start of the race as horses move to the inner rail, rapidly decreasing the distance between one another. As the race goes on, strain rate over time oscillates around zero, as the shape of the pack doesn't change over the middle portion of the race. Interestingly enough, we see some patterns begin to emerge: race four (4) depicts one horse's strain rate increasing for a brief moment while the other horses decrease--this horse is possibly making a move to get into the lead. Conversely, race three (3) depicts a slow shift by all the horses in the race from little-to-no strain to positive strain during the last 25-30 seconds of the race. This could indicate horses jockeying for position during a sprint to the end; the less distance between horses, the more likely it is for one horse to bump into another, potentially increasing the risk of injury.
 
 ----
 
@@ -378,11 +391,52 @@ $$\overline{STRAIN_{ij}}(t) = \frac{1}{|Z_i|}*\sum_{j^* \in Z_i} \widehat{STRAIN
 
 Both of these metrics are useful for evaluating the magnitude of STRAIN experienced by horses in a race and provide novel features for predicting future injury.
 
-#### Determining Descriptive Summary Statistics for Trajectories
-
 #### Principal Component Analysis
 
+Principal component analysis (PCA) is an unsupervised learning method used for dimensionality reduction (Jolliffe, 2002). It works by transforming to a new set of variables, referred to as principal components (PCs), which are independent of one another, and are ordered in terms of maximizing the variance explained in the original dataset. (Shlens, 2014). In this context, we did not apply PCA directly on the NYRA tracking data itself--we first computed numerous summary statistics upon features in the data such as median horse speed, average horse acceleration, maximum strain rate, and range of lateral movement. We then performed principal component analysis on the set summary statistics of the features separate from one another. Using a 90% threshold for cumulative proportion of variance explained, we took the top variable from the corresponding principal component. 
+
+```{r table, fig.cap = "Number of Relevant Summary Statistics for each Feature"}
+features <-  c("Speed", "Acceleration", "Lateral Movement", "Strain Rate")
+num_sum <- c("4", "4", "4", "5")
+
+sums_tbl <- data.frame(features, num_sum)
+colnames(sums_tbl) <- c("Features", "Number of Summary Statistics, as determined from PCA")
+
+knitr::kable(sums_tbl)
+```
+
+
 ### Clustering Horse Trajectories
+
+We utilized a Gaussian Mixture Model (GMM) to categorize the 4,588 horses into different clusters based upon their values for the relevant summary statistics (note that one horse was omitted from the analysis, as it has no information available for its races in 2019). A Gaussian Mixture Model is a probabilistic model that assumes the data is generated from a mixture of Gaussian distributions. Its advantages include flexibility (employing Bayesian information criterion, a penalized likelihood measure, to determine the number of clusters), soft clustering (probabilistic approach, as opposed to deterministic), and data generation (Fraley, C., & Raftery, A. E., 2002).
+
+```{r clustering prep, fig.cap="Cluster Assignments for Speed Features"}
+acceleration_summaries <- read_csv("../clustering-results-revised/acceleration-summaries.csv") |> 
+  select(-`...1`)
+side_mvmt_summaries <- read_csv("../clustering-results-revised/lateral-movement-summaries.csv") |> 
+  select(-`...1`)
+speed_summaries <- read_csv("../clustering-results-revised/speed-summaries.csv") |> 
+  select(-`...1`)
+strains_summaries <- read_csv("..clustering-results-revised/strain-summaries.csv") |> 
+  select(-`...1`)
+
+# read in profiles
+horse_profiles <- read_csv("../outputted-csvs/horse_profiles.csv") |>
+  filter(horse_id != 3563) # horse with no data
+# join profile data
+accel_profiles <- left_join(acceleration_summaries, horse_profiles,
+                            by = c("horse_id", "horse_name"))
+lat_mvmt_profiles <- left_join(side_mvmt_summaries, horse_profiles,
+                               by = c("horse_id", "horse_name"))
+speed_profiles <- left_join(speed_summaries, horse_profiles,
+                            by = c("horse_id", "horse_name"))
+strain_profiles <- left_join(strains_summaries, horse_profiles,
+                             by = c("horse_id", "horse_name"))
+
+# cluster example
+knitr::kable(x=table(speed_profiles$cluster), 
+             col.names = c("Cluster Number", "Number of Horses"))
+```
 
 
 ----
@@ -531,9 +585,169 @@ model_resids |>
   theme(text = element_text(size = 14, color = "black"), axis.text.x = element_text(size = 12, color = "black"), plot.title = element_text(hjust = 0.5, size = 14, color = "black"))
 ```
 
-### Horse Trajectory Clusters
-
 ### Cluster Membership for Horses that Under-Raced or had a Reported Injury  
+
+Figure 5 below shows the proportion of horses in each cluster who suffered an injury for each of speed, acceleration, strain rate, and lateral movement. We found that the 8th cluster of the speed movement profile saw a proportion of injured horses that is close to 50%. Considering there are only 15 horses in this cluster--less than one percent of all horses in the data--there is evidence of a cluster 8 being representative of a potentially harmful speed profile. Similar conclusions can be drawn for Cluster 8 of the acceleration profiles: a significant proportion of injuries (approximately 25%) with a small sample size (27 horses). However, unlike the aforementioned clusters, Cluster 5 of the speed profiles has a larger proportion of horses (138 horses, or 3% of all horses in the data), and a relatively significant proportion of injuries (> 10%).
+
+```{r, fig.cap="Clustering of Horse Movement Profiles, Colored by Injury"}
+# injury viz ####
+
+# be sure figure number in text matches figure number of plot
+speed_injruies_plot <- speed_profiles |> 
+  mutate(report_plot = 
+           if_else(if_injury_reported == T, "Yes", "No")) |> 
+  ggplot(aes(x = cluster, fill = report_plot)) + 
+  geom_bar(position = "fill") + scale_fill_brewer(
+    type = "qual", palette = "Set1", direction = -1) + 
+  scale_x_discrete() + theme_classic() + 
+  labs(subtitle = "Horses Clustered by Speed Profiles",
+       x = "Clusters",y = "Proportion", 
+       fill = "Injury Reported?") + 
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+accel_injruies_plot <- accel_profiles |> 
+  mutate(report_plot = 
+           if_else(if_injury_reported == T, "Yes", "No")) |> 
+  ggplot(aes(x = cluster, fill = report_plot)) + 
+  geom_bar(position = "fill") + scale_fill_brewer(
+    type = "qual", palette = "Set1", direction = -1) + 
+  scale_x_discrete() + theme_classic() + 
+  labs(subtitle = "Horses Clustered by Acceleration Profiles",
+       x = "Clusters",y = "Proportion", 
+       fill = "Injury Reported?") + 
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+lat_mvmt_injruies_plot <- lat_mvmt_profiles |> 
+  mutate(report_plot = 
+           if_else(if_injury_reported == T, "Yes", "No")) |> 
+  ggplot(aes(x = cluster, fill = report_plot)) + 
+  geom_bar(position = "fill") + scale_fill_brewer(
+    type = "qual", palette = "Set1", direction = -1) + 
+  scale_x_discrete() + theme_classic() + 
+  labs(subtitle = "Horses Clustered by Lateral Movement Profiles",
+       x = "Clusters",y = "Proportion", 
+       fill = "Injury Reported?") + 
+  theme(legend.position = "bottom",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+strain_injruies_plot <- strain_profiles |> 
+  mutate(report_plot = 
+           if_else(if_injury_reported == T, "Yes", "No")) |> 
+  ggplot(aes(x = cluster, fill = report_plot)) + 
+  geom_bar(position = "fill") + scale_fill_brewer(
+    type = "qual", palette = "Set1", direction = -1) + 
+  scale_x_discrete() + theme_classic() + 
+  labs(subtitle = "Horses Clustered by Strain Rate Profiles",
+       x = "Clusters",y = "Proportion", 
+       fill = "Injury Reported?") + 
+  theme(legend.position = "bottom",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+cowplot::plot_grid(speed_injruies_plot, accel_injruies_plot,
+                   lat_mvmt_injruies_plot, strain_injruies_plot,
+                   ncol = 2)
+```
+
+Upon further investigation, it's clear that Speed Cluster 8 displays greater variation in horse speed other clusters (see Table 3). Specifically, Cluster 8 has the greatest range of average speed and the greatest coefficient of variation of speed. Furthermore, possessing the lowest average median speed and average minimum speed respectively could signal horses who are fatigued or hurt prior to suffering serious injuries.
+
+```{r, fig.cap="Speed Summary Statistics for Each Cluster"}
+speed_var_table <- speed_profiles |> 
+  filter(horse_id != 2260, horse_id != 1842) |> 
+  group_by(cluster) |> 
+  summarize(avg_median_speed = mean(median_speed),
+            avg_min_speed = mean(min_speed),
+            avg_max_speed = mean(max_speed),
+            avg_cv_speed = mean(cv_speed),
+            avg_race_distance = mean(avg_race_dist_meters),
+            avg_weight_carried = mean(avg_weight_carried)) |> 
+  arrange(desc(avg_cv_speed))
+colnames(speed_var_table) <- c("Cluster", "Average Median Speed",
+                               "Average Min. Speed",
+                               "Average Max. Speed",
+                               "Average CV Speed",
+                               "Average Race Distance",
+                               "Average Weight Carried")
+knitr::kable(speed_var_table, digits = 2)
+```
+
+Figure 6 displays the proportion of horses in each cluster who raced less than expected for 2019, 2020, or 2021 for each of speed, acceleration, strain rate, and lateral movement profiles. The relative proportion of injuries is both consistent within clusters and between clusters, suggesting that these trajectories are not indicative of potentially harmful profiles. It should be noted that some clusters have a proportion that is approximately zero. This is likely due to having a higher proportion of injured horses, not age, as seen in the previous model. Those horses who suffer an injury are often kept out of races for an extended period of time, so they are racing as expected, given that they suffered an injury.
+
+```{r, fig.cap="Clustering of Horse Movement Profiles, Colored by Under-Recing}
+# under-racing viz ####
+speed_underrace <- speed_profiles |>
+  mutate(report_plot = 
+           if_else(ever_under_raced == T, "Yes", "No")) |> 
+  ggplot(aes(x = cluster, 
+             fill = report_plot)) + 
+  geom_bar(position = "fill") + 
+  scale_fill_brewer(type = "qual", 
+                    palette = "Set1", direction = -1) + 
+  scale_x_discrete() + theme_classic() + 
+  labs(subtitle = "Clustered by Speed Profiles",
+       x = "Clusters",y = "Proportion", 
+       fill = "Ever Under-Raced? (2019-2021)") + 
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+accel_underrace <- accel_profiles |>
+  mutate(report_plot = 
+           if_else(ever_under_raced == T, "Yes", "No")) |> 
+  ggplot(aes(x = cluster, 
+             fill = report_plot)) + 
+  geom_bar(position = "fill") + 
+  scale_fill_brewer(type = "qual", 
+                    palette = "Set1", direction = -1) + 
+  scale_x_discrete() + theme_classic() + 
+  labs(subtitle = "Clustered by Acceleration Profiles",
+       x = "Clusters",y = "Proportion", 
+       fill = "Ever Under-Raced? (2019-2021)") + 
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+lat_underrace <- lat_mvmt_profiles |>
+  mutate(report_plot = 
+           if_else(ever_under_raced == T, "Yes", "No")) |> 
+  ggplot(aes(x = cluster, 
+             fill = report_plot)) + 
+  geom_bar(position = "fill") + 
+  scale_fill_brewer(type = "qual", 
+                    palette = "Set1", direction = -1) + 
+  scale_x_discrete() + theme_classic() + 
+  labs(subtitle = "Clustered by Lateral Movement Profiles",
+       x = "Clusters",y = "Proportion", 
+       fill = "Ever Under-Raced? (2019-2021)") + 
+  theme(legend.position = "bottom",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+strain_underrace <- strain_profiles |>
+  mutate(report_plot = 
+           if_else(ever_under_raced == T, "Yes", "No")) |> 
+  ggplot(aes(x = cluster, 
+             fill = report_plot)) + 
+  geom_bar(position = "fill") + 
+  scale_fill_brewer(type = "qual", 
+                    palette = "Set1", direction = -1) + 
+  scale_x_discrete() + theme_classic() + 
+  labs(subtitle = "Clustered by Strain Rate Profiles",
+       x = "Clusters",y = "Proportion", 
+       fill = "Ever Under-Raced? (2019-2021)") + 
+  theme(legend.position = "bottom",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+cowplot::plot_grid(speed_underrace, accel_underrace,
+                   lat_underrace, strain_underrace,ncol = 2)
+
+```
 
 ----
 
