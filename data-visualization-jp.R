@@ -1,6 +1,5 @@
 # load required packages ####
 library(tidyverse)
-library(ggplot2)
 
 # load horse data ####
 
