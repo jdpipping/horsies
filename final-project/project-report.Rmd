@@ -189,8 +189,7 @@ race <- horse_data %>%
   # display track outlines
   geom_path(data = track_outline, show.legend = FALSE,
             aes(group = as.factor(outline_type))) +
-  labs(title = 'The Aqueduct on April 19th, 2019: Race 1',
-       x = 'x (m)',
+  labs(x = 'x (m)',
        y = 'y (m)') +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5))
@@ -272,6 +271,33 @@ cum_lat <- horse_data_1600 %>%
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(plot.subtitle = element_text(hjust = 0.5))
+```
+
+```{r race, fig.cap = 'Horse Tracking Data from Race 1 at The Aqueduct on April 19th, 2019"}
+grid.arrange(race, nrow = 1)
+```
+
+**Figure \@ref(fig:race) Key Takeaways:**: Figure \@ref(fig:race) depicts the movement of 6 horses during Race 1 at the Aqueduct Racetrack on April 19th, 2019. It is a one-turn, 1600-meter race that culminates at the vertical finish line on the upper side of the track.
+
+```{r rates, fig.cap = "Speed and Acceleration Trajectories from the Aqueduct on April 19th, 2019"}
+grid.arrange(speed, accel, nrow=1)
+```
+
+**Figure \@ref(fig:rates) Key Takeaways:**: The left side of Figure \@ref(fig:rates) depicts the speed trajectories for each horse who raced at the Aqueduct Racetrack on April 19th, 2019. Typical speed curves are characterized by a steep increase at the start of the race followed by a slow decrease as the race goes on as seen in Races 1, 2, and 6. However, Races 3, 5, and 9 deviate from this pattern and are defined instead by a plateau in speed as the race progresses. The right side of \@ref(fig:rates) depicts the acceleration trajectories for each horse (which correspond to their speed trajectories). Typical acceleration curves are characterized by a spike at the start the race followed by an immediate decrease. Volatility around 0 $\frac{m}{s^2}$ ensues as horses jockey for position. We hypothesize that wide fluctuations in velocity and acceleration may be associated with increased injury risk.
+
+```{r lateral, fig.cap = "Lateral Movement Trajectories from the Aqueduct on April 19th, 2019"}
+grid.arrange(lat, cum_lat, nrow=1)
+```
+
+**Figure \@ref(fig:lateral) Key Takeaways:**: The left side of Figure \@ref(fig:lateral) depicts the lateral movement trajectories for each horse who raced at the Aqueduct Racetrack on April 19th, 2019. Typical lateral movement trajectories sometimes include a spike at the start of the race as horses move to the inner rail, but the widest oscillations ensue in the middle / final stages of a race as horses jockey for position. The right side of Figure \@ref(fig:lateral) depicts the cumulative lateral movement trajectories for each horse (which correspond to their lateral movement trajectories). These curves are strictly increasing, and though they tend to move together, some horses show significant deviation in cumulative lateral movement accumulated throughout a race, which we hypothesize may be associated with increased injury risk.
+
+```{r}
+# FOR KRIS: INPUT STRAIN CODE HERE
+```
+
+```{r NAMEOFOBJECT, fig.cap = "Strain Trajectories from the Aqueduct on April 19th, 2019"}
+grid.arrange(NAMEOFOBJECT, nrow=1)
+
 ```
 
 

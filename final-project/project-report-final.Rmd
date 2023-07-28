@@ -162,6 +162,144 @@ grid.arrange(EDA_underrace_1, EDA_underrace_2, nrow=1)
 
 **Figure \@ref(fig:EDA-under-race) Key Takeaways:** The left side of Figure \@ref(fig:EDA-under-race) depicts the relationship between a horse's age (in years) and their number of races, fit with a simple linear regression model. From the regression line, we see that as horse's age (in years) increases, the expected number of races the horse will compete in increases as well for horse's between 1 and 10 years-old. The plot does not give us any indication that we should treat horse's age as a factored predictor rather than a continuous variable. The right side of Figure \@ref(fig:EDA-under-race) illustrates the relationship between the calendar year and each horse's number of races in that year. The change in median number of races from 2019 to 2020 against the change in median number of races from 2020 to 2021, solidifies that we should treat calendar year as a factored variable (rather than continuous variable) in our expected race count model.
 
+Before computing summary statistics and clustering horse movement profiles, we visualized horse trajectories from the 2019 NYRA Horse Tracking Data Set; namely, we visualized the position, speed, acceleration, lateral movement, cumulative lateral movement, and STRAIN for horses who ran at the Aqueduct on April 19th, 2019. These visualizations provide a better understanding of common patterns of horse movement throughought a race.
+
+```{r}
+# load horse data ####
+
+horse_data <- read_csv('../processed-horse-data/final_horse_strains.csv')
+
+track_outline <- read_csv('../processed-horse-data/track_outlines_for_viz.csv') |> 
+  filter(track_id == 'AQU',
+         course_type == 'D')
+
+# visualizing a race (race) ####
+
+# visualize horse trajectories
+race <- horse_data %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19",
+         race_number == 1) %>%
+  arrange(horse_id, frame_id) %>%
+  ggplot(aes(x = x,
+             y = y)) +
+  geom_path(show.legend = FALSE,
+            aes(color = as.factor(horse_name),
+                group = as.factor(horse_name))) +
+  # display track outlines
+  geom_path(data = track_outline, show.legend = FALSE,
+            aes(group = as.factor(outline_type))) +
+  labs(x = 'x (m)',
+       y = 'y (m)') +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+# speed vs time (speed) ####
+
+speed <- horse_data %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>%
+  ggplot(aes(x = (frame_id / 4),
+             y = speed,
+             color = factor(horse_name))) +
+  geom_line(show.legend = FALSE) +
+  labs(title = 'Speed vs Time for Each Horse',
+       subtitle = 'At the Aqueduct on April 19th, 2019',
+       x = 'Time (s)',
+       y = 'Speed (m/s)') +
+  facet_wrap(~ race_number) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.subtitle = element_text(hjust = 0.5))
+
+# acceleration vs time (accel) ####
+
+accel <- horse_data %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>%
+  ggplot(aes(x = (frame_id / 4),
+             y = acceleration,
+             color = factor(horse_name))) +
+  geom_line(show.legend = FALSE) +
+  labs(title = 'Acceleration vs Time for Each Horse',
+       subtitle = 'At the Aqueduct on April 19th, 2019',
+       x = 'Time (s)',
+       y = 'Acceleration (m/s^2)') +
+  facet_wrap(~ race_number) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.subtitle = element_text(hjust = 0.5))
+
+# load 1600m horse data ####
+
+horse_data_1600 <- read_csv('../processed-horse-data/lateral_movement_1600.csv')
+
+# lateral movement vs time (lat) ####
+
+lat <- horse_data_1600 %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>%
+  ggplot(aes(x = (frame_id / 4),
+             y = abs(side_movement),
+             color = factor(horse_name))) +
+  geom_line(show.legend = FALSE) +
+  labs(title = 'Lateral Movement vs Time for Each Horse',
+       subtitle = 'At the Aqueduct on April 19th, 2019',
+       x = 'Time (s)',
+       y = 'Lateral Movement (m)') +
+  facet_wrap(~ race_number) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.subtitle = element_text(hjust = 0.5))
+
+# cumulative lateral movement vs time (cum_lat) ####
+
+cum_lat <- horse_data_1600 %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19") %>%
+  group_by(horse_id) %>%
+  mutate(cum_side_movement = cumsum(abs(side_movement))) %>%
+  ggplot(aes(x = frame_id / 4,
+             y = cum_side_movement,
+             color = factor(horse_name))) +
+  geom_line(show.legend = FALSE) +
+  labs(title = 'Cumulative Lateral Movement vs Time for Each Horse',
+       subtitle = 'At the Aqueduct on April 19th, 2019',
+       x = 'Time (s)',
+       y = 'Cumulative Lateral Movement (m)') +
+  facet_wrap(~ race_number) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.subtitle = element_text(hjust = 0.5))
+```
+
+```{r race, fig.cap = 'Horse Tracking Data from Race 1 at The Aqueduct on April 19th, 2019"}
+grid.arrange(race, nrow = 1)
+```
+
+**Figure \@ref(fig:race) Key Takeaways:**: Figure \@ref(fig:race) depicts the movement of 6 horses during Race 1 at the Aqueduct Racetrack on April 19th, 2019. It is a one-turn, 1600-meter race that culminates at the vertical finish line on the upper side of the track.
+
+```{r rates, fig.cap = "Speed and Acceleration Trajectories from the Aqueduct on April 19th, 2019"}
+grid.arrange(speed, accel, nrow=1)
+```
+
+**Figure \@ref(fig:rates) Key Takeaways:**: The left side of Figure \@ref(fig:rates) depicts the speed trajectories for each horse who raced at the Aqueduct Racetrack on April 19th, 2019. Typical speed curves are characterized by a steep increase at the start of the race followed by a slow decrease as the race goes on as seen in Races 1, 2, and 6. However, Races 3, 5, and 9 deviate from this pattern and are defined instead by a plateau in speed as the race progresses. The right side of \@ref(fig:rates) depicts the acceleration trajectories for each horse (which correspond to their speed trajectories). Typical acceleration curves are characterized by a spike at the start the race followed by an immediate decrease. Volatility around 0 $\frac{m}{s^2}$ ensues as horses jockey for position. We hypothesize that wide fluctuations in velocity and acceleration may be associated with increased injury risk.
+
+```{r lateral, fig.cap = "Lateral Movement Trajectories from the Aqueduct on April 19th, 2019"}
+grid.arrange(lat, cum_lat, nrow=1)
+```
+
+**Figure \@ref(fig:lateral) Key Takeaways:**: The left side of Figure \@ref(fig:lateral) depicts the lateral movement trajectories for each horse who raced at the Aqueduct Racetrack on April 19th, 2019. Typical lateral movement trajectories sometimes include a spike at the start of the race as horses move to the inner rail, but the widest oscillations ensue in the middle / final stages of a race as horses jockey for position. The right side of Figure \@ref(fig:lateral) depicts the cumulative lateral movement trajectories for each horse (which correspond to their lateral movement trajectories). These curves are strictly increasing, and though they tend to move together, some horses show significant deviation in cumulative lateral movement accumulated throughout a race, which we hypothesize may be associated with increased injury risk.
+
+```{r}
+# FOR KRIS: INPUT STRAIN CODE HERE
+```
+
+```{r NAMEOFOBJECT, fig.cap = "Strain Trajectories from the Aqueduct on April 19th, 2019"}
+grid.arrange(NAMEOFOBJECT, nrow=1)
+
+```
+
 
 ----
 
