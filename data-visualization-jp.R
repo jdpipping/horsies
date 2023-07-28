@@ -1,7 +1,43 @@
-# loading tidyverse, horse data ####
+# load required packages ####
 library(tidyverse)
+library(ggplot2)
 
-horse_data <- read_csv('~/final_horse_strains.csv')
+# load horse data ####
+
+horse_data <- read_csv('processed-horse-data/final_horse_strains.csv')
+
+track_outline <- read_csv('processed-horse-data/track_outlines_for_viz.csv') |> 
+  filter(track_id == 'AQU',
+         course_type == 'D')
+
+# visualizing a race ####
+
+# visualize track outline
+
+
+
+# +
+#   scale_color_manual(values = c('black', 'black', 'red'))
+  
+
+# visualize horse trajectories
+horse_data %>%
+  filter(track_id == "AQU",
+         race_date  == "2019-04-19",
+         race_number == 1) %>%
+  arrange(horse_id, frame_id) %>%
+  ggplot(aes(x = x,
+             y = y)) +
+  geom_path(show.legend = FALSE,
+            aes(color = as.factor(horse_name),
+                group = as.factor(horse_name))) +
+  geom_path(data = track_outline, show.legend = FALSE,
+            aes(group = as.factor(outline_type))) +
+  labs(title = 'The Aqueduct on April 19th, 2019: Race 1',
+       x = 'x (m)',
+       y = 'y (m)') +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
 
 # speed vs time ####
 
