@@ -12,14 +12,6 @@ track_outline <- read_csv('processed-horse-data/track_outlines_for_viz.csv') |>
 
 # visualizing a race ####
 
-# visualize track outline
-
-
-
-# +
-#   scale_color_manual(values = c('black', 'black', 'red'))
-  
-
 # visualize horse trajectories
 horse_data %>%
   filter(track_id == "AQU",
@@ -31,6 +23,7 @@ horse_data %>%
   geom_path(show.legend = FALSE,
             aes(color = as.factor(horse_name),
                 group = as.factor(horse_name))) +
+  # display track outlines
   geom_path(data = track_outline, show.legend = FALSE,
             aes(group = as.factor(outline_type))) +
   labs(title = 'The Aqueduct on April 19th, 2019: Race 1',
@@ -111,9 +104,13 @@ horse_data %>%
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(plot.subtitle = element_text(hjust = 0.5))
 
+# load 1600m horse data ####
+
+horse_data_1600 <- read_csv('~/final_horse_strains.csv')
+
 # lateral movement vs time ####
 
-horse_data %>%
+horse_data_1600 %>%
   filter(track_id == "AQU",
          race_date  == "2019-04-19") %>%
   ggplot(aes(x = (frame_id / 4),
@@ -131,7 +128,7 @@ horse_data %>%
 
 # cumulative lateral movement vs time ####
 
-horse_data %>%
+horse_data_1600 %>%
   filter(track_id == "AQU",
          race_date  == "2019-04-19") %>%
   group_by(horse_id) %>%
