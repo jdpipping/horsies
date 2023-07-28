@@ -162,6 +162,9 @@ grid.arrange(EDA_underrace_1, EDA_underrace_2, nrow=1)
 
 **Figure \@ref(fig:EDA-under-race) Key Takeaways:** The left side of Figure \@ref(fig:EDA-under-race) depicts the relationship between a horse's age (in years) and their number of races, fit with a simple linear regression model. From the regression line, we see that as horse's age (in years) increases, the expected number of races the horse will compete in increases as well for horse's between 1 and 10 years-old. The plot does not give us any indication that we should treat horse's age as a factored predictor rather than a continuous variable. The right side of Figure \@ref(fig:EDA-under-race) illustrates the relationship between the calendar year and each horse's number of races in that year. The change in median number of races from 2019 to 2020 against the change in median number of races from 2020 to 2021, solidifies that we should treat calendar year as a factored variable (rather than continuous variable) in our expected race count model.
 
+Before computing summary statistics and clustering horse movement profiles, we visualized horse trajectories from the 2019 NYRA Horse Tracking Data Set; namely, we visualized the position, speed, acceleration, lateral movement, cumulative lateral movement, and STRAIN for horses who ran at the Aqueduct on April 19th, 2019. These visualizations provide a better understanding of common patterns of horse movement throughought a race.
+
+
 
 ----
 

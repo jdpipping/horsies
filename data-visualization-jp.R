@@ -106,7 +106,7 @@ horse_data %>%
 
 # load 1600m horse data ####
 
-horse_data_1600 <- read_csv('~/final_horse_strains.csv')
+horse_data_1600 <- read_csv('processed-horse-data/lateral_movement_1600.csv')
 
 # lateral movement vs time ####
 
@@ -133,24 +133,6 @@ horse_data_1600 %>%
          race_date  == "2019-04-19") %>%
   group_by(horse_id) %>%
   mutate(cum_side_movement = cumsum(abs(side_movement))) %>%
-  ggplot(aes(x = frame_id / 4,
-             y = cum_side_movement,
-             color = factor(horse_name))) +
-  geom_line(show.legend = FALSE) +
-  labs(title = 'Cumulative Lateral Movement vs Time for Each Horse',
-       subtitle = 'At the Aqueduct on April 19th, 2019',
-       x = 'Time (s)',
-       y = 'Cumulative Lateral Movement (m)') +
-  facet_wrap(~ race_number) +
-  theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(plot.subtitle = element_text(hjust = 0.5))
-
-# total strain rate vs time ####
-
-horse_data %>%
-  filter(track_id == "AQU",
-         race_date  == "2019-04-19") %>%
   ggplot(aes(x = frame_id / 4,
              y = cum_side_movement,
              color = factor(horse_name))) +
