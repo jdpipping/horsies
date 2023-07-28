@@ -184,7 +184,55 @@ $$i^{th}\text{ Standardized Residual }= \frac{y_i - \hat{y_i}}{SE}$$
 
 **Finally, we classified a horse as under-racing if their standardized residual fell below -1 for *any* combination of their age and the calendar year that appeared in the data set.** 
 
-### Caclulating Strain
+### Motivation and Implementation of STRAIN
+
+In materials science, [@materialScience] strain measures the deformation of a material from stress as the change in its length relative to its original length. Formally, let $D(t)$ be the distance between any two points of interest within a material at time $t$ and $D_0$ be the initial distance between those same points. The strain for a given material at time $t$ is defined as
+
+$$\epsilon(t)=\frac{D(t)-D_0}{D_0}.$$
+
+This metric is a ratio of two quantities of the same unit and is therefore unitless.
+
+Accordingly, strain rate measures the change in the deformation of a material with respect to time. Mathematically, the strain rate of a material is expressed as the derivative of its strain, that is:
+
+$$\epsilon'(t)=\frac{d \epsilon}{dt}=\frac{v(t)}{D_0},$$
+
+where $v(t)$ is the velocity at which two points of interest within a material are moving away from or towards each other. This metric, unlike strain, is measured in inverse of time, typically inverse second.
+
+Motivated by its scientific definition and previous work analyzing NFL pass rushing [@Quang], we draw an analogy between strain rate and horse racing. Just as strain rate is a measure of deformation in materials science, horses in a race apply deformation to one another in an effort to break away from the pack and win the race. Each horse can be viewed as a "particle", with strain rate calculated pairwise between each horse.
+
+In order to apply this metric to horse racing, we draw inspiration from previous work analyzing NFL pass rushing [@Quang] and introduce slight modifications to how the concept is usually defined. Let $(x_{ijt}, y_{ijt})$ be the $(x, y)$ location on the track of horse $j=1,2,...,J_i$ at frame $t=1,2,...,T_i$ for race $i=1,2,...,n$.
+
+* The distance between any two distinct horses $j$ and $j^*$ at frame $t$ during race $i$ is
+
+$$s_{ijj^*}(t)=\sqrt{(x_{ijt}-x_{ij^*t})+(y_{ijt}-y_{ij^*t})}.$$
+
+* The velocity at which two distinct horses $j$ and $j^*$ are moving towards each other at frame $t$ during race $i$ is
+
+$$v_{ijj*}(T)=s'_{ijj*}(t)=\frac{ds_{ijj*}(t)}{dt}$$
+
+* The STRAIN between two distinct horses $j$ and $j^*$ at frame $t$ during race $i$ is
+
+$$STRAIN_{ijj^*}(t)=\frac{-v_{ijj*}(t)}{s_{ijj*}(t)}.$$
+
+To distinguish this metric from strain and strain rate in materials science, we write it in capital letters (STRAIN) for the remainder of this report.
+
+Similarly to previous work on pass rushing analysis, we negate the approach velocity $v_{ij}(t)$ between horses to ensure STRAIN increases as the distance between horses decreases. Additionally, the initial distance $s_{ij}(t)$ between horses is updated frame-by-frame, enabling the calculation of STRAIN for each frame throughout a race.
+
+Since distance and velocity are observed discretely in increments of 4 frames/second, a point estimate for our STRAIN metric between distinct horses $j$ and $j^*$ at frame $t$ during race $i$ is
+
+$$\widehat{STRAIN_{ijj^*}(t)}=\frac{-\frac{s_{ijj^*}(t)-s_{ijj^*}(t-1)}{0.25}}{s_{ijj^*}(t)}.$$
+
+This measure increases in two ways: 1) the rate at which two horses are moving towards each other increases, and 2) the distance between two horses decreases. Both of these are indicators that a horse is moving towards the pack and running under higher stress.
+
+Additionally, since we observe STRAIN between every pair of horses in a race, we can compute the total STRAIN for a horse at each frame. Let $Z_i$ represent the set of opposing horses in race $i$. Formally, the total STRAIN for a horse $j$ at frame $t$ during race $i$ is
+
+$$STRAIN_{ij}(t) = \sum_{j^* \in Z_i} \widehat{STRAIN_{ijj^*}(t)}.$$
+
+Additionally, to control for the number of horses in a race, we also consider the average total STRAIN of a horse, denoted by $\overline{STRAIN}$. Let $Z_i$ represent the set of opposing horses in race $i$. For a horse $j$ at frame $t$ during race $i$, average total STRAIN is
+
+$$\overline{STRAIN_{ij}}(t) = \frac{1}{|Z_i|}*\sum_{j^* \in Z_i} \widehat{STRAIN_{ijj^*}(t)}.$$
+
+Both of these metrics are useful for evaluating the magnitude of STRAIN experienced by horses in a race and provide novel features for predicting future injury.
 
 ### Clustering Horse Trajectories
 
