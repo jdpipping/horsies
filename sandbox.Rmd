@@ -1,0 +1,13 @@
+---
+title: "sandbox"
+author: "Jonathan Pipping"
+date: "2023-07-25"
+output: html_document
+---
+
+## EDA
+
+
+Before identifying under-racing horses through an expected counts model, we visualized some key variables with the NYRA Start List Data Set; namely, we visualized the relationship between horse age and race count and the relationship between calendar year and race count to have a better sense of how these variables are associated with a horse's race count.
+
+Before computing summary statistics and clustering horse movement profiles, we visualized horse trajectories from the 2019 NYRA Horse Tracking Data Set; namely, we visualized the position, speed, acceleration, lateral movement, cumulative lateral movement, and STRAIN for horses who ran at the Aqueduct on April 19th, 2019. These visualizations provide a better understanding of common patterns of horse movement throughought a race.
