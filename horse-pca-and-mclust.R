@@ -5,7 +5,10 @@ library(broom)
 library(mclust)
 
 # file path may vary | this file was downloaded from the google drive
-final_horse_strains <- read_csv("C:/Users/krisa/Contacts/Downloads/final_horse_strains.csv")
+file_path <- file.choose()
+## my file path is below:
+# file_path <- "C:/Users/krisa/Contacts/Downloads/final_horse_strains.csv"
+final_horse_strains <- read_csv(file = file_path)
 # take only the variables we need
 final_horse_data <- final_horse_strains |> 
   select(-c("x_proj", "y_proj", "raw_x", "raw_y", 
