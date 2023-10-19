@@ -1,0 +1,1679 @@
+"","horse_id","horse_name","lat_mvmt_cluster"
+"1",2,"Crimson Frost",6
+"2",8,"Legion Storm",1
+"3",10,"Kavansberg",3
+"4",14,"Rose of Dublin",1
+"5",15,"Caralicious",3
+"6",19,"T J's Rose Ella",4
+"7",21,"Holiday Bonus",4
+"8",22,"Backsideofthemoon",4
+"9",23,"Hit It Once More",4
+"10",24,"Roaming Union",1
+"11",32,"Pinchbeck",3
+"12",34,"Papa Jim",4
+"13",36,"Dollarsforpennies",4
+"14",37,"Simbasalltrouble",2
+"15",41,"Timely Tradition",2
+"16",47,"Mind Control",4
+"17",48,"Our Braintrust",6
+"18",49,"Family Biz",1
+"19",50,"Gates of Dawn",4
+"20",51,"Souper Jackpot",2
+"21",52,"Direct Order",1
+"22",55,"Bitumen",4
+"23",56,"The Great Samurai",4
+"24",57,"Samadi Sky",4
+"25",62,"Excess Capacity",4
+"26",63,"Paynterbynumbers",4
+"27",64,"Fancy That",4
+"28",65,"She'll Do",4
+"29",66,"Silk Assassin",4
+"30",67,"Moon and Stars",4
+"31",68,"Tikhvin Flew",4
+"32",69,"Pulsate",3
+"33",70,"Spun to Run",4
+"34",81,"Free Coffee",4
+"35",82,"Dizzy",4
+"36",83,"Whyisshesoolucky",4
+"37",84,"Stay Smart",4
+"38",86,"Miss Allison",4
+"39",89,"Admiral Blue",4
+"40",90,"Halloween Horror",4
+"41",91,"Shamcat",3
+"42",92,"Indian Guide",4
+"43",93,"Outplay",2
+"44",94,"Dublinthepleasure",4
+"45",95,"Shalako",6
+"46",96,"Toohottoevenspeak",1
+"47",97,"Its All Relevant",3
+"48",99,"Fifty",4
+"49",100,"Gio d'Oro",4
+"50",101,"Blugrascat's Smile",4
+"51",102,"Storm Prophet",1
+"52",104,"Papa Shot",1
+"53",105,"Singapore Trader",2
+"54",108,"Know Point Given",6
+"55",109,"Frosty Linz",2
+"56",112,"Big Expense",3
+"57",113,"Needs No Ice",1
+"58",114,"Promise Me Roses",4
+"59",115,"Low Is Laine",4
+"60",116,"Got the Gist",3
+"61",117,"Reyana Reya Dreams",4
+"62",118,"Youmakemeblush",4
+"63",119,"Monteleone",4
+"64",120,"Trustworthy",1
+"65",121,"Unpredictable",4
+"66",122,"Playwright",4
+"67",123,"Expert",2
+"68",124,"Stronger",4
+"69",125,"Intoxicologist",4
+"70",126,"Delta Gamma",4
+"71",127,"Cornetta's Choice",4
+"72",128,"Bee'snbee's",3
+"73",129,"Winifred J",4
+"74",130,"Sarah's Rainbow",3
+"75",131,"Turn and Bern",1
+"76",132,"Anne's Song",5
+"77",134,"Joule",5
+"78",137,"Mrs. Orb",3
+"79",141,"Preservationist",4
+"80",145,"Hushion",4
+"81",146,"Castle Casanova",4
+"82",147,"Top of the Mint",4
+"83",148,"Smooth Tales",6
+"84",151,"Big Browning",5
+"85",160,"Have Another",4
+"86",161,"Kathryn the Wise",1
+"87",162,"Playinwiththeboys",4
+"88",164,"Starlite Mission",6
+"89",167,"Silly Sister",4
+"90",170,"Raging Fire",4
+"91",172,"Won't Be Missed",6
+"92",173,"Storm Scat",2
+"93",175,"Rockin Jo",1
+"94",176,"Double Deep",4
+"95",177,"Rogue Nation",4
+"96",178,"Dooley",1
+"97",179,"Domain",4
+"98",182,"Latin Love Bug",4
+"99",184,"I Love Jaxson",1
+"100",187,"Racing Raven",4
+"101",188,"Bold Gem",3
+"102",189,"Alrahaal",3
+"103",191,"Twelfthofneverland",1
+"104",192,"Durkin's Call",4
+"105",194,"Letzgometz",4
+"106",195,"Classic Czar",4
+"107",196,"Oh K Funnybone",3
+"108",197,"Poker Game",4
+"109",198,"Awesome Adversary",6
+"110",199,"Dash for Dollars",4
+"111",200,"Tazmonian Devil",2
+"112",201,"Shock Therapy",2
+"113",202,"My Amanjena",3
+"114",203,"Marble Moon",4
+"115",204,"Sweet August Lady",4
+"116",206,"Zecha",2
+"117",207,"Solitary Gem",6
+"118",209,"Third Card Down",4
+"119",215,"Shak's Hidden Gem",3
+"120",218,"Fiery Opal",4
+"121",222,"Horoscope",2
+"122",223,"Playthatfunnymusic",1
+"123",224,"Arthur's Hope",4
+"124",227,"New Year's Wish",4
+"125",228,"Smiles From Sadie",4
+"126",229,"Madame Barbarian",3
+"127",230,"She'sakittykat",4
+"128",231,"My Girl Annie",4
+"129",232,"Hexameter",4
+"130",234,"Golconda",4
+"131",235,"Killala Bay",4
+"132",236,"Scrutinize",6
+"133",237,"Run for Boston",4
+"134",238,"Call the Cat",4
+"135",239,"Well in Tune",1
+"136",240,"Pragmatist",4
+"137",241,"Shiloh Lane",4
+"138",242,"The Venerable Bede",2
+"139",243,"Linns Boy",4
+"140",251,"Free Kitty",4
+"141",253,"Party in the Sand",1
+"142",254,"Alley to Calvary",3
+"143",255,"Sweet Like Char",4
+"144",256,"Kingdom's Queen",4
+"145",257,"Lady Hester",4
+"146",258,"War of the States",4
+"147",259,"Communal",4
+"148",260,"Taking Aim",4
+"149",261,"Cookie Crisp",4
+"150",262,"Purchasing Power",1
+"151",263,"Never Before",4
+"152",264,"Curlin's New Moon",1
+"153",265,"Inalienable Rights",4
+"154",266,"Change of Venue",1
+"155",267,"Flush",6
+"156",270,"Alvernia",6
+"157",271,"True Prosperity",3
+"158",273,"Daria's Angel",1
+"159",274,"Stay Fond",4
+"160",275,"Not About the Nail",1
+"161",276,"Harkness",4
+"162",277,"Ipanema Beach",4
+"163",278,"Countable",4
+"164",279,"Wadadli Princess",2
+"165",280,"Anydayisherday",4
+"166",281,"Cheatham Hill",4
+"167",283,"Sander's Empire",6
+"168",286,"Gypsum Johnny",1
+"169",288,"H Man",2
+"170",290,"Blue Pigeon",4
+"171",292,"Charlie McCoy",4
+"172",293,"Mystical Song",4
+"173",295,"Ro Bear",2
+"174",296,"Three to Thirteen",1
+"175",298,"Swivel",2
+"176",299,"Foolish Ghost",4
+"177",303,"Wanna Be Regal",4
+"178",304,"Highleelikelee",4
+"179",306,"My First Gal",4
+"180",308,"Roses From Ben",6
+"181",309,"Ziggy Is Zubby",2
+"182",312,"Irish Glitter",4
+"183",314,"Gypsy Mama",4
+"184",316,"Flat Out Funky",4
+"185",317,"Devil's Flair",4
+"186",318,"La Bella Chica",4
+"187",320,"Archumybaby",2
+"188",328,"Dark N Cloudy",4
+"189",331,"Joe's Smokin Gun",1
+"190",334,"Heartbustingirl",4
+"191",336,"Shanghai Smile",4
+"192",338,"Rattle the Stars",4
+"193",340,"Javelin",4
+"194",341,"Flatexcel",2
+"195",342,"Special Story",4
+"196",343,"Ultimateenticement",4
+"197",344,"Proximate to Power",2
+"198",347,"Manifest Destiny",4
+"199",350,"Mission Command",4
+"200",352,"Too Fast to Pass",1
+"201",353,"Quai Voltaire",4
+"202",355,"Stoney Bennett",4
+"203",356,"Mr. Dougie Fresh",4
+"204",357,"House Limit",4
+"205",358,"Allured",3
+"206",359,"Vincento",4
+"207",361,"Yamano Maker (JPN)",4
+"208",362,"Felix in Fabula",4
+"209",364,"Uncle Sigh",4
+"210",365,"Honor Up",1
+"211",366,"Syndergaard",1
+"212",373,"Cross Multiply",4
+"213",374,"Shook Em Up",4
+"214",375,"Martini Lane",4
+"215",376,"Flat Out Jayvien",4
+"216",377,"Blue Skies Forever",1
+"217",378,"Holycowits Patrick",4
+"218",379,"Cool Crinoline",4
+"219",380,"Theresa's Boy",4
+"220",381,"Quintarelli",4
+"221",382,"Soup Baby",4
+"222",384,"Grumps Little Tots",4
+"223",387,"Stan the Man",1
+"224",390,"Tusk",3
+"225",391,"Coltandmississippi",6
+"226",392,"Regal Quality",4
+"227",395,"Shamrock Kid",1
+"228",400,"I Saw It All",4
+"229",402,"Wisecrack",4
+"230",408,"Desert Lights",1
+"231",410,"Unsullied",4
+"232",412,"Ten Twenty Nine",1
+"233",413,"Mr. Massena",6
+"234",414,"All Clear",6
+"235",416,"Midnight Curfew",5
+"236",417,"Pickle Rick",4
+"237",418,"Erlich",4
+"238",419,"Habitue",4
+"239",420,"Binary",4
+"240",421,"Kumar",3
+"241",422,"Coast to Coast",4
+"242",423,"Mental Model",1
+"243",425,"Kadens Courage",4
+"244",428,"Kazmania",4
+"245",429,"Tiergan",1
+"246",430,"Just Right",4
+"247",431,"Funny Guy",6
+"248",438,"Bigsouljoel",4
+"249",439,"There Goes Jose",4
+"250",441,"Love to Learn",4
+"251",446,"Thousand Percent",3
+"252",447,"Trance",3
+"253",449,"Americano",4
+"254",454,"There He Goes",1
+"255",456,"Freudian Analyst",1
+"256",459,"Ridolfo",1
+"257",460,"Potomac",4
+"258",461,"Langdarma",4
+"259",462,"Mills",3
+"260",463,"Poshsky",2
+"261",464,"Pretentious",4
+"262",465,"In a Fog",4
+"263",466,"Ok Honey",4
+"264",467,"Analyze With Honor",4
+"265",468,"Empress Sophia",4
+"266",469,"Charming Cara",4
+"267",470,"Tiztinabella",4
+"268",471,"Emmy Knows",4
+"269",472,"Where's Rudy",4
+"270",473,"Much Trouble",3
+"271",474,"Dr. Hipp",3
+"272",475,"D'ambrosio",4
+"273",476,"Local Edition",4
+"274",477,"Danny California",6
+"275",483,"Devilish Romance",4
+"276",485,"Questeq",6
+"277",490,"Stars Wilburn",4
+"278",492,"Gracetown",4
+"279",493,"Enjoyitwhilewecan",4
+"280",496,"Up At Dawn",4
+"281",497,"Stokes",4
+"282",498,"Incubator",4
+"283",499,"Call Me",4
+"284",500,"Sandy Lane",1
+"285",504,"Annie Rocks",4
+"286",505,"Cotton Candy Cutie",4
+"287",506,"Figure It Out",4
+"288",507,"Redouble",4
+"289",508,"Tiz Her Way",4
+"290",509,"Controllingthegold",4
+"291",510,"Solid Wager",4
+"292",512,"Bal Harbour",4
+"293",514,"Miss Loyalty",4
+"294",515,"Moment of Triumph",4
+"295",516,"Princess Mikayah",1
+"296",517,"Giant Ending",4
+"297",518,"Little Nanny",4
+"298",519,"Mercurian",4
+"299",520,"Twofer",4
+"300",524,"Daddy D T",1
+"301",526,"Local Counsel",3
+"302",527,"Here Comes Tommy",4
+"303",528,"Broadway Bay",4
+"304",530,"Peter's Project",4
+"305",532,"River Knight",6
+"306",533,"Planet Trailblazer (BRZ)",1
+"307",534,"Kenyan",1
+"308",535,"Holy Week",4
+"309",536,"Borsa Vento",6
+"310",537,"Avast Matey",4
+"311",539,"Brazen Prince",4
+"312",540,"Bumperdoo",1
+"313",541,"Tio Blas",2
+"314",542,"Mid Day Image",4
+"315",543,"Bridgetothefuture",4
+"316",544,"American Wish",2
+"317",545,"Lone Pioneer",5
+"318",546,"Pretty Enuff",4
+"319",547,"Elegant Jem",4
+"320",548,"That's Smart",2
+"321",549,"Beyond Discreet",3
+"322",550,"Peaches and Spice",1
+"323",551,"Mazmania",4
+"324",557,"Boosted Ego",4
+"325",558,"Mad Munnys",6
+"326",559,"Crea's Bklyn Law",4
+"327",560,"Bootlegger (FR)",6
+"328",563,"The Big Lebanese",5
+"329",564,"Bebe Banker",1
+"330",565,"Pier Forty",1
+"331",566,"Ventus",1
+"332",569,"Mrs. Crews",4
+"333",570,"Ma Meatloaf",4
+"334",575,"Forever Liesl",4
+"335",576,"Sara Street",4
+"336",578,"Matty's Magnum",1
+"337",586,"Seethisquick",2
+"338",589,"Power Boss",1
+"339",592,"Cartwheel",6
+"340",600,"Mickey Diamond",6
+"341",601,"Dancingwthdaffodls",6
+"342",605,"Sweet Breeze",3
+"343",606,"Arewehavingfunyet",4
+"344",607,"Driven by Speed",4
+"345",608,"Havana Affair",1
+"346",609,"Slam Chowder",4
+"347",610,"Elizabeth Nicole",4
+"348",611,"Southern Christmas",6
+"349",612,"Preziosa",4
+"350",613,"Caribbean Girl",4
+"351",614,"Bettor Bank On It",6
+"352",615,"Everything Pazible",3
+"353",616,"Iron Fork",4
+"354",617,"Coach Villa",6
+"355",618,"Barrel of Stout",5
+"356",619,"Threatlovesmidnite",2
+"357",620,"No Hayne No Gayne",1
+"358",621,"Out of Orbit",1
+"359",622,"Puffery",4
+"360",623,"Vip Nation",6
+"361",631,"Silent Sonet",5
+"362",640,"Haul Anchor",1
+"363",641,"Carthon",1
+"364",642,"Fleet Irish",2
+"365",643,"D Emcee",2
+"366",645,"Talespin",6
+"367",649,"Shelley Ann",4
+"368",650,"Maiden Beauty",6
+"369",651,"She Takes Charge",4
+"370",652,"Lem Me Have It",4
+"371",653,"Dirty Bird",4
+"372",654,"Waving Flags",5
+"373",656,"Went With the Wind",4
+"374",657,"Movie Score",1
+"375",660,"Big Paddy Brown",4
+"376",661,"Lorcan",4
+"377",662,"True Blue Giant",1
+"378",663,"Seven Is Heaven",1
+"379",664,"Judge Stanton",4
+"380",668,"Chuckles",4
+"381",677,"Big Muddy",1
+"382",678,"Slot",2
+"383",679,"Metaphorical",6
+"384",680,"Golden Giant",4
+"385",681,"Mr. Buff",1
+"386",682,"Sunny Ridge",1
+"387",684,"Hero's Welcome",4
+"388",685,"Title Ready",4
+"389",686,"No Distortion",4
+"390",687,"Sparty Boy",2
+"391",688,"Maimo",6
+"392",689,"Eden Ridge",4
+"393",690,"Asterisk",6
+"394",691,"Causin' Trouble",2
+"395",692,"Here Comes Helen",4
+"396",693,"Saturdaynightfling",4
+"397",694,"Saratoga Sass",4
+"398",695,"Discount Diva",2
+"399",696,"Tough Gold",4
+"400",701,"California Night",4
+"401",702,"Fillet of Sole",4
+"402",703,"American Lincoln",3
+"403",704,"Starship Zeus",1
+"404",705,"Majid",1
+"405",709,"Deputy Zapper",4
+"406",710,"Glencairn",3
+"407",711,"Simma Cum Laude",4
+"408",712,"Analyze the Odds",6
+"409",718,"Viradia",4
+"410",724,"Ujjayi",4
+"411",726,"Dovey Lovey",2
+"412",728,"Enliven",4
+"413",729,"Sheza Diva",3
+"414",730,"She's a Black Belt",5
+"415",731,"Abraxan",2
+"416",732,"Princess Pinky",1
+"417",733,"Sandra's Mine",6
+"418",734,"Sweet Blindness",4
+"419",735,"Gattino Marrone",4
+"420",736,"It's a Lovely Day",4
+"421",741,"Sam and Jax",4
+"422",742,"Tiz Morning",3
+"423",743,"Mythajacul",4
+"424",744,"Givetheman a Cigar",6
+"425",751,"Tanya's Gem",6
+"426",752,"Seediskid",4
+"427",755,"Clench",4
+"428",758,"Dazzling Speed",4
+"429",759,"Ferncourt",2
+"430",761,"Youth Gone Wild",4
+"431",762,"Mia Bella Rossa",4
+"432",767,"Halstaat",3
+"433",768,"Lazarus Project",4
+"434",770,"Cariba",4
+"435",771,"Canarsie Girl",2
+"436",772,"Solent",4
+"437",773,"Team Win",4
+"438",774,"Stonewalker",4
+"439",775,"Joyful Frolic",2
+"440",776,"Orbilicious",4
+"441",778,"Take It All Back",4
+"442",783,"Bull Feathers",3
+"443",784,"Abby Normal",4
+"444",786,"Hammerin Aamer",2
+"445",787,"J S Bach",4
+"446",788,"Sir Ballantine",6
+"447",789,"Tour de Force",4
+"448",790,"Caledonian",4
+"449",792,"Professor Snape",4
+"450",793,"Zap Zap Zap",4
+"451",794,"Old Upstart",1
+"452",798,"Phone Funky Munky",3
+"453",799,"New York Hero",4
+"454",801,"Not That Brady",3
+"455",809,"Norma's Charm",2
+"456",810,"Pecan Pattie",4
+"457",811,"Running Violence",3
+"458",813,"Dillon Rocks",6
+"459",819,"Kid Is Frosty",6
+"460",821,"Color Chart",4
+"461",822,"Two Graces",1
+"462",823,"Disquiet",1
+"463",824,"Sterling Beauty",6
+"464",827,"Saratoga Style",2
+"465",829,"Tappanzee",6
+"466",831,"Today Comes Once",1
+"467",832,"Alphadora",1
+"468",833,"First Forever",4
+"469",834,"Dancing Slippers",6
+"470",841,"Filly Joel",4
+"471",847,"Floss Dancer",6
+"472",851,"Can'tweallgetalong",4
+"473",852,"Air On Fire",3
+"474",854,"Smidge",1
+"475",855,"Huracan",6
+"476",858,"Bad Guy",3
+"477",859,"Celtic Mission",2
+"478",862,"Salty Smile",4
+"479",863,"Kosciuszko",4
+"480",864,"Southern King",3
+"481",865,"Woodbury",4
+"482",866,"Binkster",4
+"483",869,"Exulting",4
+"484",870,"Orpheus (ARG)",1
+"485",871,"Big Thicket",4
+"486",872,"Nobody Move",4
+"487",873,"Lion Sleeps",4
+"488",874,"Rockin Emmzy",4
+"489",875,"Karabessa",4
+"490",876,"Sister Emily",4
+"491",878,"Union Wise",4
+"492",881,"Trip Ups",4
+"493",882,"Craigville Beach",3
+"494",884,"Bank Gala",1
+"495",886,"Daring Disguise",6
+"496",887,"Opt",2
+"497",888,"Carfullofmoonshine",4
+"498",890,"Cathy Naz",4
+"499",897,"Clara Allen",4
+"500",898,"Bizness Beauty",4
+"501",901,"Dublin Leprechaun",4
+"502",905,"Princessof Philmar",4
+"503",907,"Diamond N Simon",3
+"504",909,"Haikal",4
+"505",913,"Overheated",4
+"506",916,"Spectator Sport",1
+"507",917,"Unbridled Mesa",1
+"508",920,"Eddie Boy",4
+"509",921,"She Makes Me Smile",3
+"510",922,"Honey Graeme",2
+"511",924,"Rachel's Blue Moon",4
+"512",925,"Ironclad",4
+"513",926,"Frostie Anne",1
+"514",927,"Midnight Disguise",1
+"515",928,"Bonita Bianca",1
+"516",929,"Frosty Margarita",4
+"517",930,"Zealous",4
+"518",931,"Rucksack",1
+"519",932,"Mutaraabit",4
+"520",933,"Replicator",4
+"521",934,"Clonedsimmard",1
+"522",938,"Lemon Crush",4
+"523",941,"Asher the Dasher",1
+"524",942,"Jump Ruler",4
+"525",943,"D J's Favorite",4
+"526",944,"Face It",2
+"527",945,"Unbridledadventure",3
+"528",947,"Tequila Sunday",4
+"529",952,"Becca Takes Charge",4
+"530",953,"Champayne",1
+"531",956,"Beach Access",4
+"532",957,"Takeoff",2
+"533",958,"Indimaaj",4
+"534",964,"Icey Cash",4
+"535",965,"Inflection",4
+"536",966,"Monaghan",3
+"537",967,"Chef Funny Money",6
+"538",972,"Discreet Mission",4
+"539",973,"Will Dancer",4
+"540",974,"Inclunation",1
+"541",975,"Eddy Dirt",4
+"542",976,"Gallant Bid",4
+"543",977,"Blewitt",4
+"544",981,"Thesis",4
+"545",982,"Mend Up",4
+"546",984,"Mac's Revolution",4
+"547",986,"Twisted Tom",2
+"548",987,"Loki's Vengeance",4
+"549",989,"Da Berg",4
+"550",992,"The Sinner Is You",6
+"551",993,"Fotis",6
+"552",997,"Thank You So Much",4
+"553",998,"First Dawn",5
+"554",999,"Chilly in Charge",3
+"555",1000,"Summer Squeeze",3
+"556",1001,"Cirque",3
+"557",1004,"Beachside",4
+"558",1009,"Moon Tweet",2
+"559",1010,"Reigning Fire",4
+"560",1011,"Carlisle Belle",4
+"561",1012,"Eight Minute Ellie",4
+"562",1013,"Avalina",4
+"563",1014,"Xanthique",6
+"564",1015,"Mom I Forgive You",3
+"565",1017,"Royal Albert Hall (GB)",4
+"566",1018,"Eagle Pass",4
+"567",1019,"Hokulea",4
+"568",1020,"Prompt",2
+"569",1021,"Nicodemus",1
+"570",1022,"Business Cycle",3
+"571",1026,"Fair Lassie",3
+"572",1029,"Detective Kid",2
+"573",1030,"Somebody",1
+"574",1031,"Support Our Cause",4
+"575",1032,"Garsoon",4
+"576",1036,"Tiz No Bluff",4
+"577",1038,"Crick",4
+"578",1040,"Behind the Couch",1
+"579",1041,"Lady Macho",1
+"580",1050,"Tri Saint Lorenzo",1
+"581",1052,"Freedom Prince",1
+"582",1056,"O Shea Can U See",4
+"583",1057,"Drummer Don",4
+"584",1058,"Lonhtwist",6
+"585",1059,"Camouflaged Kisser",3
+"586",1060,"Tale of Mist",2
+"587",1061,"Devine Dental",4
+"588",1063,"Swiping Dan",1
+"589",1066,"Creative Style",3
+"590",1067,"Dynamite Kitten",6
+"591",1068,"Whistling Birds",4
+"592",1070,"Mr Wonderful",1
+"593",1071,"Coolboy",1
+"594",1072,"Colorado Grandslam",4
+"595",1073,"Give Me a Hug",4
+"596",1074,"Plum Bay",4
+"597",1077,"Dublin Green",3
+"598",1078,"Invest",4
+"599",1082,"Elegant Zip",4
+"600",1090,"Puparee",3
+"601",1100,"Forewarned",4
+"602",1101,"Leitone (CHI)",3
+"603",1103,"Jasminesque",4
+"604",1104,"G. T. Sonia",3
+"605",1106,"Disciplanarian",4
+"606",1112,"Candy Promises",4
+"607",1113,"Obsolete",4
+"608",1115,"Skychief",3
+"609",1119,"Major Flirt",4
+"610",1120,"He'smyluckyfellow",1
+"611",1128,"Spring Emperor",4
+"612",1136,"Vino Rosso",4
+"613",1137,"Shivermetimbers",6
+"614",1138,"Curlin's Honor",6
+"615",1139,"Instagrand",4
+"616",1140,"Much Better",4
+"617",1141,"Knicks Go",4
+"618",1142,"Espresso Shot",4
+"619",1143,"Oxy Lady",4
+"620",1144,"Orra Moor",4
+"621",1145,"Please Flatter Me",4
+"622",1147,"Gobi",4
+"623",1148,"Yourcreditisgood",4
+"624",1150,"Orbed",3
+"625",1151,"Vero Sun",2
+"626",1152,"Final Say",1
+"627",1153,"Hizaam",4
+"628",1154,"Litany",4
+"629",1155,"Dream Friend",3
+"630",1156,"Divine Miss Grey",4
+"631",1157,"Split Time",4
+"632",1158,"Road to Victory",4
+"633",1161,"Roziere",1
+"634",1162,"Keepmyeyeontheboys",4
+"635",1164,"Offlee Irish",4
+"636",1165,"Mandatory Payout",4
+"637",1168,"Distorted News",4
+"638",1169,"Weekend Madness",4
+"639",1170,"Moscows Got Talent",4
+"640",1171,"Miss Flambe",4
+"641",1173,"Who's Driving",3
+"642",1174,"Big Mountain",4
+"643",1177,"Pipes",3
+"644",1178,"Spice Road",5
+"645",1182,"Apex Predator",1
+"646",1185,"Prince Slaughter",4
+"647",1189,"Bye Bye Man",4
+"648",1190,"Bronxville",4
+"649",1191,"Impunity",2
+"650",1192,"Mount Olympus",4
+"651",1194,"Miss You Blues",3
+"652",1202,"Rumor Driven",1
+"653",1203,"Linda's Ballet",6
+"654",1205,"Turbulence",4
+"655",1207,"Big Wonder",6
+"656",1209,"Hurricane Andrew",4
+"657",1210,"Evan",1
+"658",1225,"Step to the Bank",4
+"659",1230,"Big Gemmy",4
+"660",1232,"Sun Studio",1
+"661",1233,"Storm Rising",4
+"662",1234,"Pink Twist",4
+"663",1235,"Brown Essence",4
+"664",1236,"South of the Shore",4
+"665",1237,"Mo Moxie",4
+"666",1238,"We Are Family",6
+"667",1240,"Don't Rush",4
+"668",1242,"Flashndynamite",4
+"669",1249,"Sarah's Treasure",2
+"670",1254,"King Koa",4
+"671",1255,"Dattt Melody",5
+"672",1257,"Dynamax Prime",2
+"673",1259,"Hoffenheim",1
+"674",1264,"Red Zinger",1
+"675",1267,"Laur Net",4
+"676",1268,"Seven Plus Seven",1
+"677",1271,"Prince Halo",6
+"678",1274,"Ragtime Suzy",6
+"679",1275,"Pat's No Fool",4
+"680",1286,"Herecomesyourman",6
+"681",1287,"Variant Perception",6
+"682",1288,"Sport",6
+"683",1289,"Zonic",4
+"684",1290,"Come Dancing",6
+"685",1293,"Star of the East",6
+"686",1294,"Recess",6
+"687",1295,"Lough Na Mona",6
+"688",1296,"Amarone",5
+"689",1297,"Scarlet's Command",6
+"690",1298,"Violetas Visions",3
+"691",1299,"Mo Gotcha",1
+"692",1305,"Pretty Spectacular",3
+"693",1308,"Applicator",6
+"694",1310,"Wicked Freud",5
+"695",1313,"Sycamore Lane",6
+"696",1314,"Tiz a Chance",3
+"697",1318,"Monongahela",1
+"698",1321,"Proud Emma",1
+"699",1323,"Identity Politics",4
+"700",1326,"Final Jeopardy",1
+"701",1329,"Overdeliver",1
+"702",1330,"Sea Foam",4
+"703",1331,"Unleveraged",6
+"704",1332,"Chantry Flats",6
+"705",1334,"Strategic Outlook",6
+"706",1337,"Rhode Island",3
+"707",1339,"Inspector Lynley",5
+"708",1340,"Multiplier",6
+"709",1341,"Maraud",5
+"710",1342,"Awesome Saturday",6
+"711",1343,"Black Tide",5
+"712",1350,"Five Alarm Robin",3
+"713",1355,"Call Me Kayla",6
+"714",1357,"Go Rose (GER)",3
+"715",1358,"War Canoe",3
+"716",1359,"Wegetsdamunnys",3
+"717",1362,"Skywriting",1
+"718",1363,"Samaronti",4
+"719",1364,"You Tell Me",4
+"720",1366,"Rattlesnake Bite",4
+"721",1369,"Gunboat Diplomacy",4
+"722",1373,"Summer Fantasy",4
+"723",1374,"Beautiful Lover",5
+"724",1375,"Makeme Dream",5
+"725",1376,"Western Curl",5
+"726",1377,"Style and Grace",5
+"727",1378,"Multi Strategy",5
+"728",1382,"Serengeti Cat",4
+"729",1383,"Cairo Queen",3
+"730",1391,"Zandora",6
+"731",1394,"Helen's Tiger",1
+"732",1404,"Greek Alphabet",6
+"733",1405,"Harlan's Harmony",6
+"734",1406,"Lemonist",5
+"735",1407,"Ninety One Assault",6
+"736",1408,"Prioritize",5
+"737",1413,"Bears Mafia",4
+"738",1414,"My Primo",6
+"739",1416,"El Hermano",3
+"740",1419,"Barrel of Destiny",6
+"741",1420,"Tiz a Kitten",4
+"742",1422,"Grand Banks",3
+"743",1423,"Handle With Care",3
+"744",1425,"Timber Ghost",4
+"745",1426,"Driven to Compete",3
+"746",1427,"Ash n' Em",4
+"747",1428,"Awe Honey",4
+"748",1429,"Regally Irish",6
+"749",1438,"Newly Minted",1
+"750",1441,"Singular Sensation",1
+"751",1442,"Chillinwithfriends",1
+"752",1445,"Lady Love",4
+"753",1446,"Tropical Joy",4
+"754",1447,"Another Broad",2
+"755",1451,"Fort Worth",4
+"756",1453,"Fifty Five",6
+"757",1454,"Conquest Hardcandy",5
+"758",1455,"Coffee Crush",6
+"759",1456,"Thais (FR)",5
+"760",1457,"Front Run the Fed",6
+"761",1459,"Point of Humor",6
+"762",1463,"The Right Path",4
+"763",1464,"Standard Deviation",4
+"764",1465,"Back to Back",4
+"765",1466,"Mr. Vincent",6
+"766",1468,"Eyeinthesky",3
+"767",1473,"Riendo",3
+"768",1474,"Impazible Odds",6
+"769",1475,"Fleet Admiral",3
+"770",1479,"Lady Fatima",5
+"771",1485,"Honorable Hero",6
+"772",1486,"Traffic Stop",3
+"773",1487,"False Info",3
+"774",1494,"Hoard",1
+"775",1496,"Outrageous Bet",3
+"776",1498,"We Should Talk",6
+"777",1500,"Catch a Cab",6
+"778",1510,"Snake Oil Charlie",4
+"779",1511,"Letterman",6
+"780",1514,"Dreammaster",4
+"781",1526,"Lebda",4
+"782",1529,"Managing Risk",4
+"783",1531,"Feel Glorious (GB)",3
+"784",1532,"Blowout (GB)",6
+"785",1536,"Our Super Nova",1
+"786",1538,"Wish Upon",6
+"787",1539,"Classic Lady",3
+"788",1541,"Pound Note",3
+"789",1542,"Codrington",3
+"790",1544,"Shareholder Value",4
+"791",1545,"Believe in Luck",4
+"792",1549,"Compagno",3
+"793",1551,"Uncle Curly",3
+"794",1552,"Quick Charge",1
+"795",1554,"Zechariah",6
+"796",1558,"Internet of Things",3
+"797",1559,"Sporting Art",2
+"798",1560,"Time Expired",6
+"799",1561,"Candygram",6
+"800",1562,"King Cause",6
+"801",1563,"Blame the Thief",1
+"802",1564,"Clint Maroon (GB)",6
+"803",1568,"Minsky Moment",6
+"804",1569,"Lutsky",4
+"805",1570,"Bangle Gal",6
+"806",1584,"Roma Carpe",4
+"807",1588,"Later Cat",4
+"808",1589,"Implied Volatility",4
+"809",1590,"Brown Eyed Boy",1
+"810",1591,"Champagne Chills",4
+"811",1592,"Paynter's Prize",6
+"812",1593,"Makin' Out",1
+"813",1599,"Queentigua",4
+"814",1601,"My Bronx Tail",4
+"815",1602,"Kodiak Katie",4
+"816",1603,"Canteen",1
+"817",1604,"Smooth With a Kick",4
+"818",1605,"Hollywood Glory",6
+"819",1606,"Awesome Alana",6
+"820",1607,"Love and Love",1
+"821",1608,"Tempers Way",6
+"822",1609,"Paved With Gold",1
+"823",1610,"Maedean",1
+"824",1611,"Power Move",4
+"825",1612,"Ankle Monitor",2
+"826",1613,"Vast",2
+"827",1614,"Sweet Kisses",4
+"828",1615,"Cee's Overture",4
+"829",1617,"Am Impazible",4
+"830",1625,"Turbo Drive",3
+"831",1629,"Zipalong",4
+"832",1630,"Go Rudy Go",4
+"833",1635,"Ghost Giant",3
+"834",1637,"Whatawonderflworld",3
+"835",1638,"Ides of Arch",6
+"836",1639,"Gambler's Fallacy",2
+"837",1646,"Portfolio Hedge",3
+"838",1648,"Empire Express",4
+"839",1650,"Political",4
+"840",1652,"Bellarmine Hall",3
+"841",1653,"Stash My Money",4
+"842",1655,"Payne",4
+"843",1662,"Alberobello",1
+"844",1664,"Jeltrin",1
+"845",1668,"Blues City",4
+"846",1669,"Victory Built",3
+"847",1670,"Wild Banker",1
+"848",1671,"True Palace",2
+"849",1672,"Titan's Will",3
+"850",1679,"Sengekontacket",4
+"851",1683,"Worth a Shot",5
+"852",1684,"Nutzforboltz",6
+"853",1685,"Jo's Bold Cat",5
+"854",1686,"Albie",6
+"855",1687,"Dashing Dan",6
+"856",1688,"Risky Sour",6
+"857",1695,"Ownitifyouwantit",6
+"858",1698,"Speaktomeofsummer",5
+"859",1699,"English Breeze",5
+"860",1700,"Quality Heat",6
+"861",1701,"Astoria Kitten",6
+"862",1702,"Sparkling Sky",5
+"863",1703,"Bredenbury (IRE)",5
+"864",1704,"Micheline",5
+"865",1705,"Wicked Title",5
+"866",1706,"Sky Kitten",5
+"867",1708,"Le General",3
+"868",1711,"Manoffire",3
+"869",1712,"Proven Reserves",4
+"870",1713,"Ruby Bleu",4
+"871",1714,"Westerland (GB)",2
+"872",1715,"Guns of Steel",4
+"873",1726,"Independence Hall",4
+"874",1727,"Meru",2
+"875",1728,"Chase Tracker",4
+"876",1729,"Famished",4
+"877",1730,"Ashaar",3
+"878",1731,"Liveyourbeastlife",4
+"879",1732,"Spycraft",4
+"880",1733,"Americanus",2
+"881",1734,"What's to Blame",3
+"882",1735,"Cavaradossi",1
+"883",1739,"Trans Mississippi",6
+"884",1741,"Savvy Cairo",3
+"885",1745,"Inscom",3
+"886",1746,"Coral Legacy",5
+"887",1747,"Appealing Briefs",6
+"888",1748,"Ego",3
+"889",1750,"Conforto",5
+"890",1751,"Somethingtotellyou",4
+"891",1752,"Cold Hard Cash",4
+"892",1753,"True Grace",4
+"893",1754,"Diannesimpazible",4
+"894",1755,"Tapizearance",1
+"895",1756,"Forever Wicked",1
+"896",1757,"First Deputy",4
+"897",1761,"Trixie's Time",6
+"898",1766,"Whatdoesasharksay",3
+"899",1771,"Riot Worthy",4
+"900",1774,"O'Malley",6
+"901",1777,"Dance Till Dawn",6
+"902",1779,"Jennemily",6
+"903",1780,"King's Honor (IRE)",5
+"904",1781,"Le Coste",5
+"905",1782,"Alley Oop Johnny",5
+"906",1783,"Rapstorerocks",5
+"907",1784,"Happy Danza",5
+"908",1785,"Geta Lode of Lucky",5
+"909",1786,"Upham",5
+"910",1787,"Tipazo",5
+"911",1788,"Hostile Witness",6
+"912",1789,"Hihosey",5
+"913",1790,"Tempesta",5
+"914",1791,"Champagne Bliss",4
+"915",1792,"Blahnik",3
+"916",1797,"Ari's Naughty Luca",1
+"917",1799,"La Negrita",3
+"918",1819,"Lucky Ramsey",6
+"919",1821,"The Sicarii",4
+"920",1822,"Doups Point",1
+"921",1823,"Danebury",1
+"922",1838,"Evade",2
+"923",1840,"Days of Spring",3
+"924",1841,"Launch Sequence",3
+"925",1842,"Shine Like Bobby",6
+"926",1843,"Barker Lane",6
+"927",1844,"Monaco Princess",4
+"928",1845,"Balon Rose",6
+"929",1846,"Ocean Fire",6
+"930",1847,"Smack",5
+"931",1848,"Take Ten",5
+"932",1849,"Tapit to Ride",5
+"933",1850,"Soul Kitchen",5
+"934",1851,"Keepme in Thegame",6
+"935",1852,"Navasha",5
+"936",1853,"Champagne Diet",5
+"937",1854,"Fritzi",5
+"938",1855,"So Gracious",5
+"939",1856,"Quality Choice",6
+"940",1858,"Thomond Park",3
+"941",1859,"Spinning Kitten",3
+"942",1860,"Decadence",4
+"943",1868,"Harvey's Lil Goil",4
+"944",1876,"Devamani (FR)",4
+"945",1879,"Aquaphobia",3
+"946",1880,"Rapt",6
+"947",1881,"Hay Dakota",6
+"948",1883,"Another",5
+"949",1884,"Saguaro Row",4
+"950",1886,"Pink Sands",1
+"951",1889,"Caribou Club",5
+"952",1890,"Frontier Market",6
+"953",1891,"Just Howard",5
+"954",1892,"Golden Brown",5
+"955",1893,"Voodoo Song",5
+"956",1894,"Gidu (IRE)",6
+"957",1895,"Dr. Edgar",6
+"958",1896,"Abiding Star",5
+"959",1900,"Me and Mr. C",3
+"960",1910,"Onward",1
+"961",1913,"Malibu Edge",3
+"962",1916,"Colloquist",4
+"963",1924,"U S Army Corps",3
+"964",1929,"Pecatonica",6
+"965",1930,"Hit a Provisional",6
+"966",1931,"Augusta Moon",6
+"967",1933,"Crater Rim",3
+"968",1935,"Positive Skew",6
+"969",1936,"Communicator",4
+"970",1937,"Kid Bourbon",4
+"971",1938,"Road Home",2
+"972",1939,"Hail Michigan",1
+"973",1940,"Corcoran",4
+"974",1963,"Network Effect",4
+"975",1964,"Airtouch",4
+"976",1965,"Dark Storm",1
+"977",1966,"Aurelius Maximus",4
+"978",1967,"Purrageous Dyna",3
+"979",1979,"Loaded Joe",4
+"980",1985,"Foti",3
+"981",1990,"Arch of Troy",6
+"982",2004,"Jack of Clubs",1
+"983",2006,"Selfmade",4
+"984",2009,"Oneshotatforever",2
+"985",2011,"Ninja Dust",3
+"986",2012,"Tricky Magician",3
+"987",2013,"I'm Elmer J Fudd",6
+"988",2014,"Solar",3
+"989",2015,"Fairy Link",3
+"990",2019,"Standup",5
+"991",2020,"Clyde's Runner",6
+"992",2021,"Boppin Anda Weavin",3
+"993",2022,"Lundqvist",3
+"994",2023,"Honey Won't",5
+"995",2026,"Country Grammer",3
+"996",2028,"Mo and Go",3
+"997",2029,"Mischief Afoot",1
+"998",2030,"Juulstone",4
+"999",2031,"Tapage",1
+"1000",2032,"Hard Sting",1
+"1001",2033,"Vintage Print",1
+"1002",2034,"King of American",3
+"1003",2036,"Out of Trouble",3
+"1004",2037,"Fetching",3
+"1005",2038,"Short Pour",6
+"1006",2044,"Molly's Nighthawk",3
+"1007",2047,"Yankee Division",4
+"1008",2048,"Sneads",4
+"1009",2049,"Single Focus",1
+"1010",2050,"Qaabil",4
+"1011",2051,"Masterprize",4
+"1012",2052,"Purely Lucky",6
+"1013",2053,"Bronco Sally",6
+"1014",2054,"Factoring",1
+"1015",2055,"Kickin Kimberly",6
+"1016",2060,"Wicked Happy",4
+"1017",2062,"Cherokee Song",4
+"1018",2063,"Justintimeforwine",6
+"1019",2065,"Ringgood",4
+"1020",2066,"Danzing Dunhill",3
+"1021",2068,"Princess Victoria",4
+"1022",2071,"A Little Faith",6
+"1023",2074,"Theaterintheround",3
+"1024",2075,"Dull Knife",3
+"1025",2076,"Soul Fight",4
+"1026",2077,"Violent Delights",1
+"1027",2079,"Sargeant Drive",1
+"1028",2080,"Spirit Animal",5
+"1029",2081,"Gauguin (GER)",5
+"1030",2082,"Everyonelovesjames",3
+"1031",2083,"Blockade",5
+"1032",2084,"Road to Meath",6
+"1033",2085,"Clear Vision",5
+"1034",2086,"Conviction Trade",5
+"1035",2087,"Digital Footprint",6
+"1036",2097,"Vintage Hollywood",4
+"1037",2098,"Booby Trap",4
+"1038",2099,"Kreesie",6
+"1039",2100,"Passing Out",6
+"1040",2101,"Reversethedecision",5
+"1041",2102,"Arabella Bella",5
+"1042",2103,"Water White",4
+"1043",2104,"Indawin",4
+"1044",2105,"Persisto",4
+"1045",2106,"Kissing Frogs",4
+"1046",2107,"Sinister Siren",4
+"1047",2108,"Mrs. S",3
+"1048",2120,"Beyond Brown",3
+"1049",2135,"Pugilist",6
+"1050",2145,"Hieroglyphics",6
+"1051",2146,"Siding Spring",6
+"1052",2147,"Krewe Chief",5
+"1053",2148,"Seanow",5
+"1054",2149,"River Deep",5
+"1055",2152,"Banque de Margaux",2
+"1056",2158,"Kefaliani",6
+"1057",2159,"Theyallcomehome",2
+"1058",2160,"So Sublime",4
+"1059",2161,"Hellbender",4
+"1060",2165,"Too Early",4
+"1061",2170,"Galway Empire",1
+"1062",2172,"Bondurant",3
+"1063",2175,"Total Tap",1
+"1064",2177,"Mobridge",4
+"1065",2178,"Local Hero",6
+"1066",2184,"Kingmeister",4
+"1067",2188,"Southern Brigade",3
+"1068",2189,"Quiet Out East",3
+"1069",2190,"Saltking",5
+"1070",2191,"Ten Eyck",3
+"1071",2193,"Steelersfanforlife",3
+"1072",2194,"Knight Frost",4
+"1073",2195,"Starting Point",5
+"1074",2196,"Tiberius Mercurius",6
+"1075",2197,"North Dakota",5
+"1076",2198,"Blameless",5
+"1077",2199,"French Reef (IRE)",5
+"1078",2200,"Rakeez",5
+"1079",2201,"Tough Times",5
+"1080",2202,"Brahe",5
+"1081",2203,"Donegal Aces",5
+"1082",2205,"My Last Million",1
+"1083",2206,"Nasty Affair",1
+"1084",2214,"Altea (FR)",6
+"1085",2215,"Mean Mary",5
+"1086",2216,"Blonde Moment",5
+"1087",2217,"Civil Union",5
+"1088",2218,"Bareeqa",6
+"1089",2219,"Betty F (GB)",6
+"1090",2220,"Kelleycanrun",5
+"1091",2221,"Periodical",5
+"1092",2222,"Music of Life",5
+"1093",2224,"Chiclet's Dream",6
+"1094",2225,"She's Dreamin",6
+"1095",2226,"Cape Cod Diva",6
+"1096",2228,"Incredible Miss",1
+"1097",2229,"Heartstrings",6
+"1098",2233,"Bourbon in May",6
+"1099",2234,"Scoreswhenhewants",5
+"1100",2235,"Hardest Part (GB)",5
+"1101",2236,"Wild Weekend",5
+"1102",2237,"Knockout Punch",1
+"1103",2238,"Aladdin Sane",5
+"1104",2239,"Double Happiness",6
+"1105",2240,"Eighty Seven North",3
+"1106",2246,"Fika",3
+"1107",2247,"Alexacrat",1
+"1108",2248,"Armament",4
+"1109",2249,"Neighborhood Bully",1
+"1110",2257,"Constant Knight",4
+"1111",2259,"Irish Valor",1
+"1112",2260,"Six Percent",6
+"1113",2262,"Scanno",3
+"1114",2265,"Basie",6
+"1115",2267,"Croi Mor",4
+"1116",2268,"War Stopper",3
+"1117",2270,"Jedi Master",1
+"1118",2272,"Magic Fairy",1
+"1119",2279,"Harris Bay",1
+"1120",2281,"Mission Wrapitup",1
+"1121",2296,"Azzedine (FR)",4
+"1122",2302,"Mr. Shortandsimple",4
+"1123",2303,"The Great Johanna",1
+"1124",2304,"Belleza",5
+"1125",2305,"Amos",1
+"1126",2306,"Two Cent Tootsie",5
+"1127",2308,"That Is Key",4
+"1128",2309,"Imperial Brew",4
+"1129",2310,"Johnny Wishbone",3
+"1130",2313,"Shandian",4
+"1131",2314,"Money Ride",4
+"1132",2319,"Drink to the Clown",4
+"1133",2321,"Super Silver",1
+"1134",2322,"Other Things Equal",1
+"1135",2331,"Zabava",5
+"1136",2333,"Corey Scores",1
+"1137",2334,"Take Charge Tina",6
+"1138",2338,"Leaveematthegate",6
+"1139",2339,"Gosilently",6
+"1140",2340,"Dream Passage",6
+"1141",2346,"Imprsstheprofessor",4
+"1142",2365,"Jazzy Lady",3
+"1143",2370,"Malthael",6
+"1144",2371,"Betterment",3
+"1145",2376,"Super Wicked Charm",5
+"1146",2378,"John Want Revenge",4
+"1147",2386,"White Hot",4
+"1148",2389,"Miss Jen",3
+"1149",2390,"Kerry's Ring",6
+"1150",2398,"Tapaloof",3
+"1151",2401,"Lord of the Nile",3
+"1152",2422,"Have At It",3
+"1153",2426,"Red Right Hand",1
+"1154",2433,"Geils Rocks",4
+"1155",2435,"Girl of Tosconova",4
+"1156",2436,"The Honest Toun",6
+"1157",2437,"Snow Lion",4
+"1158",2438,"El Sangru",4
+"1159",2439,"No Dozing",4
+"1160",2440,"Noble Indy",3
+"1161",2441,"Quick Entry",1
+"1162",2443,"Dr. Devera's Way",1
+"1163",2445,"Valid Quest",4
+"1164",2448,"Fivestar Bandit",4
+"1165",2459,"Uncle Ned",3
+"1166",2460,"Bobbyfromthepalm",4
+"1167",2461,"Little Mazzy",4
+"1168",2462,"Icy Dude",3
+"1169",2463,"Textpectation",4
+"1170",2464,"Theodosia",3
+"1171",2465,"Wait a Minute",4
+"1172",2470,"Might Be",1
+"1173",2471,"Jimmy Jazz",3
+"1174",2472,"Klickitat",6
+"1175",2473,"Crazy Life",4
+"1176",2474,"Dancers for Token",4
+"1177",2475,"Kingfish",4
+"1178",2476,"Maxwell Esquire",3
+"1179",2481,"Foolish Living",6
+"1180",2482,"Blacktop Legend",3
+"1181",2488,"Jerome Avenue",6
+"1182",2489,"Robin Hood",5
+"1183",2494,"Tornado Crossing",6
+"1184",2500,"Vibrancy",4
+"1185",2503,"Andina Del Sur",6
+"1186",2508,"Too Charming",3
+"1187",2511,"Elle's Town",6
+"1188",2519,"Stand for the Flag",4
+"1189",2522,"Halladay",6
+"1190",2529,"Tokyo Bay",4
+"1191",2531,"Wicked Amber",3
+"1192",2536,"Superbloodwolfmoon",4
+"1193",2546,"Mo Maverick",3
+"1194",2547,"Call Me Harry",3
+"1195",2554,"Tangled Web",3
+"1196",2561,"Mubarmaj",1
+"1197",2566,"Pivotal Connection (GB)",3
+"1198",2570,"Talent Scout",4
+"1199",2572,"Waynes Footsteps",6
+"1200",2574,"Chestertown",2
+"1201",2575,"Dawn's Early Light",4
+"1202",2577,"Baffin Bay",3
+"1203",2578,"Antoinette",3
+"1204",2579,"I Dare U",4
+"1205",2580,"Stretchthestory",4
+"1206",2581,"More Glitter",6
+"1207",2582,"Logic N Reason",4
+"1208",2583,"Mutakaamil",4
+"1209",2584,"Perceived",3
+"1210",2585,"Fast Break",4
+"1211",2586,"Superfan",6
+"1212",2590,"Future Book",4
+"1213",2591,"Superego",4
+"1214",2595,"Derby Day Zip",4
+"1215",2596,"Kerry Boy",4
+"1216",2609,"Southern Bridge",6
+"1217",2620,"Seven Lilies",4
+"1218",2621,"Harv Won't Tap",3
+"1219",2622,"Barnacle Bill",4
+"1220",2628,"Pixelate",3
+"1221",2630,"City Man",6
+"1222",2632,"Miss Ross",1
+"1223",2635,"Cost Basis",1
+"1224",2636,"Modernist",4
+"1225",2637,"Liam's Fire",4
+"1226",2638,"First Degree",4
+"1227",2639,"Dack Janiel's",4
+"1228",2642,"Panther Hit",6
+"1229",2651,"Moon Over Miami",4
+"1230",2652,"Farmington Road",5
+"1231",2653,"Default Rate",4
+"1232",2654,"Or'effice",4
+"1233",2655,"Feeling Dangerous",4
+"1234",2656,"Spiced Perfection",6
+"1235",2657,"Needs Supervision",4
+"1236",2668,"Critical Value",1
+"1237",2671,"Daphne Moon",1
+"1238",2673,"Miss Marissa",1
+"1239",2675,"Ajaaweed",1
+"1240",2678,"Alpha Sixty Six",1
+"1241",2679,"Cleon Jones",1
+"1242",2680,"Forza Di Oro",3
+"1243",2682,"Maximum Security",4
+"1244",2683,"True Timber",1
+"1245",2684,"Looking At Bikinis",1
+"1246",2685,"Whitmore",4
+"1247",2686,"Pat On the Back",1
+"1248",2687,"Tale of Silence",6
+"1249",2698,"Dancing Kiki",2
+"1250",2710,"Control Group",1
+"1251",2722,"Etana",4
+"1252",2723,"Make Or Break",6
+"1253",2724,"A J Rock",4
+"1254",2725,"Super Dude",4
+"1255",2726,"Illudere",2
+"1256",2727,"Crypto Gold",4
+"1257",2728,"Narcissistic",4
+"1258",2729,"Freddymo Factor",4
+"1259",2730,"Petalite",6
+"1260",2731,"Lucky Six",4
+"1261",2753,"Floyd Unger",4
+"1262",2756,"Traveling",4
+"1263",2757,"Captain Bombastic",1
+"1264",2767,"Royal Flag",4
+"1265",2768,"Candy Money",4
+"1266",2771,"Overbold",3
+"1267",2772,"Supreme Aura",1
+"1268",2779,"La Rubia",4
+"1269",2780,"Nellie's Cat",4
+"1270",2781,"Filly Ride",4
+"1271",2782,"Wicked Kheisha",3
+"1272",2783,"Idaka",2
+"1273",2785,"Freaky Styley",4
+"1274",2786,"Moonlight Now",3
+"1275",2787,"Go With Honor",4
+"1276",2793,"Curlin Road",4
+"1277",2805,"Courageous Girl",6
+"1278",2806,"My My Michelle",4
+"1279",2807,"Topaz Bride",3
+"1280",2811,"Autostrade",6
+"1281",2812,"Nonsensical",4
+"1282",2813,"Private Beach",2
+"1283",2814,"Take Charge Aubrey",1
+"1284",2815,"Proximity Bias",4
+"1285",2816,"Firenze Fire",1
+"1286",2817,"Beach Front",3
+"1287",2837,"Firenze Freedom",1
+"1288",2839,"Pave It",4
+"1289",2840,"Brunate",4
+"1290",2843,"Lightning Rob",4
+"1291",2844,"Yah Huh",4
+"1292",2845,"Wild Boar",3
+"1293",2847,"Tiz Epic",4
+"1294",2848,"Kampai",4
+"1295",2853,"Judgement Free",1
+"1296",2854,"Pachamama",4
+"1297",2857,"Hard Won",4
+"1298",2858,"Saffron Girl",4
+"1299",2859,"Cowtown",1
+"1300",2866,"Vortex Road",3
+"1301",2874,"Papa Zulu",1
+"1302",2876,"Downside Risk",6
+"1303",2877,"Zorbed",1
+"1304",2878,"Therapist",3
+"1305",2880,"Big Handsome",3
+"1306",2881,"V. I. P. Code",3
+"1307",2883,"Mission Statement",6
+"1308",2884,"Walkoff",1
+"1309",2885,"Bad Sueno",3
+"1310",2892,"Lovely La La",6
+"1311",2893,"Broken Border",3
+"1312",2894,"Tudox Lifting Off",3
+"1313",2896,"Meet Me in L A",1
+"1314",2900,"Mrs. Ramona G.",3
+"1315",2912,"Retro Street",6
+"1316",2913,"Hand Rail",3
+"1317",2914,"Surge Pricing",6
+"1318",2919,"Sundrenched",6
+"1319",2921,"Ocean Monarch",1
+"1320",2935,"Dating Game",3
+"1321",2937,"Patriot Drive",6
+"1322",2938,"River of Dreams",3
+"1323",2939,"Zinger",3
+"1324",2945,"Doctor Mounty",5
+"1325",2947,"Realm",1
+"1326",2948,"Prince Lucky",1
+"1327",2949,"Bandua",1
+"1328",2954,"Pacific Wind",1
+"1329",2958,"Lion in Wait",3
+"1330",2959,"Orbolution",3
+"1331",2960,"Miss Munnings",3
+"1332",2961,"Romantic Moment",3
+"1333",2967,"Collins Ave",3
+"1334",2969,"Kulik Bear",3
+"1335",2972,"Taamer",3
+"1336",2988,"Firery Tale",1
+"1337",2989,"Bernin' Thru Gold",1
+"1338",2992,"Principled",1
+"1339",2993,"Majority Rules",1
+"1340",2994,"Muchacho",1
+"1341",2998,"Federal Case",3
+"1342",3000,"Whiskey Is My Wine",3
+"1343",3005,"Binti Al Nar (GER)",6
+"1344",3011,"Tip At Tapit",6
+"1345",3033,"Sombeyay",6
+"1346",3034,"Daddy Knows",6
+"1347",3035,"Playful Hunter",1
+"1348",3036,"Happy Sophia",1
+"1349",3037,"La Vida",3
+"1350",3038,"Estill",3
+"1351",3039,"Athary (IRE)",3
+"1352",3040,"Passion Flower",3
+"1353",3048,"Carom",3
+"1354",3049,"Teachable Moment",3
+"1355",3050,"Honor System",3
+"1356",3051,"Spindletop",3
+"1357",3055,"New Jersey John",3
+"1358",3056,"Giuseppe the Great",1
+"1359",3057,"Be Gone Daddy",1
+"1360",3062,"Global Exchange",6
+"1361",3063,"Say the Word",3
+"1362",3064,"Dundalk",3
+"1363",3065,"Lunaire",3
+"1364",3067,"Danielle's Pride",3
+"1365",3068,"Ascender",3
+"1366",3071,"Seek and Destroy",3
+"1367",3077,"The Last Zip",3
+"1368",3085,"Niko's Dream",6
+"1369",3086,"Honorable Rose",3
+"1370",3087,"Crescent Lady",6
+"1371",3088,"Barton Hall",3
+"1372",3089,"Rossellini",6
+"1373",3092,"Indebted",3
+"1374",3097,"Katook",3
+"1375",3099,"Morality Clause",3
+"1376",3102,"Adhafera",1
+"1377",3103,"Hoboe",6
+"1378",3106,"Grassetto",1
+"1379",3109,"Zap Daddy",6
+"1380",3116,"Stock Trade",3
+"1381",3121,"Malakeh (GB)",6
+"1382",3124,"Goodbye Brockley",3
+"1383",3139,"Ratajkowski",3
+"1384",3142,"Pole Setter",3
+"1385",3145,"Fog of War",3
+"1386",3146,"Ian Glass",3
+"1387",3156,"Discreet Image",3
+"1388",3157,"Ladrona",1
+"1389",3160,"Architect",3
+"1390",3161,"Mamma Dee",6
+"1391",3172,"Munchkin Money",3
+"1392",3173,"Lady Joan",3
+"1393",3175,"Still There",1
+"1394",3176,"Indy's Lady",1
+"1395",3177,"Gucci Factor",3
+"1396",3178,"Offering Plan",6
+"1397",3180,"Giant Expectations",1
+"1398",3181,"Causforcelebration",6
+"1399",3190,"Razeena",1
+"1400",3199,"Ask Contrition",1
+"1401",3205,"Pep",3
+"1402",3210,"Bellamy Knows",6
+"1403",3212,"Seismic Wave",3
+"1404",3219,"Moyne Spun",3
+"1405",3226,"Wacky Pal",6
+"1406",3238,"Catch a Bid",6
+"1407",3239,"Queen Medb (IRE)",6
+"1408",3240,"Skep",3
+"1409",3241,"Madame Orbe",3
+"1410",3242,"Ygritte",3
+"1411",3243,"Rowayton",1
+"1412",3252,"Significant Form",3
+"1413",3253,"Stella di Camelot (IRE)",3
+"1414",3256,"Rinaldi",6
+"1415",3263,"Noble Jewel",6
+"1416",3265,"Valencia Vale",3
+"1417",3266,"Valid Point",3
+"1418",3267,"Shootin the Breeze",3
+"1419",3268,"Oggonis",3
+"1420",3273,"Annals of Time",3
+"1421",3274,"Zapperini",3
+"1422",3296,"Rushing Fall",3
+"1423",3297,"Beau Recall (IRE)",3
+"1424",3298,"Daddy Is a Legend",3
+"1425",3299,"Bellavais",3
+"1426",3300,"Environs (GB)",3
+"1427",3301,"Capla Temptress (IRE)",3
+"1428",3310,"Guarana",1
+"1429",3311,"Serengeti Empress",1
+"1430",3312,"Ce Ce",1
+"1431",3313,"Queen of Beas",1
+"1432",3314,"Bell's the One",1
+"1433",3315,"Cookie Dough",1
+"1434",3316,"Fancy Dress Party",1
+"1435",3323,"Mitole",1
+"1436",3324,"McKinzie",1
+"1437",3325,"Thunder Snow (IRE)",1
+"1438",3326,"Promises Fulfilled",1
+"1439",3327,"Pavel",1
+"1440",3328,"Coal Front",1
+"1441",3330,"Raging Bull (FR)",6
+"1442",3331,"Qurbaan",5
+"1443",3337,"Bourbon War",6
+"1444",3348,"Make Motime",6
+"1445",3352,"Will's Bay",5
+"1446",3355,"Somekindofmagician",6
+"1447",3356,"News Anchor",3
+"1448",3357,"Yowza Yowza Yowza",3
+"1449",3364,"Positive Power",3
+"1450",3365,"Battle of Blenheim",6
+"1451",3368,"Galadriel's Light",6
+"1452",3369,"Raphael",1
+"1453",3372,"Tax Me Naught",1
+"1454",3375,"Charreada",3
+"1455",3379,"English Soul",3
+"1456",3380,"Bath And Tennis (IRE)",3
+"1457",3381,"Tapping Pearl",6
+"1458",3382,"Plimsoll Anny",1
+"1459",3383,"Storm Rider",1
+"1460",3387,"Doswell",6
+"1461",3388,"Noble Spirit",3
+"1462",3396,"Citizen Matzo",6
+"1463",3397,"Opry",3
+"1464",3398,"Extrordinary Jerry",3
+"1465",3399,"Morrison",6
+"1466",3400,"Prognostication",3
+"1467",3408,"Art Thief",6
+"1468",3413,"Hembree",6
+"1469",3414,"Krampus",6
+"1470",3415,"Clyde's Image",3
+"1471",3416,"Master Merion",3
+"1472",3417,"Ticonderoga",3
+"1473",3418,"Breaking the Rules",6
+"1474",3421,"Burkey's Bro",6
+"1475",3425,"The Paper Wazoo",1
+"1476",3431,"Azrael",1
+"1477",3432,"Sagaponack",1
+"1478",3433,"Golden Tapit",1
+"1479",3458,"Mo Gee",6
+"1480",3459,"Nicki de Nephew",3
+"1481",3460,"Saratoga Colonel",6
+"1482",3462,"Risp",3
+"1483",3465,"Clockstrikestwelve",3
+"1484",3467,"Nova Sol (GER)",3
+"1485",3477,"Paint It Green",6
+"1486",3485,"Magical Tale",6
+"1487",3503,"Enlisting",3
+"1488",3504,"Anne Dupree",3
+"1489",3508,"Mystic Times",3
+"1490",3509,"Noble Lion",3
+"1491",3510,"French Revolution",3
+"1492",3512,"Uni (GB)",6
+"1493",3539,"Power Player",3
+"1494",3540,"Asdaaf",6
+"1495",3542,"Green Light Go",1
+"1496",3545,"Ask Siri",5
+"1497",3547,"Win Win Win",3
+"1498",3548,"Casa Creed",6
+"1499",3549,"Gentleman Joe",3
+"1500",3551,"Alasaayil",3
+"1501",3559,"Report to the Rail",3
+"1502",3560,"Royalbonnielegacy",3
+"1503",3569,"Code of Honor",1
+"1504",3570,"Mihos",1
+"1505",3571,"Whiskey Echo",1
+"1506",3583,"Moon Colony",6
+"1507",3584,"English Bee",6
+"1508",3592,"Ledecka",3
+"1509",3593,"Downstream",3
+"1510",3594,"Skyhawk",3
+"1511",3595,"Windward Sands",3
+"1512",3596,"Aveenu Malcainu",6
+"1513",3602,"Masterkey",1
+"1514",3603,"Good Credence",1
+"1515",3614,"Dancing Vega (IRE)",6
+"1516",3616,"Ice Princess",1
+"1517",3619,"La Hara (IRE)",3
+"1518",3639,"Mo Fun",3
+"1519",3640,"Brilliant Brooks",3
+"1520",3641,"Very Replaceable",3
+"1521",3642,"Drop of Bourbon",3
+"1522",3643,"Lucky Dime",1
+"1523",3644,"Fiftyshays Ofgreen",1
+"1524",3645,"Abilene Trail",1
+"1525",3646,"Striking Beauty",1
+"1526",3647,"Cat's Pajamas",3
+"1527",3650,"Starting Over",1
+"1528",3651,"Brewmeister",1
+"1529",3652,"Ox Bridge",1
+"1530",3653,"Abrupt",3
+"1531",3659,"Marquet Legacy",6
+"1532",3662,"Artemus Bridge",3
+"1533",3665,"Farcical",6
+"1534",3666,"Stunning Beauty",3
+"1535",3667,"Rhinegold",3
+"1536",3668,"Bebeau",1
+"1537",3669,"Burn and Turn",1
+"1538",3673,"Madita (GER)",6
+"1539",3678,"Shiny Copper Penny",3
+"1540",3682,"Saratoga Beauty",1
+"1541",3690,"Indochine",3
+"1542",3691,"Velvet Crush",3
+"1543",3692,"Inveterate",3
+"1544",3693,"Coalition Building",3
+"1545",3694,"Windfall Profit",3
+"1546",3695,"Scape",6
+"1547",3696,"Trash Panda",3
+"1548",3697,"Revelment",3
+"1549",3698,"Connectivity",6
+"1550",3700,"East (GB)",3
+"1551",3703,"Wild North",3
+"1552",3707,"Psalmody",3
+"1553",3708,"Curluck",3
+"1554",3714,"Cardiff Cay",6
+"1555",3728,"Brucia La Terra",5
+"1556",3730,"Naked Avenger",1
+"1557",3734,"Get Smokin",6
+"1558",3735,"Fame to Famous",6
+"1559",3736,"Constitutional Pal",6
+"1560",3737,"Like You",6
+"1561",3738,"Nexus",3
+"1562",3739,"It's Pazible",3
+"1563",3760,"Lady Kaza",3
+"1564",3761,"Ella Brilla",6
+"1565",3762,"Shyza",3
+"1566",3763,"Sweet Leaf",3
+"1567",3764,"Three Jokers",1
+"1568",3767,"Classic Covey",3
+"1569",3768,"C C Rider",3
+"1570",3773,"Noble Emotion",3
+"1571",3774,"Prince of Pharoahs",1
+"1572",3776,"Tiesto",6
+"1573",3783,"Valedictorian",3
+"1574",3784,"Plainsman",1
+"1575",3785,"Louisiana Lady",6
+"1576",3786,"Pioneerof New York",3
+"1577",3792,"Victorine (FR)",5
+"1578",3794,"Bramble Queen",6
+"1579",3798,"Memories of Peter",6
+"1580",3800,"Seven X Tippet",3
+"1581",3804,"Princess Fawzia",3
+"1582",3805,"Melisande",3
+"1583",3807,"Soulmate",3
+"1584",3815,"Adriatic Holiday",6
+"1585",3818,"Swamp Rat",6
+"1586",3837,"No Lime",3
+"1587",3840,"Going for Gold",3
+"1588",3841,"Border Town",3
+"1589",3842,"Motataabeq",3
+"1590",3863,"Always Forgiven",1
+"1591",3869,"Street Trust",1
+"1592",3871,"Katama Moonlight",1
+"1593",3878,"Here Comes Jackie",6
+"1594",3879,"All Quality",6
+"1595",3884,"Sonneman",1
+"1596",3888,"Tiz the Law",1
+"1597",3889,"Big City Bob",1
+"1598",3890,"Gozilla",1
+"1599",3891,"Truculent",1
+"1600",3892,"Don Juan Kitten",3
+"1601",3893,"Sul Moon",6
+"1602",3894,"Voodoo Zip",3
+"1603",3895,"Startup Nation",3
+"1604",3903,"Wicked Whisper",1
+"1605",3904,"Frank's Rockette",1
+"1606",3905,"Slam Dunk",1
+"1607",3906,"Quality Response",1
+"1608",3909,"Subsidiary",6
+"1609",3913,"Decorated Ace",6
+"1610",3921,"New and Improved",6
+"1611",3947,"Knight Train",1
+"1612",3949,"Held Accountable",6
+"1613",3955,"Edict",1
+"1614",3970,"Firewater Jake",3
+"1615",3984,"Made You Look",6
+"1616",3996,"Buy Land and See",3
+"1617",3997,"Irish Mias",3
+"1618",3998,"Talking",6
+"1619",4008,"Bemma's Boy",6
+"1620",4009,"Wilderness Gate",6
+"1621",4033,"Mr Havercamp",6
+"1622",4034,"March to the Arch",5
+"1623",4035,"First Premio",6
+"1624",4037,"Warm",6
+"1625",4068,"Derby Champagne",6
+"1626",4069,"Coltrane",6
+"1627",4070,"Themanbehindtheman",6
+"1628",4071,"Basha",6
+"1629",4072,"Gray Sky",6
+"1630",4085,"Free to Fly",6
+"1631",4137,"Regal Glory",6
+"1632",4138,"Dogtag",6
+"1633",4156,"Chestnut Street",6
+"1634",4157,"Art Buff",5
+"1635",4158,"Kinky Sox",5
+"1636",4173,"Penalty",6
+"1637",4174,"Saintly Samurai",6
+"1638",4213,"Countenance",6
+"1639",4241,"Keep Quiet (FR)",6
+"1640",4249,"My Macho",6
+"1641",4257,"Proquestor",6
+"1642",4258,"Burn the Boats",6
+"1643",4260,"Pat Pat Pat",5
+"1644",4261,"Confessing",6
+"1645",4262,"Aymara",6
+"1646",4263,"Shurakaa",6
+"1647",4264,"Elle M'a Souri (FR)",6
+"1648",4265,"Magical Time",6
+"1649",4266,"Gemonteer",6
+"1650",4296,"Going to Temple",6
+"1651",4297,"Lady Trish's Dream (GB)",6
+"1652",4305,"Blue Atlas",6
+"1653",4309,"Prince of New York",5
+"1654",4313,"Macagone",6
+"1655",4314,"Way Early",6
+"1656",4319,"Global Access",6
+"1657",4320,"Award Winner",6
+"1658",4321,"Limonite",6
+"1659",4335,"Our Way",5
+"1660",4351,"Got Stormy",6
+"1661",4374,"Good Governance (GB)",6
+"1662",4375,"Embellisher",6
+"1663",4383,"Sooner Schooner",6
+"1664",4393,"Sweet Gisel",6
+"1665",4413,"Enjay's Brass",6
+"1666",4414,"Devious Charm",6
+"1667",4432,"Ostilio (GB)",6
+"1668",4519,"East Moon",6
+"1669",4543,"Dalika (GER)",6
+"1670",4544,"Hotsy Totsy (IRE)",6
+"1671",4578,"Bulletin",6
+"1672",4580,"Secret Alchemy",6
+"1673",4581,"Into Glamour",6
+"1674",4590,"Tricky Tune",6
+"1675",4601,"Cartabianca (FR)",6
+"1676",4602,"Tearless",6
+"1677",4606,"Tropical Frosty",6
+"1678",4638,"Jc's Shooting Star",3
