@@ -75,62 +75,33 @@ lateral_movement <- horse_movement |>
 
 # pca time! ####
 ## extract matrices for each feature | convert to matrix for prcomp()
-horsies_pca <- horse_summary_stats |> 
-  data.frame() |> select(-c(horse_id, horse_name))
+horsies_no_ids <- horse_summary_stats |> 
+  data.frame() |> select(-c(horse_id, horse_name)) |> as.matrix()
 
-# speed stats
-speed_stats <- horsies_pca |> 
-  select(matches("speed")) |> as.matrix()
-# accel stats
-acceleration_stats <- horsies_pca |> 
-  select(matches("acceleration")) |> as.matrix()
-# strain stats
-strain_stats <- horsies_pca |> 
-  select(matches("strain")) |> as.matrix()
 # lat mvmt stats
 side_mvmt_pca <- lateral_movement |> 
   data.frame() |> select(-c(horse_id, horse_name)) |> as.matrix()
 
-# strain rate pca
-pca_strain <- prcomp(strain_stats, center = TRUE, scale. = TRUE)
-summary(pca_strain)
-
-# speed pca
-pca_speed <- prcomp(speed_stats, center = TRUE, scale. = TRUE)
-summary(pca_speed)
-
-# acceleration pca
-pca_acceleration <- prcomp(acceleration_stats, 
-                           center = TRUE, scale. = TRUE)
-summary(pca_acceleration)
-
 # lat mvmt pca
 pca_lat_mvmt <- prcomp(side_mvmt_pca, center = TRUE, scale. = TRUE)
 
+# big pca
+horsies_pca <- prcomp(horsies_no_ids, center = TRUE, scale. = TRUE)
+summary(horsies_pca)
+
+# select principal components that capture 90% of variation
+horsies_pcs <- horsies_pca$x |> data.frame() |> select(1:10)
 # subset each just for relevant principal components
-speed_pcs <- pca_speed$x |> data.frame() |> select(1:4)
-accel_pcs <- pca_acceleration$x |> data.frame() |> select(1:4)
 lat_mvmt_pcs <- pca_lat_mvmt$x |> data.frame() |> select(1:4)
-strain_rate_pcs <- pca_strain$x |> data.frame() |> select(1:5)
-## needs 5 PCs to explain >= 90% variation
 
 # clustering on PCs directly ####
 set.seed(27072023) # same seed as summer
-strain_pcs_mclust <- Mclust(strain_rate_pcs)
-speed_pcs_mclust <- Mclust(speed_pcs)
-acceleration_pcs_mclust <- Mclust(accel_pcs)
+horsies_mclust <- Mclust(horsies_pcs)
 lat_mvmt_pcs_mclust <- Mclust(lat_mvmt_pcs)
-
-# join the data--need to verify it joined right since technically 
-# not joining by unique key (e.g., name/id)
 
 # also joined to full data, NOT data w PCs
 horse_summary_stats <- cbind(horse_summary_stats,
-      "strain_cluster" = strain_pcs_mclust$classification)
-horse_summary_stats <- cbind(horse_summary_stats,
-      "speed_cluster" = speed_pcs_mclust$classification)
-horse_summary_stats <- cbind(horse_summary_stats,
-      "acceleration_cluster" = acceleration_pcs_mclust$classification)
+      "cluster" = horsies_mclust$classification)
 lateral_movement <- cbind(lateral_movement,
       "lat_mvmt_cluster" = lat_mvmt_pcs_mclust$classification)
 

@@ -7,7 +7,7 @@ library(mclust)
 # file path may vary | this file was downloaded from the google drive
 file_path <- file.choose()
 ## my file path is below:
-# file_path <- "C:/Users/krisa/Contacts/Downloads/final_horse_strains.csv"
+#file_path <- "C:/Users/krisa/Contacts/Downloads/final_horse_strains.csv"
 final_horse_strains <- read_csv(file = file_path)
 # take only the variables we need
 final_horse_data <- final_horse_strains |> 
@@ -56,94 +56,34 @@ horse_summary_stats <- final_horse_data  |>
 
 # pca time! ####
 ## extract matrices for each feature | convert to matrix for prcomp()
-horsies_pca <- horse_summary_stats |> 
-  data.frame() |> select(-c(horse_id, horse_name))
+horsies_no_ids <- horse_summary_stats |> 
+  data.frame() |> select(-c(horse_id, horse_name)) |> as.matrix()
 
-# speed stats
-speed_stats <- horsies_pca |> 
-  select(matches("speed")) |> as.matrix()
-# accel stats
-acceleration_stats <- horsies_pca |> 
-  select(matches("acceleration")) |> as.matrix()
-# strain stats
-strain_stats <- horsies_pca |> 
-  select(matches("strain")) |> as.matrix()
-
-# strain rate pca
-pca_strain <- prcomp(strain_stats, center = TRUE, scale. = TRUE)
-#summary(pca_strain)
-
-# visualizations | currently not run
-# fviz_eig(pca_strain)
-# using a threshold of 90%, we would select the first five principal components. explain 92% of the variance
-# fviz_pca_biplot(pca_strain, alpha.ind = 0.5, alpha.var = 0.75,
-#                 geom.var = "arrow", geom.ind = "point")
-# fviz_pca_ind(pca_strain)
-
-# investigate principal components
-strain_loadings <- tidy(pca_strain, matrix = "loadings") |> 
-  arrange(PC, desc(abs(value))) |> 
-  group_by(PC) |> top_n(1, abs(value)) |> 
-  filter(PC <= 5) |> select(PC, column, value)
-
-# speed pca
-pca_speed <- prcomp(speed_stats, center = TRUE, scale. = TRUE)
-#summary(pca_speed)
-
-# visualizations | not run
-# fviz_eig(pca_speed)
-# select first four principal components. explain 97% of the variance
-# fviz_pca_biplot(pca_speed, alpha.ind = 0.5, 
-#                geom.var = "arrow", geom.ind = "point")
-# fviz_pca_ind(pca_speed)
-
-# investigate principal components
-speed_loadings <- tidy(pca_speed, matrix = "loadings") |> 
-  arrange(PC, desc(abs(value))) |> 
-  group_by(PC) |> top_n(1, abs(value)) |> 
-  filter(PC <= 4) |> select(PC, column, value)
-# acceleration pca
-pca_acceleration <- prcomp(acceleration_stats, 
+# statistics pca
+horsies_pca <- prcomp(horsies_no_ids, 
                            center = TRUE, scale. = TRUE)
-#summary(pca_acceleration)
+#summary(horsies_pca)
 
 # visualizations | not run
-# fviz_eig(pca_acceleration)
-# select first four principal components. explain 95% of the variance
-#fviz_pca_biplot(pca_acceleration, alpha.ind = 0.5, 
+# fviz_eig(horsies_pca)
+# select first ten principal components. explain 90% of the variance
+#fviz_pca_biplot(horsies_pca, alpha.ind = 0.3, 
 #                geom.var = "arrow", geom.ind = "point")
-#fviz_pca_ind(pca_acceleration)
+#fviz_pca_ind(horsies_pca)
 
 # extract components
-acceleration_loadings <- tidy(pca_acceleration, matrix = "loadings") |> 
+horsies_loadings <- tidy(horsies_pca, matrix = "loadings") |> 
   arrange(PC, desc(abs(value))) |> 
-  group_by(PC) |> top_n(1, abs(value)) |> 
-  filter(PC <= 4) |> select(PC, column, value)
+  group_by(PC) |> 
+  top_n(3, abs(value)) |> 
+  filter(PC <= 10) |> 
+  select(PC, column, value)
 
 # clustering ####
 
 # extract the important stats as designated by the PCA
-race_summary_stats <- final_horse_data |> 
-  filter(horse_id != 3563, is.finite(avg_strain) & is.finite(total_strain)) |>
-  group_by(horse_id, horse_name) |> 
-  summarise(mean_acceleration = mean(acceleration),
-            median_speed = median(speed),
-            median_acceleration = median(acceleration),
-            min_speed = min(speed),
-            max_speed = max(speed),
-            range_acceleration = max(acceleration) - min(acceleration),
-            iqr_acceleration = IQR(acceleration),
-            cv_speed = (sd(speed) / mean(speed)),
-            median_total_strain = median(total_strain),
-            min_avg_strain = min(avg_strain),
-            iqr_total_strain = IQR(total_strain),
-            min_total_strain = min(total_strain),
-            sd_avg_strain = sd(avg_strain)) |> ungroup()
-
-# clean up environment
-#rm(acceleration_stats, speed_stats, strain_stats,
-#   acceleration_loadings, speed_loadings, strain_loadings,
-#   final_horse_data, final_horse_strains)
+race_summary_stats <- horse_summary_stats |> 
+  select(horse_id, horse_name, all_of(horsies_loadings$column))
 
 # lateral movement detour ####
 # read in data
@@ -182,41 +122,19 @@ side_mvmt_summaries <- horse_movement |>
             range_side_movement = max(side_movement) - min(side_movement),
             iqr_side_movement = IQR(side_movement)) |> ungroup()
 
-# back to the good stuff ####
-# strain stats
-strains_summaries <- race_summary_stats |> data.frame() |> 
-  select(-matches(c("speed", "acceleration")))
-# speed stats
-speed_summaries <- race_summary_stats |> data.frame() |> 
-  select(-matches(c("strain", "acceleration")))
-# acceleration stats
-acceleration_summaries <- race_summary_stats |> data.frame() |> 
-  select(-matches(c("speed", "strain")))
-
-# clustering time!
+# clustering time! ####
 # set the seed for reproduceability
 set.seed(27072023)
-strain_mclust <- Mclust(select(strains_summaries, 
-                               -c(horse_id, horse_name)))
-speed_mclust <- Mclust(select(speed_summaries, 
-                               -c(horse_id, horse_name)))
-acceleration_mclust <- Mclust(select(acceleration_summaries, 
-                               -c(horse_id, horse_name)))
 lat_mvmt_mclust <- Mclust(select(side_mvmt_summaries,
                                  -c(horse_id, horse_name)))
-
+horsies_mclust <- Mclust(select(race_summary_stats,
+                                -c(horse_id, horse_name)))
 # join the data
-strains_summaries <- cbind(strains_summaries, 
-                           "cluster" = strain_mclust$classification)
 side_mvmt_summaries <- cbind(side_mvmt_summaries, 
                    "cluster" = lat_mvmt_mclust$classification)
-speed_summaries <- cbind(speed_summaries,
-                         "cluster" = speed_mclust$classification)
-acceleration_summaries <- cbind(acceleration_summaries,
-                                "cluster" = acceleration_mclust$classification)
+race_summary_stats <- cbind(race_summary_stats,
+                         "cluster" = horsies_mclust$classification)
 
 # save the data!
-# write.csv(acceleration_summaries, "C:/horsies/clustering-results-revised/acceleration-summaries.csv")
+#write.csv(race_summary_stats, "C:/horsies/clustering-results-revised/race-summaries.csv")
 # write.csv(side_mvmt_summaries, "C:/horsies/clustering-results-revised/lateral-movement-summaries.csv")
-# write.csv(speed_summaries, "C:/horsies/clustering-results-revised/speed-summaries.csv")
-# write.csv(strains_summaries, "C:/horsies/clustering-results-revised/strain-summaries.csv")
