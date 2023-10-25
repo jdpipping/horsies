@@ -103,7 +103,7 @@ lat_mvmt_pcs_mclust <- Mclust(lat_mvmt_pcs)
 horse_summary_stats <- cbind(horse_summary_stats,
       "cluster" = horsies_mclust$classification)
 lateral_movement <- cbind(lateral_movement,
-      "lat_mvmt_cluster" = lat_mvmt_pcs_mclust$classification)
+      "cluster" = lat_mvmt_pcs_mclust$classification)
 
 # remove summary stats, keep cluster assignments only
 horse_summary_stats <- horse_summary_stats |> 

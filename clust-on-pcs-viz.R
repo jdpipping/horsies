@@ -27,21 +27,7 @@ horse_injruies_plot <- all_horse_profiles |>
   geom_bar(position = "fill") + scale_fill_brewer(
     type = "qual", palette = "Set1", direction = -1) + 
   scale_x_discrete() + theme_classic() + 
-  labs(subtitle = "Horses Clustered by Speed Profiles",
-       x = "Clusters",y = "Proportion", 
-       fill = "Injury Reported?") + 
-  theme(legend.position = "none",
-        plot.title = element_text(hjust = 0.5),
-        plot.subtitle = element_text(hjust = 0.5))
-
-accel_injruies_plot <- accel_profiles |> 
-  mutate(report_plot = 
-           if_else(if_injury_reported == T, "Yes", "No")) |> 
-  ggplot(aes(x = cluster, fill = report_plot)) + 
-  geom_bar(position = "fill") + scale_fill_brewer(
-    type = "qual", palette = "Set1", direction = -1) + 
-  scale_x_discrete() + theme_classic() + 
-  labs(subtitle = "Horses Clustered by Acceleration Profiles",
+  labs(subtitle = "Horses Clustered by Movement Profiles",
        x = "Clusters",y = "Proportion", 
        fill = "Injury Reported?") + 
   theme(legend.position = "none",

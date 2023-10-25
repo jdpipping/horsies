@@ -5,9 +5,9 @@ library(broom)
 library(mclust)
 
 # file path may vary | this file was downloaded from the google drive
-file_path <- file.choose()
+#file_path <- file.choose()
 ## my file path is below:
-#file_path <- "C:/Users/krisa/Contacts/Downloads/final_horse_strains.csv"
+file_path <- "C:/Users/krisa/Contacts/Downloads/final_horse_strains.csv"
 final_horse_strains <- read_csv(file = file_path)
 # take only the variables we need
 final_horse_data <- final_horse_strains |> 
@@ -75,7 +75,7 @@ horsies_pca <- prcomp(horsies_no_ids,
 horsies_loadings <- tidy(horsies_pca, matrix = "loadings") |> 
   arrange(PC, desc(abs(value))) |> 
   group_by(PC) |> 
-  top_n(3, abs(value)) |> 
+  top_n(2, abs(value)) |> 
   filter(PC <= 10) |> 
   select(PC, column, value)
 
@@ -83,7 +83,8 @@ horsies_loadings <- tidy(horsies_pca, matrix = "loadings") |>
 
 # extract the important stats as designated by the PCA
 race_summary_stats <- horse_summary_stats |> 
-  select(horse_id, horse_name, all_of(horsies_loadings$column))
+  select(horse_id, horse_name, all_of(horsies_loadings$column)) |> 
+  ungroup()
 
 # lateral movement detour ####
 # read in data
@@ -127,6 +128,7 @@ side_mvmt_summaries <- horse_movement |>
 set.seed(27072023)
 lat_mvmt_mclust <- Mclust(select(side_mvmt_summaries,
                                  -c(horse_id, horse_name)))
+
 horsies_mclust <- Mclust(select(race_summary_stats,
                                 -c(horse_id, horse_name)))
 # join the data
@@ -136,5 +138,5 @@ race_summary_stats <- cbind(race_summary_stats,
                          "cluster" = horsies_mclust$classification)
 
 # save the data!
-#write.csv(race_summary_stats, "C:/horsies/clustering-results-revised/race-summaries.csv")
+write.csv(race_summary_stats, "C:/horsies/clustering-results-revised/race-summaries.csv")
 # write.csv(side_mvmt_summaries, "C:/horsies/clustering-results-revised/lateral-movement-summaries.csv")
