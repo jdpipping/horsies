@@ -65,17 +65,20 @@ horsies_pca <- prcomp(horsies_no_ids,
 #summary(horsies_pca)
 
 # visualizations | not run
-# fviz_eig(horsies_pca)
+fviz_eig(horsies_pca)
 # select first ten principal components. explain 90% of the variance
-#fviz_pca_biplot(horsies_pca, alpha.ind = 0.3, 
-#                geom.var = "arrow", geom.ind = "point")
-#fviz_pca_ind(horsies_pca)
+fviz_pca_biplot(horsies_pca, alpha.ind = 0.25, 
+                select.var = list(contrib = 10),
+                label = "var", repel = T,
+                xlab = "PC1 (31.8%)", ylab = "PC2 (16.7%)",
+                title = "Biplot")
+fviz_pca_ind(horsies_pca)
 
 # extract components
 horsies_loadings <- tidy(horsies_pca, matrix = "loadings") |> 
   arrange(PC, desc(abs(value))) |> 
   group_by(PC) |> 
-  top_n(2, abs(value)) |> 
+  top_n(5, abs(value)) |> 
   filter(PC <= 10) |> 
   select(PC, column, value)
 

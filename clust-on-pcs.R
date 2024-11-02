@@ -5,9 +5,9 @@ library(broom)
 library(mclust)
 
 # file path may vary | this file was downloaded from the google drive
-file_path <- file.choose()
+#file_path <- file.choose()
 ## my file path is below:
-#file_path <- "C:/Users/krisa/Contacts/Downloads/final_horse_strains.csv"
+file_path <- "C:/Users/krisa/Contacts/Downloads/final_horse_strains.csv"
 final_horse_strains <- read_csv(file = file_path)
 # take only the variables we need
 final_horse_data <- final_horse_strains |> 
@@ -93,6 +93,19 @@ summary(horsies_pca)
 horsies_pcs <- horsies_pca$x |> data.frame() |> select(1:10)
 # subset each just for relevant principal components
 lat_mvmt_pcs <- pca_lat_mvmt$x |> data.frame() |> select(1:4)
+
+# extract loading matrix. subset for first 10 PCs
+horsies_loadings <- as.data.frame(horsies_pca$rotation) |> select(1:10)
+
+# sort by descending absolute value. one for each PC 
+##(should vectorize this code)
+s_pc1 <- horsies_loadings |> arrange(desc(abs(PC1)))
+s_pc2 <- horsies_loadings |> arrange(desc(abs(PC2)))
+s_pc3 <- horsies_loadings |> arrange(desc(abs(PC3)))
+s_pc4 <- horsies_loadings |> arrange(desc(abs(PC4)))
+s_pc5 <- horsies_loadings |> arrange(desc(abs(PC5)))
+s_pc6 <- horsies_loadings |> arrange(desc(abs(PC6)))
+s_pc10 <- horsies_loadings |> arrange(desc(abs(PC10)))
 
 # clustering on PCs directly ####
 set.seed(27072023) # same seed as summer
